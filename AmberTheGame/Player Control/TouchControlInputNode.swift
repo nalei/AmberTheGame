@@ -12,7 +12,8 @@ class TouchControlInputNode: SKSpriteNode {
   var alphaUnpressed:CGFloat = 0.8
   var alphaPressed:CGFloat   = 1
   
-  var pressedButtons = [SKSpriteNode]()
+  var allButtons     = [SKSpriteNode]()
+  var pressedButtons = Set<SKSpriteNode>()
   
   let buttonDirLeft  = SKSpriteNode(imageNamed: "button-left")
   let buttonDirRight = SKSpriteNode(imageNamed: "button-right")
@@ -50,6 +51,7 @@ class TouchControlInputNode: SKSpriteNode {
     button.name = name
     button.zPosition = 10
     button.alpha = alphaUnpressed
+    allButtons.append(button)
     self.addChild(button)
   }
   
@@ -62,32 +64,37 @@ class TouchControlInputNode: SKSpriteNode {
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    touchSart(touches: touches, withEvent: event)
+    for touch in touches {
+      let touchPoint = touch.location(in: self)
+      
+      for button in allButtons {
+        
+        if button.contains(touchPoint) && !pressedButtons.contains(button) {
+          pressedButtons.insert(button)
+          inputDelegate?.follow(command: button.name!)
+        }
+        
+        setAlphaStatus(button)
+      }
+    }
   }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     for touch in touches {
-      let touchPoint = touch.location(in: parent!)
-      let previousTouchPoint = touch.previousLocation(in: parent!)
+      let touchPoint = touch.location(in: self)
+      let previousTouchPoint = touch.previousLocation(in: self)
       
-      for button in [buttonDirLeft, buttonDirRight, buttonA] {
+      for button in allButtons {
         
         // если касание покидает кнопку
-        if button.contains(previousTouchPoint) &&
-           !button.contains(touchPoint) {
-
-          if let index = pressedButtons.firstIndex(of: button) {
-            pressedButtons.remove(at: index)
-            
+        if button.contains(previousTouchPoint) && !button.contains(touchPoint) {
+          if let _ = pressedButtons.remove(button) {
             inputDelegate?.follow(command: "cancel \(String(describing: button.name!))")
           }
         }
         // если касание перемещается на кнопку которая ещё не нажата
-        else if !button.contains(previousTouchPoint) &&
-                button.contains(touchPoint) &&
-                pressedButtons.firstIndex(of: button) == nil {
-          pressedButtons.append(button)
-          
+        else if !button.contains(previousTouchPoint) && button.contains(touchPoint) && !pressedButtons.contains(button) {
+          pressedButtons.insert(button)
           inputDelegate?.follow(command: button.name!)
         }
         
@@ -97,42 +104,21 @@ class TouchControlInputNode: SKSpriteNode {
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    touchStop(touches: touches, withEvent: event)
+    touchStop(touches: touches)
   }
   
   override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-    touchStop(touches: touches, withEvent: event)
+    touchStop(touches: touches)
   }
   
-  func touchSart(touches: Set<UITouch>, withEvent event: UIEvent?) {
+  func touchStop(touches: Set<UITouch>) {
     for touch in touches {
-      let touchPoint = touch.location(in: parent!)
+      let touchPoint = touch.location(in: self)
       
-      for button in [buttonDirLeft, buttonDirRight, buttonA] {
+      for button in allButtons {
         
-        if button.contains(touchPoint) && pressedButtons.firstIndex(of: button) == nil {
-          pressedButtons.append(button)
-          
-          inputDelegate?.follow(command: button.name!)
-        }
-        
-        setAlphaStatus(button)
-      }
-    }
-  }
-  
-  func touchStop(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    for touch in touches {
-      let touchPoint = touch.location(in: parent!)
-      let previousTouchPoint = touch.previousLocation(in: parent!)
-      
-      for button in [buttonDirLeft, buttonDirRight, buttonA] {
-        
-        if button.contains(touchPoint) || button.contains(previousTouchPoint) {
-          
-          if let index = pressedButtons.firstIndex(of: button) {
-            pressedButtons.remove(at: index)
-            
+        if button.contains(touchPoint) {
+          if let _ = pressedButtons.remove(button) {
             inputDelegate?.follow(command: "stop \(String(describing: button.name!))")
           }
         }
