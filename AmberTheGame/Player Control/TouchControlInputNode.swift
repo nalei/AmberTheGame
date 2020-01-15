@@ -1,6 +1,5 @@
 import SpriteKit
 
-
 protocol ControlInputSourceDelegate : class {
   func follow(command : String?)
 }
@@ -14,19 +13,39 @@ class TouchControlInputNode: SKSpriteNode {
   var alphaUnpressed:CGFloat = 0.8
   var alphaPressed:CGFloat   = 1
   
-  var allButtons     = [SKSpriteNode]()
-  var pressedButtons = Set<SKSpriteNode>()
-  
-  let buttonDirLeft  = SKSpriteNode(imageNamed: "button-left")
-  let buttonDirRight = SKSpriteNode(imageNamed: "button-right")
-  let buttonA        = SKSpriteNode(imageNamed: "button-A")
+  var allButtons     = [ButtonNode]()
+  var pressedButtons = Set<ButtonNode>()
   
   // MARK: Initialization
   
   init(frame: CGRect) {
     super.init(texture: nil, color: UIColor.clear, size: frame.size)
     
-    setupControls(size: frame.size)
+    let buttonDirLeft  = ButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonDirRight = ButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonJump     = ButtonNode(iconName: "shevron-arrow", color: .clear)
+    
+    addButton(button: buttonDirLeft,
+              position: CGPoint(
+                x: -(size.width / 2) + 100,
+                y: -(size.height / 2) + 100),
+              rotation: 0,
+              name: "left")
+    
+    addButton(button: buttonDirRight,
+              position: CGPoint(
+                x: -(size.width / 2) + 250,
+                y: -(size.height / 2) + 100),
+              rotation: .pi,
+              name: "right")
+    
+    addButton(button: buttonJump,
+              position: CGPoint(
+                x: (size.width / 2 ) - 100,
+                y: -(size.height / 2)  + 100),
+              rotation: -(.pi / 2),
+              name: "jump")
+    
     isUserInteractionEnabled = true
   }
   
@@ -34,25 +53,11 @@ class TouchControlInputNode: SKSpriteNode {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setupControls(size : CGSize) {
-    addButton(button: buttonDirLeft,
-              position: CGPoint(x: -(size.width / 2) + 100, y: -(size.height / 2) + 100),
-              name: "left",
-              scale: 1.5)
-    addButton(button: buttonDirRight,
-              position: CGPoint(x: -(size.width / 2) + 250, y: -(size.height / 2) + 100),
-              name: "right",
-              scale: 1.5)
-    addButton(button: buttonA,
-              position: CGPoint(x: (size.width / 2 ) - 100, y: -(size.height / 2)  + 100),
-              name: "A",
-              scale: 1.5)
-  }
-  
-  func addButton(button: SKSpriteNode, position: CGPoint, name: String, scale: CGFloat) {
+  func addButton(button: ButtonNode, position: CGPoint, rotation: CGFloat, name: String) {
+    button.size = CGSize(width: 150, height: 150)
     button.position = position
-    button.setScale(scale)
     button.name = name
+    button.zRotation = rotation
     button.zPosition = 10
     button.alpha = alphaUnpressed
     allButtons.append(button)
@@ -61,7 +66,7 @@ class TouchControlInputNode: SKSpriteNode {
   
   // MARK: UIResponder
   
-  func buttonPressed(_ button: SKSpriteNode) {
+  func buttonPressed(_ button: ButtonNode) {
     let insertionResult = pressedButtons.insert(button)
     if insertionResult.inserted {
       button.alpha = alphaPressed
@@ -72,7 +77,7 @@ class TouchControlInputNode: SKSpriteNode {
     }
   }
   
-  func buttonUnpressed(_ button: SKSpriteNode) {
+  func buttonUnpressed(_ button: ButtonNode) {
     if let _ = pressedButtons.remove(button) {
       button.alpha = alphaUnpressed
       
