@@ -6,16 +6,25 @@ class GameScene: SKScene, ControlInputSourceDelegate {
   var graphs = [String : GKGraph]()
   
   private var lastUpdateTime : TimeInterval = 0
+  let label = SKLabelNode(fontNamed: "Courier-Bold")
   
   // Player Control
   var touchControlNode: TouchControlInputNode?
   
   func follow(command: String?) {
-    print(command!)
+    label.text = "\(command!)"
   }
   
   override func sceneDidLoad() {
     self.lastUpdateTime = 0
+    
+    // Test label
+    label.text = ""
+    label.fontSize = 100
+    label.fontColor = .white
+    label.zPosition = 1
+    label.verticalAlignmentMode = .center
+    addChild(label)
     
     // Add Player Control
     touchControlNode = TouchControlInputNode(frame: self.frame)

@@ -45,6 +45,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E6BA84C23CF76D800DC47AA /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		1E6BA84D23CF76EF00DC47AA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		1EC165F723CA2E2F0055452D = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +78,8 @@
 		1EC1660223CA2E2F0055452D /* AmberTheGame */ = {
 			isa = PBXGroup;
 			children = (
+				1E6BA84C23CF76D800DC47AA /* Entities */,
+				1E6BA84D23CF76EF00DC47AA /* Components */,
 				1EC1662423CB78710055452D /* Nodes */,
 				1EC1662023CB19930055452D /* Player Control */,
 				1EC1661B23CA2E900055452D /* Game */,
