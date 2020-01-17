@@ -9,7 +9,7 @@ class GameScene: SKScene, ControlInputSourceDelegate {
   let label = SKLabelNode(fontNamed: "Courier-Bold")
   
   // Player Control
-  var touchControlNode: TouchControlInputNode?
+  var touchControlInputNode: TouchControlInputNode?
   
   func follow(command: String?) {
     label.text = "\(command!)"
@@ -27,9 +27,9 @@ class GameScene: SKScene, ControlInputSourceDelegate {
     addChild(label)
     
     // Add Player Control
-    touchControlNode = SceneManager.shared.gameInput
-    touchControlNode?.inputDelegate = self
-    addChild(touchControlNode!)
+    touchControlInputNode = TouchControlInputNode(frame: self.frame)
+    touchControlInputNode?.inputDelegate = self
+    addChild(touchControlInputNode!)
   }
   
   override func update(_ currentTime: TimeInterval) {

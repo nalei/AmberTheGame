@@ -82,29 +82,29 @@
 		1EC1660223CA2E2F0055452D /* AmberTheGame */ = {
 			isa = PBXGroup;
 			children = (
+				1EC1661F23CB17DF0055452D /* Assets */,
 				1E829E9423D1A8AC0026F495 /* Scenes */,
-				1EFDAA5923CFAB030081527C /* State Machine */,
+				1EFDAA5923CFAB030081527C /* Game States */,
 				1EFDAA5623CFA9AF0081527C /* Components */,
 				1EFDAA5323CFA8A30081527C /* Entities */,
 				1EC1662423CB78710055452D /* Nodes */,
 				1EC1662023CB19930055452D /* Player Control */,
-				1EC1661B23CA2E900055452D /* iOS */,
-				1EC1661F23CB17DF0055452D /* Assets */,
+				1EC1661B23CA2E900055452D /* Viev Controllers */,
 				1EC1660723CA2E2F0055452D /* Actions.sks */,
+				1EC1660323CA2E2F0055452D /* AppDelegate.swift */,
+				1EC1660D23CA2E2F0055452D /* Main.storyboard */,
+				1EC1661223CA2E310055452D /* LaunchScreen.storyboard */,
 				1EC1661523CA2E310055452D /* Info.plist */,
 			);
 			path = AmberTheGame;
 			sourceTree = "<group>";
 		};
-		1EC1661B23CA2E900055452D /* iOS */ = {
+		1EC1661B23CA2E900055452D /* Viev Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1EC1660323CA2E2F0055452D /* AppDelegate.swift */,
 				1EC1660B23CA2E2F0055452D /* GameViewController.swift */,
-				1EC1660D23CA2E2F0055452D /* Main.storyboard */,
-				1EC1661223CA2E310055452D /* LaunchScreen.storyboard */,
 			);
-			path = iOS;
+			path = "Viev Controllers";
 			sourceTree = "<group>";
 		};
 		1EC1661F23CB17DF0055452D /* Assets */ = {
@@ -147,12 +147,12 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		1EFDAA5923CFAB030081527C /* State Machine */ = {
+		1EFDAA5923CFAB030081527C /* Game States */ = {
 			isa = PBXGroup;
 			children = (
 				1EFDAA5A23CFAB650081527C /* NormalState.swift */,
 			);
-			path = "State Machine";
+			path = "Game States";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

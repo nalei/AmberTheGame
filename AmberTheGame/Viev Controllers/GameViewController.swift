@@ -15,9 +15,6 @@ class GameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let touchControlInputNode = TouchControlInputNode(frame: CGRect(x: 0, y: 0, width: 1136, height: 640))
-    SceneManager.shared.gameInput = touchControlInputNode
-    
     print(view.frame.size)
     
     // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
