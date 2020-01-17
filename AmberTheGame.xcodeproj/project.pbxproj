@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E829E9723D1A9B00026F495 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E829E9623D1A9B00026F495 /* SceneManager.swift */; };
 		1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1660323CA2E2F0055452D /* AppDelegate.swift */; };
 		1EC1660623CA2E2F0055452D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1660523CA2E2F0055452D /* GameScene.sks */; };
 		1EC1660823CA2E2F0055452D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1660723CA2E2F0055452D /* Actions.sks */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E829E9623D1A9B00026F495 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
 		1EC1660023CA2E2F0055452D /* AmberTheGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmberTheGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EC1660323CA2E2F0055452D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1EC1660523CA2E2F0055452D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -51,6 +53,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E829E9423D1A8AC0026F495 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				1E829E9623D1A9B00026F495 /* SceneManager.swift */,
+				1EC1660923CA2E2F0055452D /* GameScene.swift */,
+				1EC1660523CA2E2F0055452D /* GameScene.sks */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		1EC165F723CA2E2F0055452D = {
 			isa = PBXGroup;
 			children = (
@@ -70,30 +82,29 @@
 		1EC1660223CA2E2F0055452D /* AmberTheGame */ = {
 			isa = PBXGroup;
 			children = (
+				1E829E9423D1A8AC0026F495 /* Scenes */,
 				1EFDAA5923CFAB030081527C /* State Machine */,
 				1EFDAA5623CFA9AF0081527C /* Components */,
 				1EFDAA5323CFA8A30081527C /* Entities */,
 				1EC1662423CB78710055452D /* Nodes */,
 				1EC1662023CB19930055452D /* Player Control */,
-				1EC1661B23CA2E900055452D /* Game */,
+				1EC1661B23CA2E900055452D /* iOS */,
 				1EC1661F23CB17DF0055452D /* Assets */,
-				1EC1660323CA2E2F0055452D /* AppDelegate.swift */,
 				1EC1660723CA2E2F0055452D /* Actions.sks */,
-				1EC1660D23CA2E2F0055452D /* Main.storyboard */,
-				1EC1661223CA2E310055452D /* LaunchScreen.storyboard */,
 				1EC1661523CA2E310055452D /* Info.plist */,
 			);
 			path = AmberTheGame;
 			sourceTree = "<group>";
 		};
-		1EC1661B23CA2E900055452D /* Game */ = {
+		1EC1661B23CA2E900055452D /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				1EC1660923CA2E2F0055452D /* GameScene.swift */,
+				1EC1660323CA2E2F0055452D /* AppDelegate.swift */,
 				1EC1660B23CA2E2F0055452D /* GameViewController.swift */,
-				1EC1660523CA2E2F0055452D /* GameScene.sks */,
+				1EC1660D23CA2E2F0055452D /* Main.storyboard */,
+				1EC1661223CA2E310055452D /* LaunchScreen.storyboard */,
 			);
-			path = Game;
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		1EC1661F23CB17DF0055452D /* Assets */ = {
@@ -221,6 +232,7 @@
 				1EC1660A23CA2E2F0055452D /* GameScene.swift in Sources */,
 				1EC1660C23CA2E2F0055452D /* GameViewController.swift in Sources */,
 				1EFDAA5523CFA8E60081527C /* Character.swift in Sources */,
+				1E829E9723D1A9B00026F495 /* SceneManager.swift in Sources */,
 				1EFDAA5823CFAAA70081527C /* PlayerControlComponent.swift in Sources */,
 				1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */,
 				1EFDAA5B23CFAB650081527C /* NormalState.swift in Sources */,

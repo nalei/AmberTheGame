@@ -27,7 +27,7 @@ class GameScene: SKScene, ControlInputSourceDelegate {
     addChild(label)
     
     // Add Player Control
-    touchControlNode = TouchControlInputNode(frame: self.frame)
+    touchControlNode = SceneManager.shared.gameInput
     touchControlNode?.inputDelegate = self
     addChild(touchControlNode!)
   }
