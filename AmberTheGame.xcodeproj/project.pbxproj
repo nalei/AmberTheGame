@@ -102,7 +102,7 @@
 				1E829E9423D1A8AC0026F495 /* Scenes */,
 				1EC1662423CB78710055452D /* Nodes */,
 				1EC1662023CB19930055452D /* Player Control */,
-				1EC1661B23CA2E900055452D /* Viev Controllers */,
+				1EC1661B23CA2E900055452D /* View Controllers */,
 				1EC1661F23CB17DF0055452D /* Assets */,
 				1EC1660723CA2E2F0055452D /* Actions.sks */,
 				1EC1660323CA2E2F0055452D /* AppDelegate.swift */,
@@ -113,12 +113,12 @@
 			path = AmberTheGame;
 			sourceTree = "<group>";
 		};
-		1EC1661B23CA2E900055452D /* Viev Controllers */ = {
+		1EC1661B23CA2E900055452D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				1EC1660B23CA2E2F0055452D /* GameViewController.swift */,
 			);
-			path = "Viev Controllers";
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		1EC1661F23CB17DF0055452D /* Assets */ = {
