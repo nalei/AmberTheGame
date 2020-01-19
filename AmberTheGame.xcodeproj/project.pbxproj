@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E829E9723D1A9B00026F495 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E829E9623D1A9B00026F495 /* SceneManager.swift */; };
+		1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2223D3273A002FFE8C /* SpriteComponent.swift */; };
+		1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2423D32869002FFE8C /* EntityManager.swift */; };
+		1E118C2723D3A669002FFE8C /* EnemyMoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */; };
+		1E118C2923D44741002FFE8C /* EnemyMoveBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */; };
+		1E118C2B23D45873002FFE8C /* GravityComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2A23D45873002FFE8C /* GravityComponent.swift */; };
 		1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1660323CA2E2F0055452D /* AppDelegate.swift */; };
 		1EC1660623CA2E2F0055452D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1660523CA2E2F0055452D /* GameScene.sks */; };
 		1EC1660823CA2E2F0055452D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1660723CA2E2F0055452D /* Actions.sks */; };
@@ -18,13 +22,17 @@
 		1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1661223CA2E310055452D /* LaunchScreen.storyboard */; };
 		1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662123CB20670055452D /* TouchControlInputNode.swift */; };
 		1EC1662623CB78920055452D /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662523CB78920055452D /* ButtonNode.swift */; };
-		1EFDAA5523CFA8E60081527C /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDAA5423CFA8E60081527C /* Character.swift */; };
+		1EFDAA5523CFA8E60081527C /* Amber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDAA5423CFA8E60081527C /* Amber.swift */; };
 		1EFDAA5823CFAAA70081527C /* PlayerControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */; };
-		1EFDAA5B23CFAB650081527C /* NormalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDAA5A23CFAB650081527C /* NormalState.swift */; };
+		1EFDAA5B23CFAB650081527C /* IdleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDAA5A23CFAB650081527C /* IdleState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1E829E9623D1A9B00026F495 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
+		1E118C2223D3273A002FFE8C /* SpriteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
+		1E118C2423D32869002FFE8C /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
+		1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyMoveComponent.swift; sourceTree = "<group>"; };
+		1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyMoveBehavior.swift; sourceTree = "<group>"; };
+		1E118C2A23D45873002FFE8C /* GravityComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityComponent.swift; sourceTree = "<group>"; };
 		1EC1660023CA2E2F0055452D /* AmberTheGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmberTheGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EC1660323CA2E2F0055452D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1EC1660523CA2E2F0055452D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -37,9 +45,9 @@
 		1EC1661523CA2E310055452D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC1662123CB20670055452D /* TouchControlInputNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchControlInputNode.swift; sourceTree = "<group>"; };
 		1EC1662523CB78920055452D /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
-		1EFDAA5423CFA8E60081527C /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		1EFDAA5423CFA8E60081527C /* Amber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amber.swift; sourceTree = "<group>"; };
 		1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlComponent.swift; sourceTree = "<group>"; };
-		1EFDAA5A23CFAB650081527C /* NormalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalState.swift; sourceTree = "<group>"; };
+		1EFDAA5A23CFAB650081527C /* IdleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +61,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E118C2123D32694002FFE8C /* Amber States */ = {
+			isa = PBXGroup;
+			children = (
+				1EFDAA5A23CFAB650081527C /* IdleState.swift */,
+			);
+			path = "Amber States";
+			sourceTree = "<group>";
+		};
 		1E829E9423D1A8AC0026F495 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				1E829E9623D1A9B00026F495 /* SceneManager.swift */,
 				1EC1660923CA2E2F0055452D /* GameScene.swift */,
 				1EC1660523CA2E2F0055452D /* GameScene.sks */,
 			);
@@ -82,14 +97,13 @@
 		1EC1660223CA2E2F0055452D /* AmberTheGame */ = {
 			isa = PBXGroup;
 			children = (
-				1EC1661F23CB17DF0055452D /* Assets */,
-				1E829E9423D1A8AC0026F495 /* Scenes */,
-				1EFDAA5923CFAB030081527C /* Game States */,
-				1EFDAA5623CFA9AF0081527C /* Components */,
 				1EFDAA5323CFA8A30081527C /* Entities */,
+				1EFDAA5623CFA9AF0081527C /* Components */,
+				1E829E9423D1A8AC0026F495 /* Scenes */,
 				1EC1662423CB78710055452D /* Nodes */,
 				1EC1662023CB19930055452D /* Player Control */,
 				1EC1661B23CA2E900055452D /* Viev Controllers */,
+				1EC1661F23CB17DF0055452D /* Assets */,
 				1EC1660723CA2E2F0055452D /* Actions.sks */,
 				1EC1660323CA2E2F0055452D /* AppDelegate.swift */,
 				1EC1660D23CA2E2F0055452D /* Main.storyboard */,
@@ -134,7 +148,9 @@
 		1EFDAA5323CFA8A30081527C /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				1EFDAA5423CFA8E60081527C /* Character.swift */,
+				1E118C2423D32869002FFE8C /* EntityManager.swift */,
+				1EFDAA5423CFA8E60081527C /* Amber.swift */,
+				1E118C2123D32694002FFE8C /* Amber States */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -142,17 +158,13 @@
 		1EFDAA5623CFA9AF0081527C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1E118C2223D3273A002FFE8C /* SpriteComponent.swift */,
 				1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */,
+				1E118C2A23D45873002FFE8C /* GravityComponent.swift */,
+				1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */,
+				1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		1EFDAA5923CFAB030081527C /* Game States */ = {
-			isa = PBXGroup;
-			children = (
-				1EFDAA5A23CFAB650081527C /* NormalState.swift */,
-			);
-			path = "Game States";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,14 +240,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */,
 				1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */,
 				1EC1660A23CA2E2F0055452D /* GameScene.swift in Sources */,
 				1EC1660C23CA2E2F0055452D /* GameViewController.swift in Sources */,
-				1EFDAA5523CFA8E60081527C /* Character.swift in Sources */,
-				1E829E9723D1A9B00026F495 /* SceneManager.swift in Sources */,
+				1E118C2923D44741002FFE8C /* EnemyMoveBehavior.swift in Sources */,
+				1EFDAA5523CFA8E60081527C /* Amber.swift in Sources */,
+				1E118C2B23D45873002FFE8C /* GravityComponent.swift in Sources */,
 				1EFDAA5823CFAAA70081527C /* PlayerControlComponent.swift in Sources */,
+				1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */,
 				1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */,
-				1EFDAA5B23CFAB650081527C /* NormalState.swift in Sources */,
+				1E118C2723D3A669002FFE8C /* EnemyMoveComponent.swift in Sources */,
+				1EFDAA5B23CFAB650081527C /* IdleState.swift in Sources */,
 				1EC1662623CB78920055452D /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

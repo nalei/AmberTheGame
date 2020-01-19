@@ -21,11 +21,9 @@ class TouchControlInputNode: SKSpriteNode {
   init(frame: CGRect) {
     super.init(texture: nil, color: UIColor.clear, size: frame.size)
     
-    drawBorder(color: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), width: 2)
-    
-    let buttonDirLeft  = ButtonNode(iconName: "shevron-arrow", color: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
-    let buttonDirRight = ButtonNode(iconName: "shevron-arrow", color: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
-    let buttonJump     = ButtonNode(iconName: "shevron-arrow", color: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+    let buttonDirLeft  = ButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonDirRight = ButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonJump     = ButtonNode(iconName: "shevron-arrow", color: .clear)
     
     addButton(button: buttonDirLeft,
               position: CGPoint(
@@ -152,7 +150,6 @@ class TouchControlInputNode: SKSpriteNode {
     }
   }
 }
-
 
 extension SKSpriteNode {
     func drawBorder(color: UIColor, width: CGFloat) {

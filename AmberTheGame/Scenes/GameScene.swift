@@ -1,35 +1,35 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, ControlInputSourceDelegate {
+class GameScene: SKScene {
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
-  private var lastUpdateTime : TimeInterval = 0
-  let label = SKLabelNode(fontNamed: "Courier-Bold")
+  var lastUpdateTime : TimeInterval = 0
   
-  // Player Control
-  var touchControlInputNode: TouchControlInputNode?
-  
-  func follow(command: String?) {
-    label.text = "\(command!)"
-  }
+  // Entity manager
+  var entityManager: EntityManager!
   
   override func sceneDidLoad() {
     self.lastUpdateTime = 0
     
-    // Test label
-    label.text = ""
-    label.fontSize = 100
-    label.fontColor = .white
-    label.zPosition = 1
-    label.verticalAlignmentMode = .center
-    addChild(label)
+    // Creare instance of Entity manager
+    entityManager = EntityManager(scene: self)
+  }
+  
+  override func didMove(to view: SKView) {
     
-    // Add Player Control
-    touchControlInputNode = TouchControlInputNode(frame: self.frame)
-    touchControlInputNode?.inputDelegate = self
-    addChild(touchControlInputNode!)
+    if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
+      
+      // Creare instance of Amber GamePlayEntity
+      let amber = Amber(camera: camera!, scene: self, entityManager: entityManager)
+      if let spriteComponent = amber.component(ofType: SpriteComponent.self) {
+        spriteComponent.node.texture = amberSprite.texture
+        spriteComponent.node.position = amberSprite.position
+      }
+      amberSprite.removeFromParent()
+      entityManager.add(amber)
+    }
   }
   
   override func update(_ currentTime: TimeInterval) {
@@ -49,5 +49,7 @@ class GameScene: SKScene, ControlInputSourceDelegate {
     }
     
     self.lastUpdateTime = currentTime
+    
+    entityManager.update(deltaTime: dt)
   }
 }
