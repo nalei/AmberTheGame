@@ -2,6 +2,8 @@ import SpriteKit
 import GameplayKit
 
 class Amber: GKEntity {
+  var st_machine: GKStateMachine?
+  
   init(camera: SKCameraNode, scene: SKScene, entityManager: EntityManager) {
     super.init()
     let texture = SKTexture(imageNamed: "amber-idle")
