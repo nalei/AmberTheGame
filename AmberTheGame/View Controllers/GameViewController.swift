@@ -1,11 +1,3 @@
-//
-//  GameViewController.swift
-//  AmberTheGame
-//
-//  Created by anikin on 11.01.2020.
-//  Copyright © 2020 com.my-box-project. All rights reserved.
-//
-
 import UIKit
 import SpriteKit
 import GameplayKit
@@ -26,8 +18,11 @@ class GameViewController: UIViewController {
         sceneNode.entities = scene.entities
         sceneNode.graphs = scene.graphs
         
+        // Resize the scene to better use the device aspect ratio.
+        let scaleFactor = sceneNode.size.height / view.bounds.height
         // Set the scale mode to scale to fit the window
         sceneNode.scaleMode = .aspectFill
+        sceneNode.size.width = view.bounds.width * scaleFactor
         
         // Present the scene
         if let view = self.view as! SKView? {

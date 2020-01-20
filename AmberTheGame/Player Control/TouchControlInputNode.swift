@@ -114,7 +114,7 @@ class TouchControlInputNode: SKSpriteNode {
         if !button.contains(previousTouchPoint) && button.contains(touchPoint) {
           buttonPressed(button)
         }
-        // Если касание покидает кнопку
+          // Если касание покидает кнопку
         else if button.contains(previousTouchPoint) && !button.contains(touchPoint) {
           buttonUnpressed(button)
         }
@@ -137,12 +137,12 @@ class TouchControlInputNode: SKSpriteNode {
   func touchStop(touches: Set<UITouch>) {
     // Если нет нажатых кнопок, выходим немедленно
     guard !pressedButtons.isEmpty else { return }
-
+    
     for touch in touches {
       let touchPoint = touch.location(in: self)
-
+      
       for button in allButtons {
-
+        
         if button.contains(touchPoint) {
           buttonUnpressed(button)
         }
@@ -152,11 +152,11 @@ class TouchControlInputNode: SKSpriteNode {
 }
 
 extension SKSpriteNode {
-    func drawBorder(color: UIColor, width: CGFloat) {
-        let shapeNode = SKShapeNode(rect: frame)
-        shapeNode.fillColor = .clear
-        shapeNode.strokeColor = color
-        shapeNode.lineWidth = width
-        addChild(shapeNode)
-    }
+  func drawBorder(color: UIColor, width: CGFloat) {
+    let shapeNode = SKShapeNode(rect: frame)
+    shapeNode.fillColor = .clear
+    shapeNode.strokeColor = color
+    shapeNode.lineWidth = width
+    addChild(shapeNode)
+  }
 }

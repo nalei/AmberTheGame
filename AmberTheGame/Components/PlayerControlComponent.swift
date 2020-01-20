@@ -2,13 +2,11 @@ import GameplayKit
 import SpriteKit
 
 class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
-  var moveLeft  = false
-  var moveRight = false
-  
-  var facing: CGFloat   = 1
+  var move: Bool = false
+  var currentSpeed: CGFloat = 0
   var maxSpeed: CGFloat = 8
-  var speed: CGFloat    = 0
   var accel: CGFloat    = 1
+  var facing: CGFloat   = 1
   
   var touchControlInputNode : TouchControlInputNode?
   
@@ -28,13 +26,15 @@ class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
   func follow(command: String?) {
     switch command! {
     case "left":
-      moveLeft = true
+      move = true
+      facing = -1
     case "stop left":
-      moveLeft = false
+      move = false
     case "right":
-      moveRight = true
+      move = true
+      facing = 1
     case "stop right":
-      moveRight = false
+      move = false
     default:
       print("command: \(String(describing: command))")
     }
@@ -46,20 +46,19 @@ class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
       return
     }
     
-    if moveLeft {
-      speed = -maxSpeed
-    } else if moveRight {
-      speed = maxSpeed
+    if move {
+      currentSpeed = maxSpeed * facing
     } else {
-      speed = 0
+      currentSpeed = 0
     }
     
-    spriteComponent.node.position.x = spriteComponent.node.position.x + speed
+    spriteComponent.node.xScale = facing
+    spriteComponent.node.position.x = spriteComponent.node.position.x + currentSpeed
   }
   
   func approach(start: CGFloat, end: CGFloat, shift: CGFloat) -> CGFloat {
     return start < end
-    ? min(start + shift, end)
-    : max(start - shift, end)
+      ? min(start + shift, end)
+      : max(start - shift, end)
   }
 }
