@@ -1,11 +1,9 @@
 import SpriteKit
 import GameplayKit
 
-
 struct ColliderType {
-  static let PLAYER:   UInt32 = 1;
-  static let GROUND:   UInt32 = 2;
-  static let ENEMY:    UInt32 = 4;
+  static let PLAYER: UInt32 = 1
+  static let GROUND: UInt32 = 2
 }
 
 class SpriteComponent: GKComponent {
@@ -15,7 +13,8 @@ class SpriteComponent: GKComponent {
     node = SKSpriteNode(texture: texture, color: .white, size: size)
     super.init()
     
-    let physicsBody = SKPhysicsBody(circleOfRadius: size.width / 5, center: CGPoint(x: 0, y: -12))
+    let physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2)
+    physicsBody.categoryBitMask = ColliderType.PLAYER
     physicsBody.affectedByGravity = true
     physicsBody.isDynamic = true
     physicsBody.allowsRotation = false

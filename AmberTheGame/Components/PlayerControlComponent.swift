@@ -3,6 +3,8 @@ import SpriteKit
 
 class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
   var move: Bool = false
+  var onGround: Bool = false
+  
   var currentSpeed: CGFloat = 0
   var maxSpeed: CGFloat = 8
   var accel: CGFloat    = 1

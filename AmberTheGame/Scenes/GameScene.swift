@@ -1,14 +1,17 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
-  var lastUpdateTime : TimeInterval = 0
+  var lastUpdateTime: TimeInterval = 0
   
   // Entity manager
   var entityManager: EntityManager!
+  
+  // Character
+  var character: GKEntity?
   
   override func sceneDidLoad() {
     self.lastUpdateTime = 0
@@ -19,21 +22,34 @@ class GameScene: SKScene {
   
   override func didMove(to view: SKView) {
     
-    // Creare instance of Amber entity
-    let amber = Amber(camera: camera!, scene: self, entityManager: entityManager)
+    self.physicsWorld.contactDelegate = self
     
     if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
-      if let spriteComponent = amber.component(ofType: SpriteComponent.self) {
+      // Create instance of Amber entity
+      character = Amber(camera: camera!, scene: self, entityManager: entityManager) //!!!
+      
+      if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
         spriteComponent.node.texture = amberSprite.texture
         spriteComponent.node.position = amberSprite.position
       }
       amberSprite.removeFromParent()
-      entityManager.add(amber)
+      entityManager.add(character!) //!!!
     }
   }
   
   //MARK: Physics
   
+  func didBegin(_ contact: SKPhysicsContact) {
+    if ((contact.bodyA.categoryBitMask == ColliderType.PLAYER &&
+        contact.bodyB.categoryBitMask == ColliderType.GROUND) ||
+      (contact.bodyB.categoryBitMask == ColliderType.PLAYER &&
+      contact.bodyA.categoryBitMask == ColliderType.GROUND)) {
+      if let playerControlComponent = character?.component(ofType: PlayerControlComponent.self) {
+        print(contact.bodyA)
+        playerControlComponent.onGround = true
+      }
+    }
+  }
   
   override func update(_ currentTime: TimeInterval) {
     // Called before each frame is rendered
