@@ -19,10 +19,10 @@ class GameScene: SKScene {
   
   override func didMove(to view: SKView) {
     
+    // Creare instance of Amber entity
+    let amber = Amber(camera: camera!, scene: self, entityManager: entityManager)
+    
     if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
-      
-      // Creare instance of Amber GamePlayEntity
-      let amber = Amber(camera: camera!, scene: self, entityManager: entityManager)
       if let spriteComponent = amber.component(ofType: SpriteComponent.self) {
         spriteComponent.node.texture = amberSprite.texture
         spriteComponent.node.position = amberSprite.position
@@ -31,6 +31,9 @@ class GameScene: SKScene {
       entityManager.add(amber)
     }
   }
+  
+  //MARK: Physics
+  
   
   override func update(_ currentTime: TimeInterval) {
     // Called before each frame is rendered

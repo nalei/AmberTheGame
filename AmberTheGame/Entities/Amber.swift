@@ -2,7 +2,7 @@ import SpriteKit
 import GameplayKit
 
 class Amber: GKEntity {
-  var st_machine: GKStateMachine?
+  var stateMachine: GKStateMachine?
   
   init(camera: SKCameraNode, scene: SKScene, entityManager: EntityManager) {
     super.init()
