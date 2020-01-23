@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene {
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
@@ -37,20 +37,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
   
-  //MARK: Physics
-  
-  func didBegin(_ contact: SKPhysicsContact) {
-    if ((contact.bodyA.categoryBitMask == ColliderType.PLAYER &&
-        contact.bodyB.categoryBitMask == ColliderType.GROUND) ||
-      (contact.bodyB.categoryBitMask == ColliderType.PLAYER &&
-      contact.bodyA.categoryBitMask == ColliderType.GROUND)) {
-      if let playerControlComponent = character?.component(ofType: PlayerControlComponent.self) {
-        print(contact.bodyA)
-        playerControlComponent.onGround = true
-      }
-    }
-  }
-  
   override func update(_ currentTime: TimeInterval) {
     // Called before each frame is rendered
     
@@ -70,5 +56,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     self.lastUpdateTime = currentTime
     
     entityManager.update(deltaTime: dt)
+  }
+}
+
+
+extension GameScene: SKPhysicsContactDelegate {
+  //MARK: Physics
+  
+  func didBegin(_ contact: SKPhysicsContact) {
+    let collision:UInt32 = (contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask)
+    
+    if collision == (ColliderType.PLAYER | ColliderType.GROUND) {
+      if let playerControlComponent = character?.component(ofType: PlayerControlComponent.self) {
+        playerControlComponent.onGround = true
+      }
+    }
   }
 }
