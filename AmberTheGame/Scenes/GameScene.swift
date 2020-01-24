@@ -67,8 +67,8 @@ extension GameScene: SKPhysicsContactDelegate {
     let collision:UInt32 = (contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask)
     
     if collision == (ColliderType.PLAYER | ColliderType.GROUND) {
-      if let playerControlComponent = character?.component(ofType: PlayerControlComponent.self) {
-        playerControlComponent.onGround = true
+      if let moveComponent = character?.component(ofType: MoveComponent.self) {
+        moveComponent.onGround = true
       }
     }
   }

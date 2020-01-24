@@ -8,9 +8,8 @@ class EntityManager {
   var toRemove = Set<GKEntity>()
   
   lazy var componentSystems: [GKComponentSystem] = {
-    let playerControlSystem = GKComponentSystem(componentClass: PlayerControlComponent.self)
-    let moveSystem = GKComponentSystem(componentClass: EnemyMoveComponent.self)
-    return [moveSystem, playerControlSystem]
+    let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
+    return [moveSystem]
   }()
   
   init(scene: SKScene) {
