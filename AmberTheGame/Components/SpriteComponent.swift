@@ -19,6 +19,7 @@ class SpriteComponent: GKComponent {
     physicsBody.isDynamic = true
     physicsBody.allowsRotation = false
     physicsBody.restitution = 0.0
+    physicsBody.mass = 0.1
     node.physicsBody = physicsBody
   }
   

@@ -8,7 +8,7 @@ class EntityManager {
   var toRemove = Set<GKEntity>()
   
   lazy var componentSystems: [GKComponentSystem] = {
-    let moveSystem = GKComponentSystem(componentClass: MoveComponent.self)
+    let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
     return [moveSystem]
   }()
   

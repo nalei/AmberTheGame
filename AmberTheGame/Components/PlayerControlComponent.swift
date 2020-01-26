@@ -1,5 +1,5 @@
-import GameplayKit
 import SpriteKit
+import GameplayKit
 
 class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
   var touchControlInputNode : TouchControlInputNode?
@@ -19,29 +19,23 @@ class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
   }
   
   func follow(command: String?) {
-    if let moveComponent = entity?.component(ofType: MoveComponent.self){
+    if let movementComponent = entity?.component(ofType: MovementComponent.self) {
       switch command! {
       case "left":
-        moveComponent.moveLeft()
+        movementComponent.moveTo(.left)
       case "stop left":
-        moveComponent.stopMoving()
+        movementComponent.stopMoving()
       case "right":
-        moveComponent.moveRight()
+        movementComponent.moveTo(.right)
       case "stop right":
-        moveComponent.stopMoving()
+        movementComponent.stopMoving()
       case "jump":
-          moveComponent.jump()
+        movementComponent.jump()
       case "stop jump":
-          ()
+        movementComponent.stopJump()
       default:
         print("command: \(String(describing: command))")
       }
     }
   }
-  
-//  func approach(start: CGFloat, end: CGFloat, shift: CGFloat) -> CGFloat {
-//    return start < end
-//      ? min(start + shift, end)
-//      : max(start - shift, end)
-//  }
 }

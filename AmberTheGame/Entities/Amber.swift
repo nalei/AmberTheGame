@@ -8,7 +8,7 @@ class Amber: GKEntity {
     super.init()
     let texture = SKTexture(imageNamed: "amber-idle")
     addComponent(SpriteComponent(texture: texture, size: CGSize(width: 100, height: 100)))
-    addComponent(MoveComponent())
+    addComponent(MovementComponent())
     addComponent(PlayerControlComponent(camera: camera, scene: scene))
   }
   

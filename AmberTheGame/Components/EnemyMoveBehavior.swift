@@ -1,5 +1,5 @@
-import GameplayKit
 import SpriteKit
+import GameplayKit
 
 class EnemyMoveBehavior: GKBehavior {
   init(targetSpeed: Float) {
