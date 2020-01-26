@@ -2,26 +2,26 @@ import SpriteKit
 import GameplayKit
 
 class WalkingState: GKState {
-  var spriteNode: SKSpriteNode?
-  var animation: SKAction
+  unowned var animationComponent: AnimationComponent
   
-  init(with entity: Amber, animation: SKAction) {
-    if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
-      self.spriteNode = spriteNode
+  /// The `SpriteComponent` associated with the `AnimationComponent`'s `entity`.
+  var spriteComponent: SpriteComponent {
+    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
+      fatalError("A WalkingState's entity must have a SpriteComponent")
     }
-    self.animation = animation
+    return spriteComponent
   }
   
-  override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-    switch stateClass {
-    case is IdleState.Type:
-      return true
-    default:
-      return false
-    }
+  required init(animationComponent: AnimationComponent) {
+    self.animationComponent = animationComponent
   }
   
   override func didEnter(from previousState: GKState?) {
-    spriteNode?.run(animation)
+    let spriteNode = spriteComponent.node
+    spriteNode.run(SKAction(named: "RunAnim")!, withKey: "RunAnim")
+  }
+  
+  override func isValidNextState(_ stateClass: AnyClass) -> Bool {
+    return stateClass is WalkingState.Type
   }
 }

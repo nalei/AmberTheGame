@@ -2,26 +2,13 @@ import SpriteKit
 import GameplayKit
 
 class IdleState: GKState {
-  var spriteNode: SKSpriteNode?
-  var animation: SKAction
+  var animationComponent: AnimationComponent
   
-  init(with entity: Amber, animation: SKAction) {
-    if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
-      self.spriteNode = spriteNode
-    }
-    self.animation = animation
+  required init(animationComponent: AnimationComponent) {
+    self.animationComponent = animationComponent
   }
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-    switch stateClass {
-    case is WalkingState.Type:
-      return true
-    default:
-      return false
-    }
-  }
-  
-  override func didEnter(from previousState: GKState?) {
-    spriteNode?.run(animation)
+    return stateClass is WalkingState.Type
   }
 }

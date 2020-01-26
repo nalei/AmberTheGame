@@ -10,6 +10,7 @@ class Amber: GKEntity {
     addComponent(SpriteComponent(texture: texture, size: CGSize(width: 100, height: 100)))
     addComponent(MovementComponent())
     addComponent(PlayerControlComponent(camera: camera, scene: scene))
+    addComponent(AnimationComponent())
   }
   
   required init?(coder aDecoder: NSCoder) {
