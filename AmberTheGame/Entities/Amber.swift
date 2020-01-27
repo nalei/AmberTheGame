@@ -11,6 +11,7 @@ class Amber: GKEntity {
     addComponent(MovementComponent())
     addComponent(PlayerControlComponent(camera: camera, scene: scene))
     addComponent(AnimationComponent())
+    
   }
   
   required init?(coder aDecoder: NSCoder) {

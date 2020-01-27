@@ -17,9 +17,9 @@ class MovementComponent : GKComponent {
   var hSpeed: CGFloat = 0
   var facing: FacingType = .right
   
-  var isMoving: Bool  = false
-  var isJumping: Bool = false
-  var onGround: Bool  = false
+  var moveButtonPressed: Bool = false
+  var jumpButtonPressed: Bool = false
+  var onGround: Bool = false
   
   /// The `SpriteComponent` for this component's entity.
   var spriteComponent: SpriteComponent {
@@ -27,6 +27,14 @@ class MovementComponent : GKComponent {
       fatalError("A MovementComponent's entity must have a SpriteComponent")
     }
     return spriteComponent
+  }
+  
+  /// The `AnimationComponent` for this component's entity.
+  var animationComponent: AnimationComponent {
+    guard let animationComponent = entity?.component(ofType: AnimationComponent.self) else {
+      fatalError("A MovementComponent's entity must have a AnimationComponent")
+    }
+    return animationComponent
   }
   
   // MARK: Initialization
@@ -40,25 +48,31 @@ class MovementComponent : GKComponent {
   }
   
   func moveTo(_ facing: FacingType) {
+    moveButtonPressed = true
     self.facing = facing
-    isMoving = true
+    
+    let stateMachine = animationComponent.stateMachine
+    if (stateMachine?.canEnterState(WalkingState.self))! {
+        stateMachine?.enter(WalkingState.self)
+    }
   }
   
   func stopMoving() {
-    isMoving = false
+    moveButtonPressed = false
   }
   
   func jump() {
+    jumpButtonPressed = true
     let spriteNode = spriteComponent.node
+    
     if onGround {
       spriteNode.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
       onGround = false
-      isJumping = true
     }
   }
   
   func stopJump() {
-    isJumping = false
+    jumpButtonPressed = false
   }
   
   override func update(deltaTime seconds: TimeInterval) {
@@ -66,16 +80,18 @@ class MovementComponent : GKComponent {
     
     let spriteNode = spriteComponent.node
     
-    if isMoving && hSpeed != walkSpeed {
+    if moveButtonPressed && hSpeed != walkSpeed {
       hSpeed = approach(start: hSpeed, end: walkSpeed * facing.rawValue, shift: accel)
       spriteNode.physicsBody?.velocity.dx = hSpeed
-    } else if  hSpeed != 0 {
+    }
+    
+    if !moveButtonPressed && hSpeed != 0 {
       hSpeed = approach(start: hSpeed, end: 0, shift: decel)
       spriteNode.physicsBody?.velocity.dx = hSpeed
     }
 
     // Прерываем прыжок, если кнопка отпущена
-    if !isJumping && (spriteNode.physicsBody?.velocity.dy)! > 0 {
+    if !jumpButtonPressed && (spriteNode.physicsBody?.velocity.dy)! > 0 {
       spriteNode.physicsBody?.velocity.dy *= 0.5
     }
     

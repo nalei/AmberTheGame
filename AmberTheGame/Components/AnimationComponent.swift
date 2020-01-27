@@ -2,15 +2,7 @@ import SpriteKit
 import GameplayKit
 
 class AnimationComponent: GKComponent {
-  var stateMachine: GKStateMachine!
-  
-  /// The `SpriteComponent` for this component's entity.
-  var spriteComponent: SpriteComponent {
-    guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
-      fatalError("A MovementComponent's entity must have a SpriteComponent")
-    }
-    return spriteComponent
-  }
+  var stateMachine: GKStateMachine! //!!!
   
   override init() {
     super.init()
@@ -20,7 +12,7 @@ class AnimationComponent: GKComponent {
       WalkingState(animationComponent: self)
     ])
     
-    stateMachine.enter(WalkingState.self)
+    stateMachine.enter(IdleState.self)
   }
   
   required init?(coder: NSCoder) {
