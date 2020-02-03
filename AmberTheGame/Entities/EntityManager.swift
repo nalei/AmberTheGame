@@ -9,7 +9,8 @@ class EntityManager {
   
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
-    return [moveSystem]
+    let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
+    return [moveSystem, animationSystem]
   }()
   
   init(scene: SKScene) {

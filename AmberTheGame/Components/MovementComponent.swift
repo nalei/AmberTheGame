@@ -1,21 +1,19 @@
 import SpriteKit
 import GameplayKit
 
-enum FacingType: CGFloat {
-  case left = -1
-  case right = 1
-}
-
 class MovementComponent : GKComponent {
-  // MARK: Properties
+  enum FacingType: CGFloat {
+    case left = -1
+    case right = 1
+  }
   
-  let walkSpeed: CGFloat = 250
-  let maxJump: CGFloat  = 60
+  let walkSpeed: CGFloat = 350
+  let maxJump: CGFloat  = 150
+  var facing: FacingType = .right
   
   var accel: CGFloat  = 40
   var decel: CGFloat  = 40
   var hSpeed: CGFloat = 0
-  var facing: FacingType = .right
   
   var moveButtonPressed: Bool = false
   var jumpButtonPressed: Bool = false
@@ -29,16 +27,6 @@ class MovementComponent : GKComponent {
     return spriteComponent
   }
   
-  /// The `AnimationComponent` for this component's entity.
-  var animationComponent: AnimationComponent {
-    guard let animationComponent = entity?.component(ofType: AnimationComponent.self) else {
-      fatalError("A MovementComponent's entity must have a AnimationComponent")
-    }
-    return animationComponent
-  }
-  
-  // MARK: Initialization
-  
   override init() {
     super.init()
   }
@@ -50,11 +38,6 @@ class MovementComponent : GKComponent {
   func moveTo(_ facing: FacingType) {
     moveButtonPressed = true
     self.facing = facing
-    
-    let stateMachine = animationComponent.stateMachine
-    if (stateMachine?.canEnterState(WalkingState.self))! {
-        stateMachine?.enter(WalkingState.self)
-    }
   }
   
   func stopMoving() {
@@ -63,11 +46,16 @@ class MovementComponent : GKComponent {
   
   func jump() {
     jumpButtonPressed = true
-    let spriteNode = spriteComponent.node
     
     if onGround {
-      spriteNode.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
+      spriteComponent.node.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
       onGround = false
+      
+      if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+        if (animationComponent.stateMachine?.canEnterState(JumpingState.self))! {
+          animationComponent.stateMachine?.enter(JumpingState.self)
+        }
+      }
     }
   }
   
@@ -75,32 +63,60 @@ class MovementComponent : GKComponent {
     jumpButtonPressed = false
   }
   
+  // MARK: GKComponent Life Cycle
+  
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
     let spriteNode = spriteComponent.node
     
+    // Начинаем движение, если кнопка отпущена
     if moveButtonPressed && hSpeed != walkSpeed {
       hSpeed = approach(start: hSpeed, end: walkSpeed * facing.rawValue, shift: accel)
       spriteNode.physicsBody?.velocity.dx = hSpeed
     }
     
+    // Останавливаем движение, если кнопка отпущена
     if !moveButtonPressed && hSpeed != 0 {
       hSpeed = approach(start: hSpeed, end: 0, shift: decel)
       spriteNode.physicsBody?.velocity.dx = hSpeed
     }
-
+    
     // Прерываем прыжок, если кнопка отпущена
     if !jumpButtonPressed && (spriteNode.physicsBody?.velocity.dy)! > 0 {
       spriteNode.physicsBody?.velocity.dy *= 0.5
     }
     
-    spriteNode.xScale = facing.rawValue
+    if hSpeed > 0 {
+      spriteNode.xScale = 1
+    } else if hSpeed < 0 {
+      spriteNode.xScale = -1
+    }
+    
+    if onGround {
+      if hSpeed == 0 || !moveButtonPressed {
+        if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+          if (animationComponent.stateMachine?.canEnterState(IdleState.self))! {
+            animationComponent.stateMachine?.enter(IdleState.self)
+          }
+        }
+      } else {
+        if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+          if (animationComponent.stateMachine?.canEnterState(WalkingState.self))! {
+            animationComponent.stateMachine?.enter(WalkingState.self)
+          }
+        }
+      }
+    }
+    
+    // Восстанавливаем размеры спрайта
+    spriteNode.xScale = approach(start: spriteNode.xScale, end: facing.rawValue, shift: 0.05)
+    spriteNode.yScale = approach(start: spriteNode.yScale, end: 1, shift: 0.05)
   }
   
   // MARK: Helper
   
-  func approach(start: CGFloat, end: CGFloat, shift: CGFloat) -> CGFloat {
+  private func approach(start: CGFloat, end: CGFloat, shift: CGFloat) -> CGFloat {
     return start < end
       ? min(start + shift, end)
       : max(start - shift, end)

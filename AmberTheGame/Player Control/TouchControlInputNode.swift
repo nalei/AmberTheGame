@@ -6,8 +6,6 @@ protocol ControlInputSourceDelegate : class {
 
 /// Виртуальный геймпад
 class TouchControlInputNode: SKSpriteNode {
-  // MARK: Properties
-  
   weak var inputDelegate : ControlInputSourceDelegate?
   
   var alphaUnpressed:CGFloat = 0.8
@@ -15,8 +13,6 @@ class TouchControlInputNode: SKSpriteNode {
   
   var allButtons     = [ButtonNode]()
   var pressedButtons = Set<ButtonNode>()
-  
-  // MARK: Initialization
   
   init(frame: CGRect) {
     super.init(texture: nil, color: UIColor.clear, size: frame.size)
@@ -53,7 +49,7 @@ class TouchControlInputNode: SKSpriteNode {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func addButton(button: ButtonNode, position: CGPoint, rotation: CGFloat, name: String) {
+  private func addButton(button: ButtonNode, position: CGPoint, rotation: CGFloat, name: String) {
     button.size = CGSize(width: 150, height: 150)
     button.position = position
     button.name = name
@@ -66,7 +62,7 @@ class TouchControlInputNode: SKSpriteNode {
   
   // MARK: UIResponder
   
-  func buttonPressed(_ button: ButtonNode) {
+  private func buttonPressed(_ button: ButtonNode) {
     let insertionResult = pressedButtons.insert(button)
     if insertionResult.inserted {
       button.alpha = alphaPressed
@@ -77,7 +73,7 @@ class TouchControlInputNode: SKSpriteNode {
     }
   }
   
-  func buttonUnpressed(_ button: ButtonNode) {
+ private func buttonUnpressed(_ button: ButtonNode) {
     if let _ = pressedButtons.remove(button) {
       button.alpha = alphaUnpressed
       
@@ -134,7 +130,7 @@ class TouchControlInputNode: SKSpriteNode {
     touchStop(touches: touches)
   }
   
-  func touchStop(touches: Set<UITouch>) {
+  private func touchStop(touches: Set<UITouch>) {
     // Если нет нажатых кнопок, выходим немедленно
     guard !pressedButtons.isEmpty else { return }
     
@@ -148,15 +144,5 @@ class TouchControlInputNode: SKSpriteNode {
         }
       }
     }
-  }
-}
-
-extension SKSpriteNode {
-  func drawBorder(color: UIColor, width: CGFloat) {
-    let shapeNode = SKShapeNode(rect: frame)
-    shapeNode.fillColor = .clear
-    shapeNode.strokeColor = color
-    shapeNode.lineWidth = width
-    addChild(shapeNode)
   }
 }

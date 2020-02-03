@@ -26,6 +26,7 @@
 		1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662123CB20670055452D /* TouchControlInputNode.swift */; };
 		1EC1662623CB78920055452D /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662523CB78920055452D /* ButtonNode.swift */; };
 		1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */; };
+		1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEFBD2123E2240900DE1B08 /* JumpingState.swift */; };
 		1EFDAA5523CFA8E60081527C /* Amber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDAA5423CFA8E60081527C /* Amber.swift */; };
 		1EFDAA5823CFAAA70081527C /* PlayerControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		1EC1662123CB20670055452D /* TouchControlInputNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchControlInputNode.swift; sourceTree = "<group>"; };
 		1EC1662523CB78920055452D /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Amber.xcassets; sourceTree = "<group>"; };
+		1EEFBD2123E2240900DE1B08 /* JumpingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpingState.swift; sourceTree = "<group>"; };
 		1EFDAA5423CFA8E60081527C /* Amber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amber.swift; sourceTree = "<group>"; };
 		1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 			children = (
 				1E50353923DDA9190010B16E /* IdleState.swift */,
 				1E50353B23DDA92B0010B16E /* WalkingState.swift */,
+				1EEFBD2123E2240900DE1B08 /* JumpingState.swift */,
 			);
 			path = "Animation States";
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				1EFDAA5523CFA8E60081527C /* Amber.swift in Sources */,
 				1EFDAA5823CFAAA70081527C /* PlayerControlComponent.swift in Sources */,
 				1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */,
+				1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */,
 				1E50353A23DDA9190010B16E /* IdleState.swift in Sources */,
 				1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */,
 				1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */,
