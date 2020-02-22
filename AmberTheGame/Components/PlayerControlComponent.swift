@@ -23,11 +23,11 @@ class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
       switch command! {
       case "left":
         movementComponent.moveTo(.left)
-      case "stop left":
-        movementComponent.stopMoving()
       case "right":
         movementComponent.moveTo(.right)
       case "stop right":
+        movementComponent.stopMoving()
+      case "stop left":
         movementComponent.stopMoving()
       case "jump":
         movementComponent.jump()

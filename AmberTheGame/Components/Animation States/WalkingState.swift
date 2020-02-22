@@ -21,10 +21,14 @@ class WalkingState: GKState {
     }
   }
   
-  override func didEnter(from previousState: GKState?) {
+  override func didEnter(from previousState: GKState?) {    
     if let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) {
-      let spriteNode = spriteComponent.node
-      spriteNode.run(SKAction(named: "amber-run")!, withKey: "amber-run")
+      spriteComponent.node.run(SKAction(named: "amber-run")!, withKey: "amber-run")
+      
+      if let _ = previousState as? JumpingState {
+        spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
+      }
     }
   }
+  
 }

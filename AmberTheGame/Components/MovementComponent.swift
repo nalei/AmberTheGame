@@ -7,12 +7,12 @@ class MovementComponent : GKComponent {
     case right = 1
   }
   
-  let walkSpeed: CGFloat = 350
+  let walkSpeed: CGFloat = 320
   let maxJump: CGFloat  = 150
   var facing: FacingType = .right
   
   var accel: CGFloat  = 40
-  var decel: CGFloat  = 40
+  var decel: CGFloat  = 30
   var hSpeed: CGFloat = 0
   
   var moveButtonPressed: Bool = false
@@ -38,6 +38,8 @@ class MovementComponent : GKComponent {
   func moveTo(_ facing: FacingType) {
     moveButtonPressed = true
     self.facing = facing
+    spriteComponent.node.xScale = facing.rawValue
+    
   }
   
   func stopMoving() {
@@ -50,7 +52,6 @@ class MovementComponent : GKComponent {
     if onGround {
       spriteComponent.node.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
       onGround = false
-      
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
         if (animationComponent.stateMachine?.canEnterState(JumpingState.self))! {
           animationComponent.stateMachine?.enter(JumpingState.self)
@@ -70,15 +71,17 @@ class MovementComponent : GKComponent {
     
     let spriteNode = spriteComponent.node
     
-    // Начинаем движение, если кнопка отпущена
-    if moveButtonPressed && hSpeed != walkSpeed {
+    // Начинаем движение, если кнопка нажата
+    if moveButtonPressed {
       hSpeed = approach(start: hSpeed, end: walkSpeed * facing.rawValue, shift: accel)
+      //spriteNode.position.x = spriteNode.position.x + hSpeed
       spriteNode.physicsBody?.velocity.dx = hSpeed
     }
     
     // Останавливаем движение, если кнопка отпущена
     if !moveButtonPressed && hSpeed != 0 {
       hSpeed = approach(start: hSpeed, end: 0, shift: decel)
+      //spriteNode.position.x = spriteNode.position.x + hSpeed
       spriteNode.physicsBody?.velocity.dx = hSpeed
     }
     
@@ -87,12 +90,7 @@ class MovementComponent : GKComponent {
       spriteNode.physicsBody?.velocity.dy *= 0.5
     }
     
-    if hSpeed > 0 {
-      spriteNode.xScale = 1
-    } else if hSpeed < 0 {
-      spriteNode.xScale = -1
-    }
-    
+    // Анимация
     if onGround {
       if hSpeed == 0 || !moveButtonPressed {
         if let animationComponent = entity?.component(ofType: AnimationComponent.self) {

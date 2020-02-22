@@ -23,18 +23,12 @@ class IdleState: GKState {
   
   override func didEnter(from previousState: GKState?) {
     if let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) {
-      let spriteNode = spriteComponent.node
-      spriteNode.removeAllActions()
-      spriteNode.texture = SKTexture(imageNamed: "amber-idle")
+      spriteComponent.node.removeAllActions()
+      spriteComponent.node.texture = SKTexture(imageNamed: "amber-idle")
       
       if let _ = previousState as? JumpingState {
-        squashAndSretch(spriteNode, xScale: 1.3 * spriteNode.xScale, yScale: 0.7)
+        spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
       }
     }
-  }
-  
-  func squashAndSretch(_ node: SKSpriteNode, xScale: CGFloat, yScale: CGFloat) {
-    node.xScale = xScale
-    node.yScale = yScale
   }
 }

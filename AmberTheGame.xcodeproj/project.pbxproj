@@ -11,10 +11,15 @@
 		1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2423D32869002FFE8C /* EntityManager.swift */; };
 		1E118C2723D3A669002FFE8C /* EnemyMoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */; };
 		1E118C2923D44741002FFE8C /* EnemyMoveBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */; };
+		1E362EF523EEECD60006B6AE /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E362EF323EEECD60006B6AE /* MyTileSet.sks */; };
+		1E3DF9EB23F7F5B200B69080 /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3DF9EA23F7F5B200B69080 /* Collision.swift */; };
+		1E432AD423F936AF005357A0 /* onGroundState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E432AD323F936AF005357A0 /* onGroundState.swift */; };
+		1E432AD623F936C0005357A0 /* onAirState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E432AD523F936C0005357A0 /* onAirState.swift */; };
 		1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353423D63B9F0010B16E /* MovementComponent.swift */; };
 		1E50353A23DDA9190010B16E /* IdleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353923DDA9190010B16E /* IdleState.swift */; };
 		1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353B23DDA92B0010B16E /* WalkingState.swift */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
+		1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EBF079E23EED26800BB2A80 /* Tiles.xcassets */; };
 		1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1660323CA2E2F0055452D /* AppDelegate.swift */; };
 		1EC1660623CA2E2F0055452D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1660523CA2E2F0055452D /* GameScene.sks */; };
 		1EC1660823CA2E2F0055452D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1660723CA2E2F0055452D /* Actions.sks */; };
@@ -36,10 +41,15 @@
 		1E118C2423D32869002FFE8C /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyMoveComponent.swift; sourceTree = "<group>"; };
 		1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyMoveBehavior.swift; sourceTree = "<group>"; };
+		1E362EF323EEECD60006B6AE /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
+		1E3DF9EA23F7F5B200B69080 /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
+		1E432AD323F936AF005357A0 /* onGroundState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onGroundState.swift; sourceTree = "<group>"; };
+		1E432AD523F936C0005357A0 /* onAirState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onAirState.swift; sourceTree = "<group>"; };
 		1E50353423D63B9F0010B16E /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
 		1E50353923DDA9190010B16E /* IdleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleState.swift; sourceTree = "<group>"; };
 		1E50353B23DDA92B0010B16E /* WalkingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingState.swift; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
+		1EBF079E23EED26800BB2A80 /* Tiles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tiles.xcassets; sourceTree = "<group>"; };
 		1EC1660023CA2E2F0055452D /* AmberTheGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmberTheGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EC1660323CA2E2F0055452D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1EC1660523CA2E2F0055452D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -69,6 +79,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E3DF9E923F7F55100B69080 /* Physics Contacts and Collisions */ = {
+			isa = PBXGroup;
+			children = (
+				1E3DF9EA23F7F5B200B69080 /* Collision.swift */,
+			);
+			path = "Physics Contacts and Collisions";
+			sourceTree = "<group>";
+		};
+		1E432AD223F9367B005357A0 /* Movement States */ = {
+			isa = PBXGroup;
+			children = (
+				1E432AD323F936AF005357A0 /* onGroundState.swift */,
+				1E432AD523F936C0005357A0 /* onAirState.swift */,
+			);
+			path = "Movement States";
+			sourceTree = "<group>";
+		};
 		1E50353823DDA8CA0010B16E /* Animation States */ = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +113,15 @@
 				1EC1660523CA2E2F0055452D /* GameScene.sks */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1EBF079D23EEC20F00BB2A80 /* Tiles */ = {
+			isa = PBXGroup;
+			children = (
+				1EBF079E23EED26800BB2A80 /* Tiles.xcassets */,
+				1E362EF323EEECD60006B6AE /* MyTileSet.sks */,
+			);
+			path = Tiles;
 			sourceTree = "<group>";
 		};
 		1EC165F723CA2E2F0055452D = {
@@ -107,6 +143,7 @@
 		1EC1660223CA2E2F0055452D /* AmberTheGame */ = {
 			isa = PBXGroup;
 			children = (
+				1E3DF9E923F7F55100B69080 /* Physics Contacts and Collisions */,
 				1EFDAA5323CFA8A30081527C /* Entities */,
 				1EFDAA5623CFA9AF0081527C /* Components */,
 				1E829E9423D1A8AC0026F495 /* Scenes */,
@@ -135,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				1EC1661023CA2E310055452D /* images.xcassets */,
+				1EBF079D23EEC20F00BB2A80 /* Tiles */,
 				1EEFBD1E23DF7EB700DE1B08 /* Amber */,
 			);
 			path = Assets;
@@ -178,6 +216,7 @@
 			children = (
 				1E118C2223D3273A002FFE8C /* SpriteComponent.swift */,
 				1E50353423D63B9F0010B16E /* MovementComponent.swift */,
+				1E432AD223F9367B005357A0 /* Movement States */,
 				1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */,
 				1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */,
 				1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */,
@@ -248,6 +287,8 @@
 				1EC1660F23CA2E2F0055452D /* Main.storyboard in Resources */,
 				1EC1660623CA2E2F0055452D /* GameScene.sks in Resources */,
 				1EC1661123CA2E310055452D /* images.xcassets in Resources */,
+				1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */,
+				1E362EF523EEECD60006B6AE /* MyTileSet.sks in Resources */,
 				1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */,
 				1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */,
 				1EC1660823CA2E2F0055452D /* Actions.sks in Resources */,
@@ -268,15 +309,18 @@
 				1E118C2923D44741002FFE8C /* EnemyMoveBehavior.swift in Sources */,
 				1EFDAA5523CFA8E60081527C /* Amber.swift in Sources */,
 				1EFDAA5823CFAAA70081527C /* PlayerControlComponent.swift in Sources */,
+				1E3DF9EB23F7F5B200B69080 /* Collision.swift in Sources */,
 				1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */,
 				1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */,
 				1E50353A23DDA9190010B16E /* IdleState.swift in Sources */,
 				1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */,
 				1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */,
+				1E432AD623F936C0005357A0 /* onAirState.swift in Sources */,
 				1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */,
 				1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */,
 				1E118C2723D3A669002FFE8C /* EnemyMoveComponent.swift in Sources */,
 				1EC1662623CB78920055452D /* ButtonNode.swift in Sources */,
+				1E432AD423F936AF005357A0 /* onGroundState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

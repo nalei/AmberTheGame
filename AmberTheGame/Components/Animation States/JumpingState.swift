@@ -15,7 +15,7 @@ class JumpingState : GKState {
     case is WalkingState.Type:
       return true
     case is JumpingState.Type:
-      return true
+      return false
     default:
       return false
     }
@@ -23,26 +23,20 @@ class JumpingState : GKState {
   
   override func didEnter(from previousState: GKState?) {
     if let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) {
-      let spriteNode = spriteComponent.node
-      spriteNode.removeAllActions()
-      spriteNode.texture = SKTexture(imageNamed: "amber-jump-up")
+      spriteComponent.node.removeAllActions()
+      spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-up")
       
-      squashAndSretch(spriteNode, xScale: 0.7 * spriteNode.xScale, yScale: 1.3)
+      spriteComponent.squashAndSretch(xScale: 0.7, yScale: 1.4)
     }
   }
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
+    
     if let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) {
-      let spriteNode = spriteComponent.node
-      if (spriteNode.physicsBody?.velocity.dy)! < -0.1 {
-        spriteNode.texture = SKTexture(imageNamed: "amber-jump-middle")
+      if (spriteComponent.node.physicsBody?.velocity.dy)! < -0.1 {
+        spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-middle")
       }
     }
-  }
-  
-  func squashAndSretch(_ node: SKSpriteNode, xScale: CGFloat, yScale: CGFloat) {
-    node.xScale = xScale
-    node.yScale = yScale
   }
 }

@@ -104,16 +104,19 @@ class TouchControlInputNode: SKSpriteNode {
       let touchPoint = touch.location(in: self)
       let previousTouchPoint = touch.previousLocation(in: self)
       
+      for button in pressedButtons {
+        // Если касание покидает кнопку
+        if button.contains(previousTouchPoint) && !button.contains(touchPoint) {
+          buttonUnpressed(button)
+        }
+      }
+      
       for button in allButtons {
-        
         // Если касание перемещается на кнопку которая ещё не нажата
         if !button.contains(previousTouchPoint) && button.contains(touchPoint) {
           buttonPressed(button)
         }
-          // Если касание покидает кнопку
-        else if button.contains(previousTouchPoint) && !button.contains(touchPoint) {
-          buttonUnpressed(button)
-        }
+
       }
     }
   }
