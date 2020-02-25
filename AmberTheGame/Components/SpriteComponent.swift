@@ -10,20 +10,16 @@ class SpriteComponent: GKComponent {
     
     node.anchorPoint = CGPoint(x: 0.5, y: 0)
     
-    let physicsBody = SKPhysicsBody(
-      rectangleOf: CGSize(width: 42, height: 64),
-      center: CGPoint(x: 0, y: 64 / 2)
-    )
-    
+    let path = UIBezierPath(roundedRect: CGRect(x:-21, y: 0, width: 42, height: 64), cornerRadius: 2).cgPath
+    let physicsBody = SKPhysicsBody(polygonFrom: path)
     physicsBody.categoryBitMask = ColliderType.PLAYER
     physicsBody.contactTestBitMask = ColliderType.GROUND
-    physicsBody.affectedByGravity = true
     physicsBody.isDynamic = true
     physicsBody.allowsRotation = false
     physicsBody.friction = 0
     physicsBody.restitution = 0.1
     physicsBody.mass = 0.15
-    node.physicsBody = physicsBody   
+    node.physicsBody = physicsBody
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -33,6 +29,15 @@ class SpriteComponent: GKComponent {
   func squashAndSretch(xScale: CGFloat, yScale: CGFloat) {
     node.xScale = xScale * node.xScale
     node.yScale = yScale
+  }
+  
+  func isContactByGround() -> Bool {
+    for body in node.physicsBody!.allContactedBodies() {
+      if body.categoryBitMask == ColliderType.GROUND {
+        return true
+      }
+    }
+    return false
   }
 }
 

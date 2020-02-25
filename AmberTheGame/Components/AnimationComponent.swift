@@ -15,7 +15,8 @@ class AnimationComponent: GKComponent {
     stateMachine = GKStateMachine(states: [
       IdleState(animationComponent: self),
       WalkingState(animationComponent: self),
-      JumpingState(animationComponent: self)
+      JumpingState(animationComponent: self),
+      FallingState(animationComponent: self)
     ])
     
     stateMachine.enter(IdleState.self)

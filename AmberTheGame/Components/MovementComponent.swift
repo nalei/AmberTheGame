@@ -51,12 +51,12 @@ class MovementComponent : GKComponent {
     
     if onGround {
       spriteComponent.node.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
-      onGround = false
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
         if (animationComponent.stateMachine?.canEnterState(JumpingState.self))! {
           animationComponent.stateMachine?.enter(JumpingState.self)
         }
       }
+      onGround = false
     }
   }
   
@@ -90,16 +90,25 @@ class MovementComponent : GKComponent {
       spriteNode.physicsBody?.velocity.dy *= 0.5
     }
     
+    // Если тело движется вниз и не имеет контакта с землёй
+    if (spriteNode.physicsBody?.velocity.dy)! < -100 &&
+      !spriteComponent.isContactByGround() {
+      if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+        if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
+          animationComponent.stateMachine?.enter(FallingState.self)
+        }
+      }
+      onGround = false
+    }
+    
     // Анимация
-    if onGround {
-      if hSpeed == 0 || !moveButtonPressed {
-        if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+    if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+      if onGround {
+        if hSpeed == 0 || !moveButtonPressed {
           if (animationComponent.stateMachine?.canEnterState(IdleState.self))! {
             animationComponent.stateMachine?.enter(IdleState.self)
           }
-        }
-      } else {
-        if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+        } else {
           if (animationComponent.stateMachine?.canEnterState(WalkingState.self))! {
             animationComponent.stateMachine?.enter(WalkingState.self)
           }
@@ -108,8 +117,8 @@ class MovementComponent : GKComponent {
     }
     
     // Восстанавливаем размеры спрайта
-    spriteNode.xScale = approach(start: spriteNode.xScale, end: facing.rawValue, shift: 0.05)
-    spriteNode.yScale = approach(start: spriteNode.yScale, end: 1, shift: 0.05)
+    spriteNode.xScale = approach(start: spriteNode.xScale, end: facing.rawValue, shift: 0.04)
+    spriteNode.yScale = approach(start: spriteNode.yScale, end: 1, shift: 0.04)
   }
   
   // MARK: Helper

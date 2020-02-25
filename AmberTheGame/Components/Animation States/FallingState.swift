@@ -1,7 +1,7 @@
-import SpriteKit
 import GameplayKit
+import SpriteKit
 
-class IdleState: GKState {
+class FallingState : GKState {
   unowned var animationComponent: AnimationComponent
   
   required init(animationComponent: AnimationComponent) {
@@ -11,13 +11,13 @@ class IdleState: GKState {
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
     case is IdleState.Type:
-      return false
+      return true
     case is WalkingState.Type:
       return true
     case is JumpingState.Type:
       return true
     case is FallingState.Type:
-      return true
+      return false
     default:
       return false
     }
@@ -27,10 +27,15 @@ class IdleState: GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
     spriteComponent.node.removeAllActions()
-    spriteComponent.node.texture = SKTexture(imageNamed: "amber-idle")
-    
-    if let _ = previousState as? FallingState {
-      spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
+    spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-middle")
+  }
+  
+  override func update(deltaTime seconds: TimeInterval) {
+    super.update(deltaTime: seconds)
+    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
+
+    if (spriteComponent.node.physicsBody?.velocity.dy)! < -300 {
+      spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-down")
     }
   }
 }

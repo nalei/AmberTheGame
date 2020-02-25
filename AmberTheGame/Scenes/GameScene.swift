@@ -36,6 +36,7 @@ class GameScene: SKScene {
       if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
         spriteComponent.node.texture = amberSprite.texture
         spriteComponent.node.position = amberSprite.position
+        spriteComponent.node.name = "Amber"
       }
       amberSprite.removeFromParent()
       entityManager.add(character!) //!!!
@@ -63,7 +64,7 @@ class GameScene: SKScene {
     for col in 0..<tileMap.numberOfColumns {
       for row in 0..<tileMap.numberOfRows {
         if let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row),
-        let isGround = tileDefinition.userData?["isGround"] as? Bool {
+          let isGround = tileDefinition.userData?["isGround"] as? Bool {
           
           if isGround {
             let texture = tileDefinition.textures[0]
@@ -77,15 +78,11 @@ class GameScene: SKScene {
               )
             )
             physicsBody.categoryBitMask = ColliderType.GROUND
-            physicsBody.contactTestBitMask = ColliderType.PLAYER
             physicsBody.affectedByGravity = false
             physicsBody.isDynamic = false
-            physicsBody.allowsRotation = false
-            physicsBody.friction = 0.1
-            physicsBody.restitution = 0
-            physicsBody.mass = 30
             
             let tileNode = SKNode()
+            tileNode.name = "Ground"
             tileNode.position = CGPoint(x: x, y: y)
             tileNode.physicsBody = physicsBody
             
@@ -124,10 +121,10 @@ class GameScene: SKScene {
 //MARK: Physics
 
 extension GameScene: SKPhysicsContactDelegate {
-
+  
   func didBegin(_ contact: SKPhysicsContact) {
     let collision:UInt32 = (contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask)
-
+    
     if collision == (ColliderType.PLAYER | ColliderType.GROUND) {
       if collisionDirection(contact) == .Bottom {
         if let movementComponent = character?.component(ofType: MovementComponent.self) {
@@ -136,9 +133,9 @@ extension GameScene: SKPhysicsContactDelegate {
       }
     }
   }
-
+  
   private func collisionDirection(_ contact: SKPhysicsContact) -> Collision.Direction {
-    if contact.contactNormal.dy > 0.2 && contact.contactNormal.dy <= 1 {
+    if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
       return .Bottom
     }
     return .None
