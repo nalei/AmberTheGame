@@ -91,8 +91,7 @@ class MovementComponent : GKComponent {
     }
     
     // Если тело движется вниз и не имеет контакта с землёй
-    if (spriteNode.physicsBody?.velocity.dy)! < -100 &&
-      !spriteComponent.isContactByGround() {
+    if (spriteNode.physicsBody?.velocity.dy)! < -100 && !spriteComponent.isContactByGround() {
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
         if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
           animationComponent.stateMachine?.enter(FallingState.self)

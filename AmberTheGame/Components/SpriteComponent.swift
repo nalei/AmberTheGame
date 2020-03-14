@@ -10,14 +10,15 @@ class SpriteComponent: GKComponent {
     
     node.anchorPoint = CGPoint(x: 0.5, y: 0)
     
-    let path = UIBezierPath(roundedRect: CGRect(x:-21, y: 0, width: 42, height: 64), cornerRadius: 2).cgPath
+    let path = UIBezierPath(roundedRect: CGRect(x: -21, y: 3, width: 42, height: 64), cornerRadius: 0).cgPath
     let physicsBody = SKPhysicsBody(polygonFrom: path)
+    
     physicsBody.categoryBitMask = ColliderType.PLAYER
     physicsBody.contactTestBitMask = ColliderType.GROUND
     physicsBody.isDynamic = true
     physicsBody.allowsRotation = false
     physicsBody.friction = 0
-    physicsBody.restitution = 0.1
+    physicsBody.restitution = 0
     physicsBody.mass = 0.15
     node.physicsBody = physicsBody
   }
@@ -41,13 +42,12 @@ class SpriteComponent: GKComponent {
   }
 }
 
-//extension SKSpriteNode {
-//  func drawBorder(color: UIColor, width: CGFloat) {
-//    let shapeNode = SKShapeNode(rect: frame)
-//    shapeNode.fillColor = .clear
-//    shapeNode.strokeColor = color
-//    shapeNode.lineWidth = width
-//    addChild(shapeNode)
-//  }
-//}
-
+extension SKSpriteNode {
+  func drawBorder(color: UIColor, width: CGFloat) {
+    let shapeNode = SKShapeNode(rect: frame)
+    shapeNode.fillColor = .clear
+    shapeNode.strokeColor = color
+    shapeNode.lineWidth = width
+    addChild(shapeNode)
+  }
+}

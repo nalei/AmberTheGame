@@ -11,7 +11,7 @@ class TouchControlInputNode: SKSpriteNode {
   var alphaUnpressed:CGFloat = 0.8
   var alphaPressed:CGFloat   = 1
   
-  var allButtons     = [ButtonNode]()
+  var allButtons = [ButtonNode]()
   var pressedButtons = Set<ButtonNode>()
   
   init(frame: CGRect) {

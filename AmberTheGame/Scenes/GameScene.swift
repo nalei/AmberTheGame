@@ -5,7 +5,8 @@ class GameScene: SKScene {
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
-  var lastUpdateTime: TimeInterval = 0
+  // Update time
+  var lastUpdateTimeInterval: TimeInterval = 0
   
   // Entity manager
   var entityManager: EntityManager!
@@ -14,13 +15,17 @@ class GameScene: SKScene {
   var character: GKEntity?
   
   override func sceneDidLoad() {
-    self.lastUpdateTime = 0
+    self.lastUpdateTimeInterval = 0
     
     // Creare instance of Entity manager
-    entityManager = EntityManager(scene: self)
+    entityManager = EntityManager(scene: self, camera: camera)
   }
   
   override func didMove(to view: SKView) {
+    
+    for entity in self.entities {
+      entityManager.add(entity)
+    }
     
     self.physicsWorld.contactDelegate = self
     
@@ -29,17 +34,29 @@ class GameScene: SKScene {
     }
     
     if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode, let camera = self.camera {
-      
       // Create instance of Amber entity
       character = Amber(camera: camera, scene: self, entityManager: entityManager)
+      entityManager.add(character!)
       
       if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
         spriteComponent.node.texture = amberSprite.texture
         spriteComponent.node.position = amberSprite.position
         spriteComponent.node.name = "Amber"
+        amberSprite.removeFromParent()
+        
+//        let groundDetector = SKNode()
+//        groundDetector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 36, height: 2), center: CGPoint(x: 0, y: 4))
+//        groundDetector.physicsBody?.categoryBitMask = ColliderType.GROUNDDETECTOR
+//        groundDetector.physicsBody?.collisionBitMask = ColliderType.GROUND
+//        groundDetector.physicsBody?.contactTestBitMask = ColliderType.GROUND
+//        spriteComponent.node.addChild(groundDetector)
+//        
+//        let pinJoint = SKPhysicsJointFixed.joint(
+//          withBodyA: spriteComponent.node.physicsBody!,
+//          bodyB: groundDetector.physicsBody!,
+//          anchor: spriteComponent.node.position)
+//        self.physicsWorld.add(pinJoint)
       }
-      amberSprite.removeFromParent()
-      entityManager.add(character!) //!!!
     }
   }
   
@@ -67,25 +84,21 @@ class GameScene: SKScene {
           let isGround = tileDefinition.userData?["isGround"] as? Bool {
           
           if isGround {
-            let texture = tileDefinition.textures[0]
             let x = CGFloat(col) * tileSize.width - halfWidth + (tileSize.width / 2)
             let y = CGFloat(row) * tileSize.height - halfHeight + (tileSize.height / 2)
             
-            let physicsBody = SKPhysicsBody(
-              rectangleOf: CGSize(
-                width: texture.size().width,
-                height: texture.size().height
-              )
-            )
-            physicsBody.categoryBitMask = ColliderType.GROUND
-            physicsBody.affectedByGravity = false
-            physicsBody.isDynamic = false
-            
             let tileNode = SKNode()
-            tileNode.name = "Ground"
             tileNode.position = CGPoint(x: x, y: y)
-            tileNode.physicsBody = physicsBody
-            
+            tileNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(
+              x: -(tileSize.width / 2),
+              y: -(tileSize.height / 2),
+              width: tileSize.width,
+              height: tileSize.height)
+            )
+            tileNode.physicsBody?.isDynamic = false
+            tileNode.physicsBody?.allowsRotation = false
+            tileNode.physicsBody?.restitution = 0
+            tileNode.physicsBody?.categoryBitMask = ColliderType.GROUND
             tileMap.addChild(tileNode)
           }
         }
@@ -93,28 +106,21 @@ class GameScene: SKScene {
     }
   }
   
-  
   // MARK: Scene Life Cycle
   
+  // Called before each frame is rendered
   override func update(_ currentTime: TimeInterval) {
-    // Called before each frame is rendered
     
     // Initialize _lastUpdateTime if it has not already been
-    if (self.lastUpdateTime == 0) {
-      self.lastUpdateTime = currentTime
+    if (self.lastUpdateTimeInterval == 0) {
+      self.lastUpdateTimeInterval = currentTime
     }
     
     // Calculate time since last update
-    let dt = currentTime - self.lastUpdateTime
+    let deltaTime = currentTime - self.lastUpdateTimeInterval
+    self.lastUpdateTimeInterval = currentTime
     
-    // Update entities
-    for entity in self.entities {
-      entity.update(deltaTime: dt)
-    }
-    
-    self.lastUpdateTime = currentTime
-    
-    entityManager.update(deltaTime: dt)
+    entityManager.update(deltaTime: deltaTime)
   }
 }
 

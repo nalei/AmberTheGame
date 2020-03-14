@@ -34,7 +34,7 @@ class FallingState : GKState {
     super.update(deltaTime: seconds)
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
 
-    if (spriteComponent.node.physicsBody?.velocity.dy)! < -300 {
+    if (spriteComponent.node.physicsBody?.velocity.dy)! < -400 {
       spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-down")
     }
   }

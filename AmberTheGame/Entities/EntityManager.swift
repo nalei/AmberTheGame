@@ -3,6 +3,7 @@ import SpriteKit
 import GameplayKit
 
 class EntityManager {
+  let camera: SKCameraNode?
   let scene: SKScene
   var entities = Set<GKEntity>()
   var toRemove = Set<GKEntity>()
@@ -10,10 +11,12 @@ class EntityManager {
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
-    return [moveSystem, animationSystem]
+    let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
+    return [moveSystem, animationSystem, parallaxSystem]
   }()
   
-  init(scene: SKScene) {
+  init(scene: SKScene, camera: SKCameraNode?) {
+    self.camera = camera
     self.scene = scene
   }
   
@@ -22,6 +25,10 @@ class EntityManager {
     
     if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
       scene.addChild(spriteNode)
+    }
+    
+    if let parralaxComponent = entity.component(ofType: ParallaxComponent.self) {
+      parralaxComponent.prepareWith(camera: camera)
     }
     
     for componentSystem in componentSystems {
