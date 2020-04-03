@@ -27,7 +27,7 @@ class IdleState: GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
     spriteComponent.node.removeAllActions()
-    spriteComponent.node.texture = SKTexture(imageNamed: "amber-idle")
+    spriteComponent.node.texture = SKTexture(imageNamed: "goblin-idle")
     
     if let _ = previousState as? FallingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)

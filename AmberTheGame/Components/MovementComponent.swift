@@ -27,6 +27,14 @@ class MovementComponent : GKComponent {
     return spriteComponent
   }
   
+  /// The `PhysicsComponent` for this component's entity.
+  var physicsComponent: PhysicsComponent {
+    guard let physicsComponent = entity?.component(ofType: PhysicsComponent.self) else {
+      fatalError("A MovementComponent's entity must have a PhysicsComponent")
+    }
+    return physicsComponent
+  }
+  
   override init() {
     super.init()
   }
@@ -50,7 +58,7 @@ class MovementComponent : GKComponent {
     jumpButtonPressed = true
     
     if onGround {
-      spriteComponent.node.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
+      physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
         if (animationComponent.stateMachine?.canEnterState(JumpingState.self))! {
           animationComponent.stateMachine?.enter(JumpingState.self)
@@ -69,29 +77,25 @@ class MovementComponent : GKComponent {
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
-    let spriteNode = spriteComponent.node
-    
     // Начинаем движение, если кнопка нажата
     if moveButtonPressed {
       hSpeed = approach(start: hSpeed, end: walkSpeed * facing.rawValue, shift: accel)
-      //spriteNode.position.x = spriteNode.position.x + hSpeed
-      spriteNode.physicsBody?.velocity.dx = hSpeed
+      physicsComponent.physicsBody.velocity.dx = hSpeed
     }
     
     // Останавливаем движение, если кнопка отпущена
     if !moveButtonPressed && hSpeed != 0 {
       hSpeed = approach(start: hSpeed, end: 0, shift: decel)
-      //spriteNode.position.x = spriteNode.position.x + hSpeed
-      spriteNode.physicsBody?.velocity.dx = hSpeed
+      physicsComponent.physicsBody.velocity.dx = hSpeed
     }
     
     // Прерываем прыжок, если кнопка отпущена
-    if !jumpButtonPressed && (spriteNode.physicsBody?.velocity.dy)! > 0 {
-      spriteNode.physicsBody?.velocity.dy *= 0.5
+    if !jumpButtonPressed && physicsComponent.physicsBody.velocity.dy > 0 {
+      physicsComponent.physicsBody.velocity.dy *= 0.5
     }
     
     // Если тело движется вниз и не имеет контакта с землёй
-    if (spriteNode.physicsBody?.velocity.dy)! < -100 && !spriteComponent.isContactByGround() {
+    if physicsComponent.physicsBody.velocity.dy < -100 && !physicsComponent.isContactByGround() {
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
         if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
           animationComponent.stateMachine?.enter(FallingState.self)
@@ -116,8 +120,8 @@ class MovementComponent : GKComponent {
     }
     
     // Восстанавливаем размеры спрайта
-    spriteNode.xScale = approach(start: spriteNode.xScale, end: facing.rawValue, shift: 0.04)
-    spriteNode.yScale = approach(start: spriteNode.yScale, end: 1, shift: 0.04)
+    spriteComponent.node.xScale = approach(start: spriteComponent.node.xScale, end: facing.rawValue, shift: 0.04)
+    spriteComponent.node.yScale = approach(start: spriteComponent.node.yScale, end: 1, shift: 0.04)
   }
   
   // MARK: Helper

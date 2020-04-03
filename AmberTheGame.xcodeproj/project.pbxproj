@@ -16,6 +16,10 @@
 		1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353423D63B9F0010B16E /* MovementComponent.swift */; };
 		1E50353A23DDA9190010B16E /* IdleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353923DDA9190010B16E /* IdleState.swift */; };
 		1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353B23DDA92B0010B16E /* WalkingState.swift */; };
+		1E5AD008242735F9002CEE01 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD007242735F9002CEE01 /* Utils.swift */; };
+		1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD009242738F1002CEE01 /* Goblin.swift */; };
+		1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */; };
+		1E60B25F242D1F4F00ABB505 /* Goblin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
 		1EB7B4AF2416237800F0FA54 /* ParralaxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB7B4AE2416237800F0FA54 /* ParralaxComponent.swift */; };
 		1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EBF079E23EED26800BB2A80 /* Tiles.xcassets */; };
@@ -46,6 +50,10 @@
 		1E50353423D63B9F0010B16E /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
 		1E50353923DDA9190010B16E /* IdleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleState.swift; sourceTree = "<group>"; };
 		1E50353B23DDA92B0010B16E /* WalkingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingState.swift; sourceTree = "<group>"; };
+		1E5AD007242735F9002CEE01 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		1E5AD009242738F1002CEE01 /* Goblin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goblin.swift; sourceTree = "<group>"; };
+		1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
+		1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Goblin.xcassets; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
 		1EB7B4AE2416237800F0FA54 /* ParralaxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParralaxComponent.swift; sourceTree = "<group>"; };
 		1EBF079E23EED26800BB2A80 /* Tiles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tiles.xcassets; sourceTree = "<group>"; };
@@ -139,7 +147,7 @@
 				1EFDAA5323CFA8A30081527C /* Entities */,
 				1EFDAA5623CFA9AF0081527C /* Components */,
 				1E829E9423D1A8AC0026F495 /* Scenes */,
-				1EC1662423CB78710055452D /* Nodes */,
+				1EC1662423CB78710055452D /* Helpers */,
 				1EC1662023CB19930055452D /* Player Control */,
 				1EC1661B23CA2E900055452D /* View Controllers */,
 				1EC1661F23CB17DF0055452D /* Assets */,
@@ -164,8 +172,9 @@
 			isa = PBXGroup;
 			children = (
 				1EC1661023CA2E310055452D /* images.xcassets */,
+				1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */,
+				1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */,
 				1EBF079D23EEC20F00BB2A80 /* Tiles */,
-				1EEFBD1E23DF7EB700DE1B08 /* Amber */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -178,20 +187,13 @@
 			path = "Player Control";
 			sourceTree = "<group>";
 		};
-		1EC1662423CB78710055452D /* Nodes */ = {
+		1EC1662423CB78710055452D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				1EC1662523CB78920055452D /* ButtonNode.swift */,
+				1E5AD007242735F9002CEE01 /* Utils.swift */,
 			);
-			path = Nodes;
-			sourceTree = "<group>";
-		};
-		1EEFBD1E23DF7EB700DE1B08 /* Amber */ = {
-			isa = PBXGroup;
-			children = (
-				1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */,
-			);
-			path = Amber;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		1EFDAA5323CFA8A30081527C /* Entities */ = {
@@ -199,6 +201,7 @@
 			children = (
 				1E118C2423D32869002FFE8C /* EntityManager.swift */,
 				1EFDAA5423CFA8E60081527C /* Amber.swift */,
+				1E5AD009242738F1002CEE01 /* Goblin.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				1E118C2223D3273A002FFE8C /* SpriteComponent.swift */,
+				1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */,
 				1E50353423D63B9F0010B16E /* MovementComponent.swift */,
 				1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */,
 				1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */,
@@ -276,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E60B25F242D1F4F00ABB505 /* Goblin.xcassets in Resources */,
 				1EC1660F23CA2E2F0055452D /* Main.storyboard in Resources */,
 				1EC1660623CA2E2F0055452D /* GameScene.sks in Resources */,
 				1EC1661123CA2E310055452D /* images.xcassets in Resources */,
@@ -306,9 +311,12 @@
 				1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */,
 				1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */,
 				1E50353A23DDA9190010B16E /* IdleState.swift in Sources */,
+				1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */,
 				1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */,
 				1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */,
 				1EB7B4AF2416237800F0FA54 /* ParralaxComponent.swift in Sources */,
+				1E5AD008242735F9002CEE01 /* Utils.swift in Sources */,
+				1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */,
 				1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */,
 				1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */,
 				1E118C2723D3A669002FFE8C /* EnemyMoveComponent.swift in Sources */,

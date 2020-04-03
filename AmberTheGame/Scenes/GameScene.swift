@@ -16,18 +16,16 @@ class GameScene: SKScene {
   
   override func sceneDidLoad() {
     self.lastUpdateTimeInterval = 0
-    
-    // Creare instance of Entity manager
-    entityManager = EntityManager(scene: self, camera: camera)
   }
   
   override func didMove(to view: SKView) {
+    self.physicsWorld.contactDelegate = self
+    
+    entityManager = EntityManager(scene: self, camera: camera)
     
     for entity in self.entities {
       entityManager.add(entity)
     }
-    
-    self.physicsWorld.contactDelegate = self
     
     if let foregroundMap = childNode(withName: "ForegroundMap") as? SKTileMapNode {
       giveTileMapPhysicsBody(tileMap: foregroundMap)
@@ -58,6 +56,9 @@ class GameScene: SKScene {
 //        self.physicsWorld.add(pinJoint)
       }
     }
+    
+    let goblin = Goblin(entityManager: entityManager)
+    entityManager.add(goblin)
   }
   
   // Camera action
@@ -70,39 +71,6 @@ class GameScene: SKScene {
           y: spriteComponent.node.position.y),
         duration: 0.2)
       )
-    }
-  }
-  
-  private func giveTileMapPhysicsBody(tileMap: SKTileMapNode) {
-    let tileSize = tileMap.tileSize
-    let halfWidth = CGFloat(tileMap.numberOfColumns) / 2 * tileSize.width
-    let halfHeight = CGFloat(tileMap.numberOfRows) / 2 * tileSize.height
-    
-    for col in 0..<tileMap.numberOfColumns {
-      for row in 0..<tileMap.numberOfRows {
-        if let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row),
-          let isGround = tileDefinition.userData?["isGround"] as? Bool {
-          
-          if isGround {
-            let x = CGFloat(col) * tileSize.width - halfWidth + (tileSize.width / 2)
-            let y = CGFloat(row) * tileSize.height - halfHeight + (tileSize.height / 2)
-            
-            let tileNode = SKNode()
-            tileNode.position = CGPoint(x: x, y: y)
-            tileNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(
-              x: -(tileSize.width / 2),
-              y: -(tileSize.height / 2),
-              width: tileSize.width,
-              height: tileSize.height)
-            )
-            tileNode.physicsBody?.isDynamic = false
-            tileNode.physicsBody?.allowsRotation = false
-            tileNode.physicsBody?.restitution = 0
-            tileNode.physicsBody?.categoryBitMask = ColliderType.GROUND
-            tileMap.addChild(tileNode)
-          }
-        }
-      }
     }
   }
   
@@ -133,7 +101,19 @@ extension GameScene: SKPhysicsContactDelegate {
     
     if collision == (ColliderType.PLAYER | ColliderType.GROUND) {
       if collisionDirection(contact) == .Bottom {
-        if let movementComponent = character?.component(ofType: MovementComponent.self) {
+        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
+          movementComponent.onGround = true
+        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
+          movementComponent.onGround = true
+        }
+      }
+    }
+    
+    if collision == (ColliderType.ENEMY | ColliderType.GROUND) {
+      if collisionDirection(contact) == .Bottom {
+        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
+          movementComponent.onGround = true
+        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
           movementComponent.onGround = true
         }
       }
