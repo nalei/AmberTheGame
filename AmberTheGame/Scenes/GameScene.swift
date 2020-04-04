@@ -14,12 +14,24 @@ class GameScene: SKScene {
   // Character
   var character: GKEntity?
   
+  var contactResponseRouter: PhysicsContactResponseRouter!
+  
   override func sceneDidLoad() {
     self.lastUpdateTimeInterval = 0
   }
   
   override func didMove(to view: SKView) {
-    self.physicsWorld.contactDelegate = self
+    contactResponseRouter = PhysicsContactResponseRouter()
+    
+//    contactResponseRouter.add(
+//      target: self,
+//      action: #selector(powerUp(_:didContact:)),
+//      maskA: ContactCategoryPowerUp,
+//      maskB: ContactCategoryPlayer
+//    )
+
+    self.physicsWorld.contactDelegate = contactResponseRouter
+//    self.physicsWorld.contactDelegate = self
     
     entityManager = EntityManager(scene: self, camera: camera)
     
@@ -94,36 +106,36 @@ class GameScene: SKScene {
 
 //MARK: Physics
 
-extension GameScene: SKPhysicsContactDelegate {
-  
-  func didBegin(_ contact: SKPhysicsContact) {
-    let collision:UInt32 = (contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask)
-    
-    if collision == (ColliderType.PLAYER | ColliderType.GROUND) {
-      if collisionDirection(contact) == .Bottom {
-        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
-          movementComponent.onGround = true
-        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
-          movementComponent.onGround = true
-        }
-      }
-    }
-    
-    if collision == (ColliderType.ENEMY | ColliderType.GROUND) {
-      if collisionDirection(contact) == .Bottom {
-        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
-          movementComponent.onGround = true
-        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
-          movementComponent.onGround = true
-        }
-      }
-    }
-  }
-  
-  private func collisionDirection(_ contact: SKPhysicsContact) -> Collision.Direction {
-    if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
-      return .Bottom
-    }
-    return .None
-  }
-}
+//extension GameScene: SKPhysicsContactDelegate {
+//
+//  func didBegin(_ contact: SKPhysicsContact) {
+//    let collision:UInt32 = (contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask)
+//
+//    if collision == (CollisionCategory.PLAYER.rawValue | CollisionCategory.GROUND.rawValue) {
+//      if collisionDirection(contact) == .Bottom {
+//        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
+//          movementComponent.onGround = true
+//        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
+//          movementComponent.onGround = true
+//        }
+//      }
+//    }
+//
+//    if collision == (CollisionCategory.ENEMY.rawValue | CollisionCategory.GROUND.rawValue) {
+//      if collisionDirection(contact) == .Bottom {
+//        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
+//          movementComponent.onGround = true
+//        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
+//          movementComponent.onGround = true
+//        }
+//      }
+//    }
+//  }
+//
+//  private func collisionDirection(_ contact: SKPhysicsContact) -> Collision.Direction {
+//    if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
+//      return .Bottom
+//    }
+//    return .None
+//  }
+//}

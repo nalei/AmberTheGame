@@ -13,8 +13,8 @@ class Amber: GKEntity {
     
     let path = UIBezierPath(roundedRect: CGRect(x: -21, y: 3, width: 42, height: 64), cornerRadius: 0).cgPath
     let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(polygonFrom: path))
-    physicsComponent.physicsBody.categoryBitMask = ColliderType.PLAYER
-    physicsComponent.physicsBody.contactTestBitMask = ColliderType.GROUND
+    physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER.rawValue
+    physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND.rawValue
     physicsComponent.physicsBody.mass = 0.15
     addComponent(physicsComponent)
     

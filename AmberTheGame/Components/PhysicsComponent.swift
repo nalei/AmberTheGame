@@ -19,7 +19,7 @@ class PhysicsComponent: GKComponent {
   
   func isContactByGround() -> Bool {
     for body in physicsBody.allContactedBodies() {
-      if body.categoryBitMask == ColliderType.GROUND {
+      if body.categoryBitMask == CollisionCategory.GROUND.rawValue {
         return true
       }
     }
