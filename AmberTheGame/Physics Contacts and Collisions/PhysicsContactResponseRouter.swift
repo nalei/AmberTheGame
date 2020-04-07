@@ -36,7 +36,6 @@ class PhysicsContactResponseRouter: NSObject {
       handler.invoke(nodeA: nodeB, nodeB: nodeA)
     }
   }
-  
 }
 
 // MARK: SKPhysicsContactDelegate

@@ -25,7 +25,7 @@ func giveTileMapPhysicsBody(tileMap: SKTileMapNode) {
           tileNode.physicsBody?.isDynamic = false
           tileNode.physicsBody?.allowsRotation = false
           tileNode.physicsBody?.restitution = 0
-          tileNode.physicsBody?.categoryBitMask = CollisionCategory.GROUND.rawValue
+          tileNode.physicsBody?.categoryBitMask = CollisionCategory.GROUND
           tileMap.addChild(tileNode)
         }
       }

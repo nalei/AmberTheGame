@@ -14,24 +14,12 @@ class GameScene: SKScene {
   // Character
   var character: GKEntity?
   
-  var contactResponseRouter: PhysicsContactResponseRouter!
-  
   override func sceneDidLoad() {
     self.lastUpdateTimeInterval = 0
   }
   
   override func didMove(to view: SKView) {
-    contactResponseRouter = PhysicsContactResponseRouter()
-    
-//    contactResponseRouter.add(
-//      target: self,
-//      action: #selector(powerUp(_:didContact:)),
-//      maskA: ContactCategoryPowerUp,
-//      maskB: ContactCategoryPlayer
-//    )
-
-    self.physicsWorld.contactDelegate = contactResponseRouter
-//    self.physicsWorld.contactDelegate = self
+    self.physicsWorld.contactDelegate = self
     
     entityManager = EntityManager(scene: self, camera: camera)
     
@@ -54,18 +42,18 @@ class GameScene: SKScene {
         spriteComponent.node.name = "Amber"
         amberSprite.removeFromParent()
         
-//        let groundDetector = SKNode()
-//        groundDetector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 36, height: 2), center: CGPoint(x: 0, y: 4))
-//        groundDetector.physicsBody?.categoryBitMask = ColliderType.GROUNDDETECTOR
-//        groundDetector.physicsBody?.collisionBitMask = ColliderType.GROUND
-//        groundDetector.physicsBody?.contactTestBitMask = ColliderType.GROUND
-//        spriteComponent.node.addChild(groundDetector)
-//        
-//        let pinJoint = SKPhysicsJointFixed.joint(
-//          withBodyA: spriteComponent.node.physicsBody!,
-//          bodyB: groundDetector.physicsBody!,
-//          anchor: spriteComponent.node.position)
-//        self.physicsWorld.add(pinJoint)
+        //        let groundDetector = SKNode()
+        //        groundDetector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 36, height: 2), center: CGPoint(x: 0, y: 4))
+        //        groundDetector.physicsBody?.categoryBitMask = ColliderType.GROUNDDETECTOR
+        //        groundDetector.physicsBody?.collisionBitMask = ColliderType.GROUND
+        //        groundDetector.physicsBody?.contactTestBitMask = ColliderType.GROUND
+        //        spriteComponent.node.addChild(groundDetector)
+        //
+        //        let pinJoint = SKPhysicsJointFixed.joint(
+        //          withBodyA: spriteComponent.node.physicsBody!,
+        //          bodyB: groundDetector.physicsBody!,
+        //          anchor: spriteComponent.node.position)
+        //        self.physicsWorld.add(pinJoint)
       }
     }
     
@@ -104,38 +92,57 @@ class GameScene: SKScene {
   }
 }
 
+
 //MARK: Physics
 
-//extension GameScene: SKPhysicsContactDelegate {
-//
-//  func didBegin(_ contact: SKPhysicsContact) {
-//    let collision:UInt32 = (contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask)
-//
-//    if collision == (CollisionCategory.PLAYER.rawValue | CollisionCategory.GROUND.rawValue) {
-//      if collisionDirection(contact) == .Bottom {
-//        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
-//          movementComponent.onGround = true
-//        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
-//          movementComponent.onGround = true
-//        }
-//      }
-//    }
-//
-//    if collision == (CollisionCategory.ENEMY.rawValue | CollisionCategory.GROUND.rawValue) {
-//      if collisionDirection(contact) == .Bottom {
-//        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
-//          movementComponent.onGround = true
-//        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
-//          movementComponent.onGround = true
-//        }
-//      }
-//    }
-//  }
-//
-//  private func collisionDirection(_ contact: SKPhysicsContact) -> Collision.Direction {
-//    if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
-//      return .Bottom
-//    }
-//    return .None
-//  }
-//}
+extension GameScene: SKPhysicsContactDelegate {
+  
+  //  func didBegin(_ contact: SKPhysicsContact) {
+  //    handleContact(contact: contact) { (ContactNotifiableType: ContactNotifiableType, otherEntity: GKEntity) in
+  //      ContactNotifiableType.contactWithEntityDidBegin(otherEntity)
+  //    }
+  //  }
+  //
+  //  func handleContact(contact: SKPhysicsContact, contactCallback: (ContactNotifiableType, GKEntity) -> Void) {
+  //    let entityA = contact.bodyA.node?.entity
+  //    let entityB = contact.bodyB.node?.entity
+  //
+  //    /*
+  //     If `entityA` is a notifiable type and `colliderTypeA` specifies that it should be notified
+  //     of contact with `colliderTypeB`, call the callback on `entityA`.
+  //     */
+  //    if let notifiableEntity = entityA as? ContactNotifiableType, let otherEntity = entityB {
+  //      print("entityA")
+  //      contactCallback(notifiableEntity, otherEntity)
+  //    }
+  //
+  //    /*
+  //     If `entityB` is a notifiable type and `colliderTypeB` specifies that it should be notified
+  //     of contact with `colliderTypeA`, call the callback on `entityB`.
+  //     */
+  //    if let notifiableEntity = entityB as? ContactNotifiableType, let otherEntity = entityA {
+  //      print("entityB")
+  //      contactCallback(notifiableEntity, otherEntity)
+  //    }
+  //  }
+  
+  func didBegin(_ contact: SKPhysicsContact) {
+    
+    if contact.bodyA.categoryBitMask == CollisionCategory.GROUND || contact.bodyB.categoryBitMask == CollisionCategory.GROUND {
+      if collisionDirection(contact) == .Bottom {
+        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
+          movementComponent.onGround = true
+        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
+          movementComponent.onGround = true
+        }
+      }
+    }
+  }
+  
+  private func collisionDirection(_ contact: SKPhysicsContact) -> Collision.Direction {
+    if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
+      return .Bottom
+    }
+    return .None
+  }
+}

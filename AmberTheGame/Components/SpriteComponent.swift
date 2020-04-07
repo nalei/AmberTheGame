@@ -22,7 +22,7 @@ class SpriteComponent: GKComponent {
   override func didAddToEntity() {
     node.entity = entity
   }
-  
+
   override func willRemoveFromEntity() {
     node.entity = nil
   }
