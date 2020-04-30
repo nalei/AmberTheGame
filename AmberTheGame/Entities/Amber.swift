@@ -24,6 +24,8 @@ class Amber: GKEntity {
     
     addComponent(MovementComponent())
     
+    addComponent(EnemyMoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent.node.size.width / 2), entityManager: entityManager))
+    
     addComponent(AnimationComponent())
   }
   

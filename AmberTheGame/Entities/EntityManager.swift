@@ -10,14 +10,24 @@ class EntityManager {
   
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
+    let enemyMoveSystem = GKComponentSystem(componentClass: EnemyMoveComponent.self)
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
-    return [moveSystem, animationSystem, parallaxSystem]
+    return [moveSystem, enemyMoveSystem, animationSystem, parallaxSystem]
   }()
   
   init(scene: SKScene, camera: SKCameraNode?) {
     self.camera = camera
     self.scene = scene
+  }
+  
+  func getPlayerEntity() -> GKEntity? {
+    for entity in entities {
+      if let _ = entity.component(ofType: PlayerControlComponent.self) {
+        return entity
+      }
+    }
+    return nil
   }
   
   func add(_ entity: GKEntity) {

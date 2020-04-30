@@ -26,7 +26,7 @@ class WalkingState: GKState {
   override func didEnter(from previousState: GKState?) {    
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
-    spriteComponent.node.run(SKAction(named: "goblin-run")!, withKey: "goblin-run")
+    spriteComponent.node.run(SKAction(named: "amber-run")!, withKey: "amber-run")
     
     if let _ = previousState as? FallingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)

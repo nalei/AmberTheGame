@@ -5,14 +5,12 @@ class GameScene: SKScene {
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
-  // Update time
   var lastUpdateTimeInterval: TimeInterval = 0
-  
-  // Entity manager
   var entityManager: EntityManager!
-  
-  // Character
   var character: GKEntity?
+  
+  
+  // MARK: - Scene Life Cycle
   
   override func sceneDidLoad() {
     self.lastUpdateTimeInterval = 0
@@ -37,28 +35,23 @@ class GameScene: SKScene {
       entityManager.add(character!)
       
       if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
-        spriteComponent.node.texture = amberSprite.texture
         spriteComponent.node.position = amberSprite.position
-        spriteComponent.node.name = "Amber"
+        spriteComponent.node.name = amberSprite.name
         amberSprite.removeFromParent()
-        
-        //        let groundDetector = SKNode()
-        //        groundDetector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 36, height: 2), center: CGPoint(x: 0, y: 4))
-        //        groundDetector.physicsBody?.categoryBitMask = ColliderType.GROUNDDETECTOR
-        //        groundDetector.physicsBody?.collisionBitMask = ColliderType.GROUND
-        //        groundDetector.physicsBody?.contactTestBitMask = ColliderType.GROUND
-        //        spriteComponent.node.addChild(groundDetector)
-        //
-        //        let pinJoint = SKPhysicsJointFixed.joint(
-        //          withBodyA: spriteComponent.node.physicsBody!,
-        //          bodyB: groundDetector.physicsBody!,
-        //          anchor: spriteComponent.node.position)
-        //        self.physicsWorld.add(pinJoint)
       }
     }
     
-    let goblin = Goblin(entityManager: entityManager)
-    entityManager.add(goblin)
+    if let goblinSprite = childNode(withName: "Goblin") as? SKSpriteNode {
+      // Create instance of Goblin entity
+      let goblin = Goblin(entityManager: entityManager)
+      entityManager.add(goblin)
+      
+      if let spriteComponent = goblin.component(ofType: SpriteComponent.self) {
+        spriteComponent.node.position = goblinSprite.position
+        spriteComponent.node.name = goblinSprite.name
+        goblinSprite.removeFromParent()
+      }
+    }
   }
   
   // Camera action
@@ -73,8 +66,6 @@ class GameScene: SKScene {
       )
     }
   }
-  
-  // MARK: Scene Life Cycle
   
   // Called before each frame is rendered
   override func update(_ currentTime: TimeInterval) {
@@ -93,38 +84,9 @@ class GameScene: SKScene {
 }
 
 
-//MARK: Physics
+//MARK: - Physics
 
 extension GameScene: SKPhysicsContactDelegate {
-  
-  //  func didBegin(_ contact: SKPhysicsContact) {
-  //    handleContact(contact: contact) { (ContactNotifiableType: ContactNotifiableType, otherEntity: GKEntity) in
-  //      ContactNotifiableType.contactWithEntityDidBegin(otherEntity)
-  //    }
-  //  }
-  //
-  //  func handleContact(contact: SKPhysicsContact, contactCallback: (ContactNotifiableType, GKEntity) -> Void) {
-  //    let entityA = contact.bodyA.node?.entity
-  //    let entityB = contact.bodyB.node?.entity
-  //
-  //    /*
-  //     If `entityA` is a notifiable type and `colliderTypeA` specifies that it should be notified
-  //     of contact with `colliderTypeB`, call the callback on `entityA`.
-  //     */
-  //    if let notifiableEntity = entityA as? ContactNotifiableType, let otherEntity = entityB {
-  //      print("entityA")
-  //      contactCallback(notifiableEntity, otherEntity)
-  //    }
-  //
-  //    /*
-  //     If `entityB` is a notifiable type and `colliderTypeB` specifies that it should be notified
-  //     of contact with `colliderTypeA`, call the callback on `entityB`.
-  //     */
-  //    if let notifiableEntity = entityB as? ContactNotifiableType, let otherEntity = entityA {
-  //      print("entityB")
-  //      contactCallback(notifiableEntity, otherEntity)
-  //    }
-  //  }
   
   func didBegin(_ contact: SKPhysicsContact) {
     
