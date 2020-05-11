@@ -21,7 +21,7 @@ class EntityManager {
     self.scene = scene
   }
   
-  func getPlayerEntity() -> GKEntity? {
+  func getAmberEntity() -> GKEntity? {
     for entity in entities {
       if let _ = entity.component(ofType: PlayerControlComponent.self) {
         return entity

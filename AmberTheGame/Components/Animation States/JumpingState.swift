@@ -27,7 +27,7 @@ class JumpingState : GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
     spriteComponent.node.removeAllActions()
-    spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-up")
+    spriteComponent.node.texture = animationComponent.jumpUp
     
     spriteComponent.squashAndSretch(xScale: 0.7, yScale: 1.4)
   }

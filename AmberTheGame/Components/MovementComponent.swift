@@ -7,12 +7,12 @@ class MovementComponent : GKComponent {
     case right = 1
   }
   
-  let walkSpeed: CGFloat = 320
-  let maxJump: CGFloat  = 150
+  var walkSpeed: CGFloat = 320 //Default value
+  var maxJump: CGFloat  = 150 //Default value
   var facing: FacingType = .right
   
-  var accel: CGFloat  = 40
-  var decel: CGFloat  = 30
+  var accel: CGFloat  = 40 //Default value
+  var decel: CGFloat  = 30 //Default value
   var hSpeed: CGFloat = 0
   
   var moveButtonPressed: Bool = false
@@ -35,6 +35,14 @@ class MovementComponent : GKComponent {
     return physicsComponent
   }
   
+  init(walkSpeed: CGFloat, maxJump: CGFloat, accel: CGFloat, decel: CGFloat) {
+    super.init()
+    self.walkSpeed = walkSpeed
+    self.maxJump = maxJump
+    self.accel = accel
+    self.decel = decel
+  }
+  
   override init() {
     super.init()
   }
@@ -47,7 +55,6 @@ class MovementComponent : GKComponent {
     moveButtonPressed = true
     self.facing = facing
     spriteComponent.node.xScale = facing.rawValue
-    
   }
   
   func stopMoving() {

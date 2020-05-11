@@ -51,6 +51,16 @@ class GameScene: SKScene {
         spriteComponent.node.name = goblinSprite.name
         goblinSprite.removeFromParent()
       }
+      
+      if let movementComponent = goblin.component(ofType: MovementComponent.self) {
+        movementComponent.moveTo(.left)
+      }
+    }
+    
+    self.enumerateChildNodes(withName: "Goblin") { node, _ in
+      if let goblinSprite = node as? SKSpriteNode {
+        print(goblinSprite)
+      }
     }
   }
   
@@ -91,7 +101,7 @@ extension GameScene: SKPhysicsContactDelegate {
   func didBegin(_ contact: SKPhysicsContact) {
     
     if contact.bodyA.categoryBitMask == CollisionCategory.GROUND || contact.bodyB.categoryBitMask == CollisionCategory.GROUND {
-      if collisionDirection(contact) == .Bottom {
+      if collisionDirection(contact) == .bottom {
         if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
           movementComponent.onGround = true
         } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
@@ -99,12 +109,38 @@ extension GameScene: SKPhysicsContactDelegate {
         }
       }
     }
+    
+    let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+    if collision == CollisionCategory.ENEMY | CollisionCategory.GROUND {
+      if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
+        if collisionDirection(contact) == .left && movementComponent.facing == .left {
+          movementComponent.moveTo(.right)
+        }
+        if collisionDirection(contact) == .right && movementComponent.facing == .right {
+          movementComponent.moveTo(.left)
+        }
+      } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
+        if collisionDirection(contact) == .left && movementComponent.facing == .left {
+          movementComponent.moveTo(.right)
+        }
+        if collisionDirection(contact) == .right && movementComponent.facing == .right {
+          movementComponent.moveTo(.left)
+        }
+      }
+    }
+    
   }
   
-  private func collisionDirection(_ contact: SKPhysicsContact) -> Collision.Direction {
+  private func collisionDirection(_ contact: SKPhysicsContact) -> CollisionCategory.Direction {
     if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
-      return .Bottom
+      return .bottom
     }
-    return .None
+    if contact.contactNormal.dx == 1 {
+      return .left
+    }
+    if contact.contactNormal.dx == -1 {
+      return .right
+    }
+    return .none
   }
 }

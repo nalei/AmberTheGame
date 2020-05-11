@@ -27,7 +27,7 @@ class FallingState : GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
     spriteComponent.node.removeAllActions()
-    spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-middle")
+    spriteComponent.node.texture = animationComponent.jumpMiddle
   }
   
   override func update(deltaTime seconds: TimeInterval) {
@@ -35,7 +35,7 @@ class FallingState : GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
 
     if (spriteComponent.node.physicsBody?.velocity.dy)! < -400 {
-      spriteComponent.node.texture = SKTexture(imageNamed: "amber-jump-down")
+      spriteComponent.node.texture = animationComponent.jumpDown
     }
   }
 }

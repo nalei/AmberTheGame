@@ -12,7 +12,6 @@ class EnemyMoveComponent: GKAgent2D, GKAgentDelegate {
     self.maxAcceleration = maxAcceleration
     self.radius = radius
     self.mass = 0.01
-    print(self.mass)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -38,15 +37,15 @@ class EnemyMoveComponent: GKAgent2D, GKAgentDelegate {
   }
   
   /// Возвращает EnemyMoveComponent игрока
-  func getPlayerMoveComponent() -> GKAgent2D? {
-    let playerEntity = entityManager.getPlayerEntity()
+  func getAmberMoveComponent() -> GKAgent2D? {
+    let playerEntity = entityManager.getAmberEntity()
     return playerEntity?.component(ofType: EnemyMoveComponent.self)
   }
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
-    guard let amberMoveComponent = getPlayerMoveComponent() else {
+    guard let amberMoveComponent = getAmberMoveComponent() else {
       return
     }
     

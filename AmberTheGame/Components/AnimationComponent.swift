@@ -9,8 +9,20 @@ class AnimationComponent: GKComponent {
   */
   var stateMachine: GKStateMachine!
   
-  override init() {
+  var idle: SKTexture?
+  var run: SKAction?
+  var jumpUp: SKTexture?
+  var jumpMiddle: SKTexture?
+  var jumpDown: SKTexture?
+  
+  init(idle: SKTexture?, run: SKAction?, jumpUp: SKTexture?, jumpMiddle: SKTexture?, jumpDown: SKTexture?) {
     super.init()
+    
+    self.idle = idle
+    self.run = run
+    self.jumpUp = jumpUp ?? idle
+    self.jumpMiddle = jumpMiddle ?? jumpUp ?? idle
+    self.jumpDown = jumpDown ?? jumpMiddle ?? jumpUp ?? idle
     
     stateMachine = GKStateMachine(states: [
       IdleState(animationComponent: self),
