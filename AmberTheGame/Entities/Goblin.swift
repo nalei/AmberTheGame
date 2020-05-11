@@ -32,7 +32,7 @@ class Goblin: GKEntity {
       jumpDown: nil
     ))
     
-    //addComponent(EnemyMoveComponent(maxSpeed: 1200, maxAcceleration: 40, radius: Float(texture.size().width * 0.3), entityManager: entityManager))
+    //addComponent(FlyComponent(maxSpeed: 1200, maxAcceleration: 40, radius: Float(texture.size().width * 0.3), entityManager: entityManager))
   }
   
   required init?(coder aDecoder: NSCoder) {

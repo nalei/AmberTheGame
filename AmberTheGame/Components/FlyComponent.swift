@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class EnemyMoveComponent: GKAgent2D, GKAgentDelegate {
+class FlyComponent: GKAgent2D, GKAgentDelegate {
   let entityManager: EntityManager
   
   init(maxSpeed: Float, maxAcceleration: Float, radius: Float, entityManager: EntityManager) {
@@ -36,10 +36,10 @@ class EnemyMoveComponent: GKAgent2D, GKAgentDelegate {
     spriteComponent.node.position = CGPoint(position)
   }
   
-  /// Возвращает EnemyMoveComponent игрока
+  /// Возвращает FlyComponent игрока
   func getAmberMoveComponent() -> GKAgent2D? {
     let playerEntity = entityManager.getAmberEntity()
-    return playerEntity?.component(ofType: EnemyMoveComponent.self)
+    return playerEntity?.component(ofType: FlyComponent.self)
   }
   
   override func update(deltaTime seconds: TimeInterval) {
@@ -47,6 +47,15 @@ class EnemyMoveComponent: GKAgent2D, GKAgentDelegate {
     
     guard let amberMoveComponent = getAmberMoveComponent() else {
       return
+    }
+    
+    if let spriteComponent = entity?.component(ofType: SpriteComponent.self) {
+      if velocity.x < 0 {
+        spriteComponent.node.xScale = -1
+      }
+      if velocity.x > 0 {
+        spriteComponent.node.xScale = 1
+      }
     }
     
     // Поведение

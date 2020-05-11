@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2223D3273A002FFE8C /* SpriteComponent.swift */; };
 		1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2423D32869002FFE8C /* EntityManager.swift */; };
-		1E118C2723D3A669002FFE8C /* EnemyMoveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */; };
+		1E118C2723D3A669002FFE8C /* FlyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2623D3A669002FFE8C /* FlyComponent.swift */; };
 		1E118C2923D44741002FFE8C /* EnemyMoveBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */; };
 		1E362EF523EEECD60006B6AE /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E362EF323EEECD60006B6AE /* MyTileSet.sks */; };
 		1E3DF9EB23F7F5B200B69080 /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3DF9EA23F7F5B200B69080 /* Collision.swift */; };
@@ -21,6 +21,8 @@
 		1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */; };
 		1E60B25F242D1F4F00ABB505 /* Goblin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
+		1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E99C9CD2469966E00930779 /* Bat.xcassets */; };
+		1E99C9D02469997E00930779 /* Bat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E99C9CF2469997E00930779 /* Bat.swift */; };
 		1EB7B4AF2416237800F0FA54 /* ParralaxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB7B4AE2416237800F0FA54 /* ParralaxComponent.swift */; };
 		1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EBF079E23EED26800BB2A80 /* Tiles.xcassets */; };
 		1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1660323CA2E2F0055452D /* AppDelegate.swift */; };
@@ -44,7 +46,7 @@
 /* Begin PBXFileReference section */
 		1E118C2223D3273A002FFE8C /* SpriteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
 		1E118C2423D32869002FFE8C /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
-		1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyMoveComponent.swift; sourceTree = "<group>"; };
+		1E118C2623D3A669002FFE8C /* FlyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlyComponent.swift; sourceTree = "<group>"; };
 		1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyMoveBehavior.swift; sourceTree = "<group>"; };
 		1E362EF323EEECD60006B6AE /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
 		1E3DF9EA23F7F5B200B69080 /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
@@ -56,6 +58,8 @@
 		1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
 		1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Goblin.xcassets; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
+		1E99C9CD2469966E00930779 /* Bat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bat.xcassets; sourceTree = "<group>"; };
+		1E99C9CF2469997E00930779 /* Bat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bat.swift; sourceTree = "<group>"; };
 		1EB7B4AE2416237800F0FA54 /* ParralaxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParralaxComponent.swift; sourceTree = "<group>"; };
 		1EBF079E23EED26800BB2A80 /* Tiles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tiles.xcassets; sourceTree = "<group>"; };
 		1EC1660023CA2E2F0055452D /* AmberTheGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmberTheGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +181,7 @@
 				1EC1661023CA2E310055452D /* images.xcassets */,
 				1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */,
 				1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */,
+				1E99C9CD2469966E00930779 /* Bat.xcassets */,
 				1EBF079D23EEC20F00BB2A80 /* Tiles */,
 			);
 			path = Assets;
@@ -205,6 +210,7 @@
 				1E118C2423D32869002FFE8C /* EntityManager.swift */,
 				1EFDAA5423CFA8E60081527C /* Amber.swift */,
 				1E5AD009242738F1002CEE01 /* Goblin.swift */,
+				1E99C9CF2469997E00930779 /* Bat.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -216,7 +222,7 @@
 				1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */,
 				1E50353423D63B9F0010B16E /* MovementComponent.swift */,
 				1EFDAA5723CFAAA70081527C /* PlayerControlComponent.swift */,
-				1E118C2623D3A669002FFE8C /* EnemyMoveComponent.swift */,
+				1E118C2623D3A669002FFE8C /* FlyComponent.swift */,
 				1E118C2823D44741002FFE8C /* EnemyMoveBehavior.swift */,
 				1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */,
 				1E50353823DDA8CA0010B16E /* Animation States */,
@@ -292,6 +298,7 @@
 				1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */,
 				1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */,
 				1EC1660823CA2E2F0055452D /* Actions.sks in Resources */,
+				1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,9 +328,10 @@
 				1EB7B4AF2416237800F0FA54 /* ParralaxComponent.swift in Sources */,
 				1E5AD008242735F9002CEE01 /* Utils.swift in Sources */,
 				1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */,
+				1E99C9D02469997E00930779 /* Bat.swift in Sources */,
 				1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */,
 				1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */,
-				1E118C2723D3A669002FFE8C /* EnemyMoveComponent.swift in Sources */,
+				1E118C2723D3A669002FFE8C /* FlyComponent.swift in Sources */,
 				1EC1662623CB78920055452D /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

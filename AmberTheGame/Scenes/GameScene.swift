@@ -58,6 +58,21 @@ class GameScene: SKScene {
         }
       }
     }
+    
+    enumerateChildNodes(withName: "Bat") { node, _ in
+      if let batSprite = node as? SKSpriteNode {
+        // Create instance of Bat entity
+        let bat = Bat(entityManager: self.entityManager)
+        self.entityManager.add(bat)
+        
+        if let spriteComponent = bat.component(ofType: SpriteComponent.self) {
+          spriteComponent.node.position = batSprite.position
+          spriteComponent.node.name = batSprite.name
+          batSprite.removeFromParent()
+          spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
+        }
+      }
+    }
   }
   
   // Camera action

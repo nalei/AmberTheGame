@@ -31,7 +31,7 @@ class Amber: GKEntity {
       jumpDown: SKTexture(imageNamed: "amber-jump-down")
     ))
     
-    //addComponent(EnemyMoveComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent.node.size.width / 2), entityManager: entityManager))
+    addComponent(FlyComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent.node.size.width / 2), entityManager: entityManager))
   }
   
   required init?(coder aDecoder: NSCoder) {

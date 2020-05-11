@@ -10,10 +10,10 @@ class EntityManager {
   
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
-    let enemyMoveSystem = GKComponentSystem(componentClass: EnemyMoveComponent.self)
+    let flySystem = GKComponentSystem(componentClass: FlyComponent.self)
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
-    return [moveSystem, enemyMoveSystem, animationSystem, parallaxSystem]
+    return [moveSystem, flySystem, animationSystem, parallaxSystem]
   }()
   
   init(scene: SKScene, camera: SKCameraNode?) {
