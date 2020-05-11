@@ -41,25 +41,21 @@ class GameScene: SKScene {
       }
     }
     
-    if let goblinSprite = childNode(withName: "Goblin") as? SKSpriteNode {
-      // Create instance of Goblin entity
-      let goblin = Goblin(entityManager: entityManager)
-      entityManager.add(goblin)
-      
-      if let spriteComponent = goblin.component(ofType: SpriteComponent.self) {
-        spriteComponent.node.position = goblinSprite.position
-        spriteComponent.node.name = goblinSprite.name
-        goblinSprite.removeFromParent()
-      }
-      
-      if let movementComponent = goblin.component(ofType: MovementComponent.self) {
-        movementComponent.moveTo(.left)
-      }
-    }
-    
-    self.enumerateChildNodes(withName: "Goblin") { node, _ in
+    enumerateChildNodes(withName: "Goblin") { node, _ in
       if let goblinSprite = node as? SKSpriteNode {
-        print(goblinSprite)
+        // Create instance of Goblin entity
+        let goblin = Goblin(entityManager: self.entityManager)
+        self.entityManager.add(goblin)
+        
+        if let spriteComponent = goblin.component(ofType: SpriteComponent.self) {
+          spriteComponent.node.position = goblinSprite.position
+          spriteComponent.node.name = goblinSprite.name
+          goblinSprite.removeFromParent()
+        }
+        
+        if let movementComponent = goblin.component(ofType: MovementComponent.self) {
+          movementComponent.moveTo(.left)
+        }
       }
     }
   }
