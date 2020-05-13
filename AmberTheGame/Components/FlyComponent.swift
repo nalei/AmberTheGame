@@ -37,7 +37,7 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
   }
   
   /// Возвращает FlyComponent игрока
-  func getAmberMoveComponent() -> GKAgent2D? {
+  func getAmberFlyComponent() -> GKAgent2D? {
     let playerEntity = entityManager.getAmberEntity()
     return playerEntity?.component(ofType: FlyComponent.self)
   }
@@ -45,9 +45,12 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
-    guard let amberMoveComponent = getAmberMoveComponent() else {
+    guard let targetFlyComponent = getAmberFlyComponent() else {
       return
     }
+    
+    // Все FlyComponent
+    let alliedFlyComponents = entityManager.getAllFlyComponents()
     
     if let spriteComponent = entity?.component(ofType: SpriteComponent.self) {
       if velocity.x < 0 {
@@ -59,7 +62,7 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
     }
     
     // Поведение
-    behavior = EnemyMoveBehavior(targetSpeed: maxSpeed, seek: amberMoveComponent)
+    behavior = EnemyMoveBehavior(targetSpeed: maxSpeed, seek: targetFlyComponent, avoid: alliedFlyComponents)
   }
 }
 

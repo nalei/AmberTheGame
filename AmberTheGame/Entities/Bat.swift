@@ -23,7 +23,7 @@ class Bat: GKEntity {
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     
-    addComponent(FlyComponent(maxSpeed: 800, maxAcceleration: 40, radius: Float(texture.size().width * 0.3), entityManager: entityManager))
+    addComponent(FlyComponent(maxSpeed: 800, maxAcceleration: 40, radius: Float(texture.size().width), entityManager: entityManager))
   }
   
   required init?(coder aDecoder: NSCoder) {

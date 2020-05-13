@@ -30,6 +30,16 @@ class EntityManager {
     return nil
   }
   
+  func getAllFlyComponents() -> [FlyComponent] {
+    var flyComponents = [FlyComponent]()
+    for entity in entities {
+      if let flyComponent = entity.component(ofType: FlyComponent.self) {
+        flyComponents.append(flyComponent)
+      }
+    }
+    return flyComponents
+  }
+  
   func add(_ entity: GKEntity) {
     entities.insert(entity)
     
