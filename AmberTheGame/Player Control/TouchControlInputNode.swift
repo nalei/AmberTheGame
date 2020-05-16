@@ -60,7 +60,7 @@ class TouchControlInputNode: SKSpriteNode {
     self.addChild(button)
   }
   
-  // MARK: UIResponder
+  // MARK: - UIResponder
   
   private func buttonPressed(_ button: ButtonNode) {
     let insertionResult = pressedButtons.insert(button)

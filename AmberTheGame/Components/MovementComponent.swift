@@ -79,7 +79,7 @@ class MovementComponent : GKComponent {
     jumpButtonPressed = false
   }
   
-  // MARK: GKComponent Life Cycle
+  // MARK: - GKComponent Life Cycle
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
@@ -131,7 +131,7 @@ class MovementComponent : GKComponent {
     spriteComponent.node.yScale = approach(start: spriteComponent.node.yScale, end: 1, shift: 0.04)
   }
   
-  // MARK: Helper
+  // MARK: - Helper
   
   private func approach(start: CGFloat, end: CGFloat, shift: CGFloat) -> CGFloat {
     return start < end

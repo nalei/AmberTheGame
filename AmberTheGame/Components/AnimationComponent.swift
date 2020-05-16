@@ -3,9 +3,9 @@ import GameplayKit
 
 class AnimationComponent: GKComponent {
   /**
-      The state machine for this `AnimationComponent`. Defined as an implicitly
-      unwrapped optional property, because it is created during initialization,
-      but cannot be created until after we have called super.init().
+    The state machine for this `AnimationComponent`. Defined as an implicitly
+    unwrapped optional property, because it is created during initialization,
+    but cannot be created until after we have called super.init().
   */
   var stateMachine: GKStateMachine!
   

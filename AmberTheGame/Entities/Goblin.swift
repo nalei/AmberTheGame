@@ -19,7 +19,7 @@ class Goblin: GKEntity {
     physicsComponent.physicsBody.mass = 0.10
     addComponent(physicsComponent)
     
-    // Connect the `PhysicsComponent` and the `SpriteComponent`.
+    /// Connect the `PhysicsComponent` and the `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
     addComponent(MovementComponent(walkSpeed: 300, maxJump: 150, accel: 300, decel: 300))
@@ -31,8 +31,6 @@ class Goblin: GKEntity {
       jumpMiddle: nil,
       jumpDown: nil
     ))
-    
-    //addComponent(FlyComponent(maxSpeed: 1200, maxAcceleration: 40, radius: Float(texture.size().width * 0.3), entityManager: entityManager))
   }
   
   required init?(coder aDecoder: NSCoder) {

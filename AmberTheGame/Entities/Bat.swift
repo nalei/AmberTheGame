@@ -19,7 +19,7 @@ class Bat: GKEntity {
     physicsComponent.physicsBody.affectedByGravity = false
     addComponent(physicsComponent)
     
-    // Connect the `PhysicsComponent` and the `SpriteComponent`.
+    /// Connect the `PhysicsComponent` and the `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     

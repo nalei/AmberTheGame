@@ -19,6 +19,7 @@ class GameScene: SKScene {
   override func didMove(to view: SKView) {
     self.physicsWorld.contactDelegate = self
     
+    /// Create instance of `EntityManager`
     entityManager = EntityManager(scene: self, camera: camera)
     
     for entity in self.entities {
@@ -30,7 +31,8 @@ class GameScene: SKScene {
     }
     
     if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode, let camera = self.camera {
-      // Create instance of Amber entity
+      
+      /// Create instance of `Amber` entity
       character = Amber(camera: camera, scene: self, entityManager: entityManager)
       entityManager.add(character!)
       
@@ -43,7 +45,8 @@ class GameScene: SKScene {
     
     enumerateChildNodes(withName: "Goblin") { node, _ in
       if let goblinSprite = node as? SKSpriteNode {
-        // Create instance of Goblin entity
+
+        /// Create instance of `Goblin` entity
         let goblin = Goblin(entityManager: self.entityManager)
         self.entityManager.add(goblin)
         
@@ -61,7 +64,8 @@ class GameScene: SKScene {
     
     enumerateChildNodes(withName: "Bat") { node, _ in
       if let batSprite = node as? SKSpriteNode {
-        // Create instance of Bat entity
+        
+        /// Create instance of `Bat` entity
         let bat = Bat(entityManager: self.entityManager)
         self.entityManager.add(bat)
         
@@ -75,7 +79,6 @@ class GameScene: SKScene {
     }
   }
   
-  // Camera action
   override func didSimulatePhysics() {
     guard let camera = self.camera else { return }
     if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
@@ -88,15 +91,14 @@ class GameScene: SKScene {
     }
   }
   
-  // Called before each frame is rendered
   override func update(_ currentTime: TimeInterval) {
     
-    // Initialize _lastUpdateTime if it has not already been
+    /// Инициализируем `lastUpdateTime`, если ешё не был инициализирован
     if (self.lastUpdateTimeInterval == 0) {
       self.lastUpdateTimeInterval = currentTime
     }
     
-    // Calculate time since last update
+    /// Рассчитываем время с момента последнего обновления
     let deltaTime = currentTime - self.lastUpdateTimeInterval
     self.lastUpdateTimeInterval = currentTime
     

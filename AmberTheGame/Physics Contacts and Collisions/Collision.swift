@@ -1,6 +1,10 @@
 import SpriteKit
 import GameplayKit
 
+protocol ContactNotifiableType {
+  func contactWithEntityDidBegin(_ entity: GKEntity)
+}
+
 struct CollisionCategory: OptionSet {
   let rawValue: UInt32
   

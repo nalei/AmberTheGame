@@ -18,7 +18,7 @@ class Amber: GKEntity {
     physicsComponent.physicsBody.mass = 0.15
     addComponent(physicsComponent)
     
-    // Connect the `PhysicsComponent` and the `SpriteComponent`.
+    /// Connect the `PhysicsComponent` and the `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
     addComponent(PlayerControlComponent(camera: camera, scene: scene))
