@@ -2,13 +2,13 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+  
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
   var lastUpdateTimeInterval: TimeInterval = 0
   var entityManager: EntityManager!
   var character: GKEntity?
-  
   
   // MARK: - Scene Life Cycle
   
@@ -19,7 +19,6 @@ class GameScene: SKScene {
   override func didMove(to view: SKView) {
     self.physicsWorld.contactDelegate = self
     
-    /// Create instance of `EntityManager`
     entityManager = EntityManager(scene: self, camera: camera)
     
     for entity in self.entities {
@@ -32,7 +31,7 @@ class GameScene: SKScene {
     
     if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode, let camera = self.camera {
       
-      /// Create instance of `Amber` entity
+      /// Создаем инстанс `Amber` entity
       character = Amber(camera: camera, scene: self, entityManager: entityManager)
       entityManager.add(character!)
       
@@ -46,7 +45,7 @@ class GameScene: SKScene {
     enumerateChildNodes(withName: "Goblin") { node, _ in
       if let goblinSprite = node as? SKSpriteNode {
 
-        /// Create instance of `Goblin` entity
+        /// Создаем инстанс`Goblin` entity
         let goblin = Goblin(entityManager: self.entityManager)
         self.entityManager.add(goblin)
         
@@ -65,7 +64,7 @@ class GameScene: SKScene {
     enumerateChildNodes(withName: "Bat") { node, _ in
       if let batSprite = node as? SKSpriteNode {
         
-        /// Create instance of `Bat` entity
+        /// Создаем инстанс`Bat` entity
         let bat = Bat(entityManager: self.entityManager)
         self.entityManager.add(bat)
         

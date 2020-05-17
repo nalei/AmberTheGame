@@ -20,6 +20,7 @@ class GameViewController: UIViewController {
         
         // Resize the scene to better use the device aspect ratio.
         let scaleFactor = sceneNode.size.height / view.bounds.height
+        
         // Set the scale mode to scale to fit the window
         sceneNode.scaleMode = .aspectFill
         sceneNode.size.width = view.bounds.width * scaleFactor

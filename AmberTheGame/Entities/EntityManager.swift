@@ -30,7 +30,7 @@ class EntityManager {
     return nil
   }
   
-  /// Возвращает массив всех FlyComponent
+  /// Возвращает массив всех `FlyComponent`
   func getAllFlyComponents() -> [FlyComponent] {
     var flyComponents = [FlyComponent]()
     for entity in entities {
