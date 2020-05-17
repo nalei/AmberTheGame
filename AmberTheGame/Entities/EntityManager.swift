@@ -48,8 +48,8 @@ class EntityManager {
       scene.addChild(spriteNode)
     }
     
-    if let parralaxComponent = entity.component(ofType: ParallaxComponent.self) {
-      parralaxComponent.prepareWith(camera: camera)
+    if let parallaxComponent = entity.component(ofType: ParallaxComponent.self) {
+      parallaxComponent.prepareWith(camera: camera)
     }
     
     for componentSystem in componentSystems {

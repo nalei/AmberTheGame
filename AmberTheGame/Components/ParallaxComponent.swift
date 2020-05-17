@@ -3,7 +3,7 @@ import SpriteKit
 
 class ParallaxComponent: GKComponent {
   
-  @GKInspectable var layer: Int = 1
+  var layer: Int = 1
   var camera: SKCameraNode?
   var spriteNode: SKNode?
   var dX: CGFloat = 1.1

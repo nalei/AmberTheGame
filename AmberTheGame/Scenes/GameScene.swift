@@ -21,10 +21,6 @@ class GameScene: SKScene {
     
     entityManager = EntityManager(scene: self, camera: camera)
     
-    for entity in self.entities {
-      entityManager.add(entity)
-    }
-    
     if let foregroundMap = childNode(withName: "ForegroundMap") as? SKTileMapNode {
       giveTileMapPhysicsBody(tileMap: foregroundMap)
     }
@@ -39,6 +35,28 @@ class GameScene: SKScene {
         spriteComponent.node.position = amberSprite.position
         spriteComponent.node.name = amberSprite.name
         amberSprite.removeFromParent()
+      }
+    }
+    
+    enumerateChildNodes(withName: "ParallaxBg") { node, _ in
+      if let parralaxBgSprite = node as? SKSpriteNode, let texture = parralaxBgSprite.texture {
+        
+        let parralaxBg = GKEntity()
+        let nodeComponent = GKSKNodeComponent(node: parralaxBgSprite)
+        let parallaxComponent = ParallaxComponent()
+        
+        switch texture.description {
+        case _ where texture.description.contains("clouds"):
+          parallaxComponent.layer = 6
+        case _ where texture.description.contains("sea"):
+          parallaxComponent.layer = 7
+        default:
+          print("texture: \(String(describing: texture.description))")
+        }
+        
+        parralaxBg.addComponent(nodeComponent)
+        parralaxBg.addComponent(parallaxComponent)
+        self.entityManager.add(parralaxBg)
       }
     }
     
