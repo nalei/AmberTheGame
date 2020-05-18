@@ -19,6 +19,7 @@
 		1E5AD008242735F9002CEE01 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD007242735F9002CEE01 /* Utils.swift */; };
 		1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD009242738F1002CEE01 /* Goblin.swift */; };
 		1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */; };
+		1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */; };
 		1E60B25F242D1F4F00ABB505 /* Goblin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
 		1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E99C9CD2469966E00930779 /* Bat.xcassets */; };
@@ -55,6 +56,7 @@
 		1E5AD007242735F9002CEE01 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1E5AD009242738F1002CEE01 /* Goblin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goblin.swift; sourceTree = "<group>"; };
 		1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
+		1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxBg.swift; sourceTree = "<group>"; };
 		1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Goblin.xcassets; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
 		1E99C9CD2469966E00930779 /* Bat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bat.xcassets; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				1EFDAA5423CFA8E60081527C /* Amber.swift */,
 				1E5AD009242738F1002CEE01 /* Goblin.swift */,
 				1E99C9CF2469997E00930779 /* Bat.swift */,
+				1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */,
+				1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */,
 				1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */,
 				1EC1660A23CA2E2F0055452D /* GameScene.swift in Sources */,
 				1EC1660C23CA2E2F0055452D /* GameViewController.swift in Sources */,

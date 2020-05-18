@@ -34,25 +34,15 @@ class GameScene: SKScene {
       if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
         spriteComponent.node.position = amberSprite.position
         spriteComponent.node.name = amberSprite.name
-        amberSprite.removeFromParent()
+//        amberSprite.removeFromParent()
       }
     }
     
     enumerateChildNodes(withName: "ParallaxBg") { node, _ in
-      if let parralaxBgSprite = node as? SKSpriteNode, let texture = parralaxBgSprite.texture {
+      if let parralaxBgSprite = node as? SKSpriteNode {
         
-        let parralaxBg = GKEntity()
-        let nodeComponent = GKSKNodeComponent(node: parralaxBgSprite)
-        parralaxBg.addComponent(nodeComponent)
-        
-        let parallaxComponent = ParallaxComponent()
-        if texture.description.contains("clouds") {
-          parallaxComponent.layer = 7
-        }else if texture.description.contains("sea") {
-          parallaxComponent.layer = 6
-        }
-        parralaxBg.addComponent(parallaxComponent)
-        
+        /// Создаем инстанс `ParallaxBg` entity
+        let parralaxBg = ParallaxBg(spriteNode: parralaxBgSprite)
         self.entityManager.add(parralaxBg)
       }
     }
