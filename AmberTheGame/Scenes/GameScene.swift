@@ -43,19 +43,16 @@ class GameScene: SKScene {
         
         let parralaxBg = GKEntity()
         let nodeComponent = GKSKNodeComponent(node: parralaxBgSprite)
-        let parallaxComponent = ParallaxComponent()
-        
-        switch texture.description {
-        case _ where texture.description.contains("clouds"):
-          parallaxComponent.layer = 6
-        case _ where texture.description.contains("sea"):
-          parallaxComponent.layer = 7
-        default:
-          print("texture: \(String(describing: texture.description))")
-        }
-        
         parralaxBg.addComponent(nodeComponent)
+        
+        let parallaxComponent = ParallaxComponent()
+        if texture.description.contains("clouds") {
+          parallaxComponent.layer = 7
+        }else if texture.description.contains("sea") {
+          parallaxComponent.layer = 6
+        }
         parralaxBg.addComponent(parallaxComponent)
+        
         self.entityManager.add(parralaxBg)
       }
     }
