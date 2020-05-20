@@ -135,6 +135,7 @@
 		1EC165F723CA2E2F0055452D = {
 			isa = PBXGroup;
 			children = (
+				1EE7C21824750B9700789FA4 /* .gitignore */,
 				1EC1660223CA2E2F0055452D /* AmberTheGame */,
 				1EC1660123CA2E2F0055452D /* Products */,
 			);
@@ -164,7 +165,6 @@
 				1EC1660D23CA2E2F0055452D /* Main.storyboard */,
 				1EC1661223CA2E310055452D /* LaunchScreen.storyboard */,
 				1EC1661523CA2E310055452D /* Info.plist */,
-				1EE7C21824750B9700789FA4 /* .gitignore */,
 			);
 			path = AmberTheGame;
 			sourceTree = "<group>";
