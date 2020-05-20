@@ -34,7 +34,7 @@ class GameScene: SKScene {
       if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
         spriteComponent.node.position = amberSprite.position
         spriteComponent.node.name = amberSprite.name
-//        amberSprite.removeFromParent()
+        amberSprite.removeFromParent()
       }
     }
     
