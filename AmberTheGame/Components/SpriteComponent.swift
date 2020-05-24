@@ -27,13 +27,3 @@ class SpriteComponent: GKComponent {
     node.entity = nil
   }
 }
-
-extension SKSpriteNode {
-  func drawBorder(color: UIColor, width: CGFloat) {
-    let shapeNode = SKShapeNode(rect: frame)
-    shapeNode.fillColor = .clear
-    shapeNode.strokeColor = color
-    shapeNode.lineWidth = width
-    addChild(shapeNode)
-  }
-}

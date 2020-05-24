@@ -3,10 +3,12 @@ import SpriteKit
 import GameplayKit
 
 class EntityManager {
-  let camera: SKCameraNode?
   let scene: SKScene
   var entities = Set<GKEntity>()
   var toRemove = Set<GKEntity>()
+  
+  var obstacles = [GKObstacle]()
+  
   
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
@@ -16,9 +18,9 @@ class EntityManager {
     return [moveSystem, flySystem, animationSystem, parallaxSystem]
   }()
   
-  init(scene: SKScene, camera: SKCameraNode?) {
-    self.camera = camera
+  init(scene: SKScene, obstacles: [GKObstacle]) {
     self.scene = scene
+    self.obstacles = obstacles
   }
   
   func getAmberEntity() -> GKEntity? {
@@ -46,10 +48,6 @@ class EntityManager {
     
     if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
       scene.addChild(spriteNode)
-    }
-    
-    if let parallaxComponent = entity.component(ofType: ParallaxComponent.self) {
-      parallaxComponent.prepareWith(camera: camera)
     }
     
     for componentSystem in componentSystems {

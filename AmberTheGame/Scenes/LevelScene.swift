@@ -1,34 +1,63 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
-  
+class LevelScene: SKScene {
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
-  var lastUpdateTimeInterval: TimeInterval = 0
-  var entityManager: EntityManager!
+  // Playable character
   var character: GKEntity?
+  
+  // Update time
+  var lastUpdateTimeInterval: TimeInterval = 0
+  
+  // Entity manager
+  var entityManager: EntityManager!
+  
+  
+  // MARK: - Pathfinding
+  
+  let graph = GKObstacleGraph(obstacles: [], bufferRadius: 60.0)
+  lazy var obstacleSpriteNodes: [SKSpriteNode] = self["Idol"] as! [SKSpriteNode]
+  lazy var polygonObstacles: [GKPolygonObstacle] = SKNode.obstacles(fromNodePhysicsBodies: self.obstacleSpriteNodes)
+  
+  
+  // MARK: - Pathfinding Debug
+  
+  var debugDrawingEnabled = false {
+    didSet {
+      debugDrawingEnabledDidChange()
+    }
+  }
+  
+  var graphLayer = SKNode()
+  var debugObstacleLayer = SKNode()
+  
   
   // MARK: - Scene Life Cycle
   
-  override func sceneDidLoad() {
-    self.lastUpdateTimeInterval = 0
-  }
-  
   override func didMove(to view: SKView) {
+    super.didMove(to: view)
+    
+    self.lastUpdateTimeInterval = 0
+    
     self.physicsWorld.contactDelegate = self
     
-    entityManager = EntityManager(scene: self, camera: camera)
+    // Добавляем препятствия в граф поиска пути
+    graph.addObstacles(polygonObstacles)
     
+    // Создаем инстанс `EntityManager` entity
+    entityManager = EntityManager(scene: self, obstacles: polygonObstacles)
+    
+    // Создаем физическое тело для `ForegroundMap`
     if let foregroundMap = childNode(withName: "ForegroundMap") as? SKTileMapNode {
       giveTileMapPhysicsBody(tileMap: foregroundMap)
     }
     
-    if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode, let camera = self.camera {
+    if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
       
-      /// Создаем инстанс `Amber` entity
-      character = Amber(camera: camera, scene: self, entityManager: entityManager)
+      // Создаем инстанс `Amber` entity
+      character = Amber(camera: self.camera, scene: self, entityManager: entityManager)
       entityManager.add(character!)
       
       if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
@@ -38,49 +67,58 @@ class GameScene: SKScene {
       }
     }
     
-    enumerateChildNodes(withName: "ParallaxBg") { node, _ in
-      if let parralaxBgSprite = node as? SKSpriteNode {
-        
-        /// Создаем инстанс `ParallaxBg` entity
-        let parralaxBg = ParallaxBg(spriteNode: parralaxBgSprite)
-        self.entityManager.add(parralaxBg)
-      }
-    }
-    
     enumerateChildNodes(withName: "Goblin") { node, _ in
-      if let goblinSprite = node as? SKSpriteNode {
-
-        /// Создаем инстанс`Goblin` entity
-        let goblin = Goblin(entityManager: self.entityManager)
-        self.entityManager.add(goblin)
-        
-        if let spriteComponent = goblin.component(ofType: SpriteComponent.self) {
-          spriteComponent.node.position = goblinSprite.position
-          spriteComponent.node.name = goblinSprite.name
-          goblinSprite.removeFromParent()
-        }
-        
-        if let movementComponent = goblin.component(ofType: MovementComponent.self) {
-          movementComponent.moveTo(.left)
-        }
+      
+      // Создаем инстанс`Goblin` entity
+      let goblin = Goblin(entityManager: self.entityManager)
+      self.entityManager.add(goblin)
+      
+      if let spriteComponent = goblin.component(ofType: SpriteComponent.self) {
+        spriteComponent.node.position = node.position
+        spriteComponent.node.name = node.name
+        node.removeFromParent()
+      }
+      
+      if let movementComponent = goblin.component(ofType: MovementComponent.self) {
+        movementComponent.moveTo(.left)
       }
     }
     
     enumerateChildNodes(withName: "Bat") { node, _ in
-      if let batSprite = node as? SKSpriteNode {
-        
-        /// Создаем инстанс`Bat` entity
-        let bat = Bat(entityManager: self.entityManager)
-        self.entityManager.add(bat)
-        
-        if let spriteComponent = bat.component(ofType: SpriteComponent.self) {
-          spriteComponent.node.position = batSprite.position
-          spriteComponent.node.name = batSprite.name
-          batSprite.removeFromParent()
-          spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
-        }
+      
+      // Создаем инстанс `Bat` entity
+      let bat = Bat(entityManager: self.entityManager)
+      self.entityManager.add(bat)
+      
+      if let spriteComponent = bat.component(ofType: SpriteComponent.self) {
+        spriteComponent.node.position = node.position
+        spriteComponent.node.name = node.name
+        node.removeFromParent()
+        spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
       }
     }
+    
+    enumerateChildNodes(withName: "ParallaxBg") { node, _ in
+      if let parralaxBgSprite = node as? SKSpriteNode {
+        
+        // Создаем инстанс `ParallaxBg` entity
+        let parralaxBg = ParallaxBg(spriteNode: parralaxBgSprite, camera: self.camera)
+        self.entityManager.add(parralaxBg)
+      }
+    }
+    
+    // Добавляем отладочные слои на сцену
+    self.addChild(graphLayer)
+    self.addChild(debugObstacleLayer)
+    
+    #if DEBUG
+    debugDrawingEnabled = !debugDrawingEnabled
+
+    view.showsPhysics   = debugDrawingEnabled
+    view.showsFPS       = debugDrawingEnabled
+    view.showsNodeCount = debugDrawingEnabled
+    view.showsDrawCount = debugDrawingEnabled
+    #endif
   }
   
   override func didSimulatePhysics() {
@@ -97,12 +135,12 @@ class GameScene: SKScene {
   
   override func update(_ currentTime: TimeInterval) {
     
-    /// Инициализируем `lastUpdateTime`, если ешё не был инициализирован
+    // Инициализируем `lastUpdateTime`, если ешё не был инициализирован
     if (self.lastUpdateTimeInterval == 0) {
       self.lastUpdateTimeInterval = currentTime
     }
     
-    /// Рассчитываем время с момента последнего обновления
+    // Рассчитываем время с момента последнего обновления
     let deltaTime = currentTime - self.lastUpdateTimeInterval
     self.lastUpdateTimeInterval = currentTime
     
@@ -111,9 +149,11 @@ class GameScene: SKScene {
 }
 
 
+
+
 //MARK: - Physics
 
-extension GameScene: SKPhysicsContactDelegate {
+extension LevelScene: SKPhysicsContactDelegate {
   
   func didBegin(_ contact: SKPhysicsContact) {
     

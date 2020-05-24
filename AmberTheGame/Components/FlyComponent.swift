@@ -49,8 +49,9 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
       return
     }
     
-    // Все FlyComponent
     let alliedFlyComponents = entityManager.getAllFlyComponents()
+    
+    let obstacles = entityManager.obstacles
     
     if let spriteComponent = entity?.component(ofType: SpriteComponent.self) {
       if velocity.x < 0 {
@@ -62,7 +63,7 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
     }
     
     // Поведение
-    behavior = EnemyMoveBehavior(targetSpeed: maxSpeed, seek: targetFlyComponent, avoid: alliedFlyComponents)
+    behavior = EnemyMoveBehavior(targetSpeed: maxSpeed, seek: targetFlyComponent, avoid: alliedFlyComponents, obstacles: obstacles)
   }
 }
 

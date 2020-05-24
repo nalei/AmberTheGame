@@ -2,21 +2,22 @@ import SpriteKit
 import GameplayKit
 
 class ParallaxBg: GKEntity {
+  var layer: Int = 1
   
-  init(spriteNode: SKSpriteNode) {
+  init(spriteNode: SKSpriteNode, camera: SKCameraNode?) {
     super.init()
     
     guard let texture = spriteNode.texture else { return }
     
+    if texture.description.contains("clouds") {
+      layer = 7
+    } else if texture.description.contains("sea") {
+      layer = 6
+    }
+    
     addComponent(GKSKNodeComponent(node: spriteNode))
     
-    let parallaxComponent = ParallaxComponent()
-    if texture.description.contains("clouds") {
-      parallaxComponent.layer = 7
-    } else if texture.description.contains("sea") {
-      parallaxComponent.layer = 6
-    }
-    addComponent(parallaxComponent)
+    addComponent(ParallaxComponent(layer: layer, camera: camera))
   }
   
   required init?(coder aDecoder: NSCoder) {

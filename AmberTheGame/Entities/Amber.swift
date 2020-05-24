@@ -2,7 +2,7 @@ import SpriteKit
 import GameplayKit
 
 class Amber: GKEntity {
-  init(camera: SKCameraNode, scene: SKScene, entityManager: EntityManager) {
+  init(camera: SKCameraNode?, scene: SKScene, entityManager: EntityManager) {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "amber-idle"), size: CGSize(width: 100, height: 100))

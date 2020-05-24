@@ -1,17 +1,17 @@
 import SpriteKit
 import GameplayKit
 
-class PlayerControlComponent: GKComponent,  ControlInputSourceDelegate {
+class PlayerControlComponent: GKComponent, ControlInputSourceDelegate {
   var touchControlInputNode : TouchControlInputNode?
   
-  init(camera: SKCameraNode, scene: SKScene) {
+  init(camera: SKCameraNode?, scene: SKScene) {
     super.init()
     
     touchControlInputNode = TouchControlInputNode(frame: scene.frame)
     touchControlInputNode?.inputDelegate = self
     touchControlInputNode?.position = CGPoint.zero
     
-    camera.addChild(touchControlInputNode!)
+    camera?.addChild(touchControlInputNode!)
   }
   
   required init?(coder: NSCoder) {

@@ -6,9 +6,7 @@ class Goblin: GKEntity {
   init(entityManager: EntityManager) {
     super.init()
     
-    let texture = SKTexture(imageNamed: "goblin-idle")
-    
-    let spriteComponent = SpriteComponent(texture: texture, size: CGSize(width: 100, height: 100))
+    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "goblin-idle"), size: CGSize(width: 100, height: 100))
     addComponent(spriteComponent)
     
     let path = UIBezierPath(roundedRect: CGRect(x: -21, y: 3, width: 42, height: 50), cornerRadius: 0).cgPath
@@ -30,6 +28,13 @@ class Goblin: GKEntity {
       jumpUp: nil,
       jumpMiddle: nil,
       jumpDown: nil
+    ))
+    
+    addComponent(FlyComponent(
+      maxSpeed: 800,
+      maxAcceleration: 40,
+      radius: Float(spriteComponent.node.size.width / 2),
+      entityManager: entityManager
     ))
   }
   

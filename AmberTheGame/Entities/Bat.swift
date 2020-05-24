@@ -6,9 +6,7 @@ class Bat: GKEntity {
   init(entityManager: EntityManager) {
     super.init()
     
-    let texture = SKTexture(imageNamed: "bat-idle")
-    
-    let spriteComponent = SpriteComponent(texture: texture, size: CGSize(width: 65, height: 65))
+    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 65, height: 65))
     addComponent(spriteComponent)
     
     let path = UIBezierPath(roundedRect: CGRect(x: -19, y: -8, width: 42, height: 33), cornerRadius: 0).cgPath
@@ -23,7 +21,12 @@ class Bat: GKEntity {
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     
-    addComponent(FlyComponent(maxSpeed: 800, maxAcceleration: 40, radius: Float(texture.size().width), entityManager: entityManager))
+    addComponent(FlyComponent(
+      maxSpeed: 800,
+      maxAcceleration: 40,
+      radius: Float(spriteComponent.node.size.width / 2),
+      entityManager: entityManager
+    ))
   }
   
   required init?(coder aDecoder: NSCoder) {

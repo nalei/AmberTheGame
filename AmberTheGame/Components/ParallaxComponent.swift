@@ -3,20 +3,23 @@ import SpriteKit
 
 class ParallaxComponent: GKComponent {
   
-  var layer: Int = 1
   var camera: SKCameraNode?
-  var spriteNode: SKNode?
+  var previousPosition: CGPoint?
   var dX: CGFloat = 1.1
   var dY: CGFloat = 1.2
-  var previousPosition: CGPoint?
   
-  func prepareWith(camera: SKCameraNode?) {
-    self.camera = camera
-    previousPosition = camera?.position
-    
-    if let nodeComponent = self.entity?.component(ofType: GKSKNodeComponent.self) {
-      self.spriteNode = nodeComponent.node
+  /// The `GKSKNodeComponent` for this component's entity.
+  var spriteComponent: GKSKNodeComponent {
+    guard let spriteComponent = entity?.component(ofType: GKSKNodeComponent.self) else {
+      fatalError("A ParallaxComponent's entity must have a GKSKNodeComponent")
     }
+    return spriteComponent
+  }
+  
+  init(layer: Int, camera: SKCameraNode?) {
+    super.init()
+    self.camera = camera
+    self.previousPosition = camera?.position
     
     switch layer {
     case 1:
@@ -45,12 +48,16 @@ class ParallaxComponent: GKComponent {
     }
   }
   
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     let difX = ((camera?.position.x)! - (previousPosition?.x)!) / dX
     let difY = ((camera?.position.y)! - (previousPosition?.y)!) / dY
     
-    spriteNode?.position = CGPoint(x:(spriteNode?.position.x)! + difX, y: (spriteNode?.position.y)! + difY)
+    spriteComponent.node.position = CGPoint(x: spriteComponent.node.position.x + difX, y: spriteComponent.node.position.y + difY)
     previousPosition = camera?.position
   }
 }
