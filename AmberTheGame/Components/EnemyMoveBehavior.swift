@@ -2,7 +2,7 @@ import SpriteKit
 import GameplayKit
 
 class EnemyMoveBehavior: GKBehavior {
-  init(targetSpeed: Float, seek: GKAgent, avoid: [GKAgent], obstacles: [GKObstacle]) {
+  init(targetSpeed: Float, seek: GKAgent, avoid: [GKAgent]) {
     super.init()
     if targetSpeed > 0 {
       // Достичь целевой скорости
@@ -13,10 +13,6 @@ class EnemyMoveBehavior: GKBehavior {
       
       // Избежать сближения с группой других агентов (избежать скученности союзников)
       setWeight(0.9, for: GKGoal(toAvoid: avoid, maxPredictionTime: 1.0))
-      
-      // Избежать столкновения с указанными статическими препятствиями.
-      setWeight(1.0, for: GKGoal(toAvoid: obstacles, maxPredictionTime: 1.0))
-      
     }
   }
 }

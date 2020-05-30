@@ -14,7 +14,10 @@ func giveTileMapPhysicsBody(tileMap: SKTileMapNode) {
           let x = CGFloat(col) * tileSize.width - halfWidth + (tileSize.width / 2)
           let y = CGFloat(row) * tileSize.height - halfHeight + (tileSize.height / 2)
           
-          let tileNode = SKNode()
+          let tileNode = SKSpriteNode()
+          tileNode.size.width = tileSize.width
+          tileNode.size.height = tileSize.height
+          tileNode.name = "Ground"
           tileNode.position = CGPoint(x: x, y: y)
           tileNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(
             x: -(tileSize.width / 2),

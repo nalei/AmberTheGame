@@ -7,8 +7,6 @@ class EntityManager {
   var entities = Set<GKEntity>()
   var toRemove = Set<GKEntity>()
   
-  var obstacles = [GKObstacle]()
-  
   
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
@@ -18,9 +16,8 @@ class EntityManager {
     return [moveSystem, flySystem, animationSystem, parallaxSystem]
   }()
   
-  init(scene: SKScene, obstacles: [GKObstacle]) {
+  init(scene: SKScene) {
     self.scene = scene
-    self.obstacles = obstacles
   }
   
   func getAmberEntity() -> GKEntity? {
@@ -48,6 +45,10 @@ class EntityManager {
     
     if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
       scene.addChild(spriteNode)
+    }
+    
+    if let debugNode = entity.component(ofType: FlyComponent.self)?.debugNode {
+      scene.addChild(debugNode)
     }
     
     for componentSystem in componentSystems {

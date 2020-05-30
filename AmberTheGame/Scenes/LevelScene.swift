@@ -17,9 +17,9 @@ class LevelScene: SKScene {
   
   // MARK: - Pathfinding
   
-  let graph = GKObstacleGraph(obstacles: [], bufferRadius: 60.0)
-  lazy var obstacleSpriteNodes: [SKSpriteNode] = self["Idol"] as! [SKSpriteNode]
+  lazy var obstacleSpriteNodes: [SKSpriteNode] = self["Ground"] as! [SKSpriteNode]
   lazy var polygonObstacles: [GKPolygonObstacle] = SKNode.obstacles(fromNodePhysicsBodies: self.obstacleSpriteNodes)
+  let graph = GKObstacleGraph(obstacles: [], bufferRadius: 30.0)
   
   
   // MARK: - Pathfinding Debug
@@ -31,7 +31,6 @@ class LevelScene: SKScene {
   }
   
   var graphLayer = SKNode()
-  var debugObstacleLayer = SKNode()
   
   
   // MARK: - Scene Life Cycle
@@ -43,19 +42,15 @@ class LevelScene: SKScene {
     
     self.physicsWorld.contactDelegate = self
     
-    // Добавляем препятствия в граф поиска пути
-    graph.addObstacles(polygonObstacles)
-    
-    // Создаем инстанс `EntityManager` entity
-    entityManager = EntityManager(scene: self, obstacles: polygonObstacles)
+    entityManager = EntityManager(scene: self)
     
     // Создаем физическое тело для `ForegroundMap`
     if let foregroundMap = childNode(withName: "ForegroundMap") as? SKTileMapNode {
       giveTileMapPhysicsBody(tileMap: foregroundMap)
+      polygonObstacles += SKNode.obstacles(fromNodeBounds: foregroundMap["Ground"] as! [SKSpriteNode])
     }
     
-    if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
-      
+    if let amberSprite = childNode(withName: "Amber") {
       // Создаем инстанс `Amber` entity
       character = Amber(camera: self.camera, scene: self, entityManager: entityManager)
       entityManager.add(character!)
@@ -67,8 +62,7 @@ class LevelScene: SKScene {
       }
     }
     
-    enumerateChildNodes(withName: "Goblin") { node, _ in
-      
+    self["Goblin"].forEach { node in
       // Создаем инстанс`Goblin` entity
       let goblin = Goblin(entityManager: self.entityManager)
       self.entityManager.add(goblin)
@@ -84,8 +78,7 @@ class LevelScene: SKScene {
       }
     }
     
-    enumerateChildNodes(withName: "Bat") { node, _ in
-      
+    self["Bat"].forEach { node in
       // Создаем инстанс `Bat` entity
       let bat = Bat(entityManager: self.entityManager)
       self.entityManager.add(bat)
@@ -93,27 +86,32 @@ class LevelScene: SKScene {
       if let spriteComponent = bat.component(ofType: SpriteComponent.self) {
         spriteComponent.node.position = node.position
         spriteComponent.node.name = node.name
-        node.removeFromParent()
         spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
+        node.removeFromParent()
       }
     }
     
-    enumerateChildNodes(withName: "ParallaxBg") { node, _ in
+    self["ParallaxBg"].forEach { node in
       if let parralaxBgSprite = node as? SKSpriteNode {
-        
         // Создаем инстанс `ParallaxBg` entity
         let parralaxBg = ParallaxBg(spriteNode: parralaxBgSprite, camera: self.camera)
         self.entityManager.add(parralaxBg)
       }
     }
     
-    // Добавляем отладочные слои на сцену
-    self.addChild(graphLayer)
-    self.addChild(debugObstacleLayer)
+    // Добавляем препятствия в граф поиска пути
+    graph.addObstacles(polygonObstacles)
+    
+    guard let centerNode = connectedNode(forPoint: vector_float2(self.position)),
+      let characterNode = connectedNode(forPoint: vector_float2(character!.component(ofType: SpriteComponent.self)!.node.position)) else { return }
+    
+    let pathNodes = graph.findPath(from: centerNode, to: characterNode) as! [GKGraphNode2D]
     
     #if DEBUG
+    self.addChild(graphLayer)
+    
     debugDrawingEnabled = !debugDrawingEnabled
-
+    
     view.showsPhysics   = debugDrawingEnabled
     view.showsFPS       = debugDrawingEnabled
     view.showsNodeCount = debugDrawingEnabled
@@ -146,9 +144,39 @@ class LevelScene: SKScene {
     
     entityManager.update(deltaTime: deltaTime)
   }
+  
+  // MARK: - Methods
+  
+  /**
+   Создает узел на графе поиска пути для заданной точки,
+   игнорируя радиус буфера  препятствий.
+   
+   Возвращает `nil` если соединение не может быть установлено.
+   */
+  func connectedNode(forPoint point: vector_float2) -> GKGraphNode2D? {
+    // Создаем узел графа для этой точки.
+    let pointNode = GKGraphNode2D(point: point)
+    
+    // Попробуем подключить этот узел к графу.
+    graph.connectUsingObstacles(node: pointNode)
+    
+    /*
+     Проверяем, смогли ли мы подключить узел к графу.
+     Если нет, это означает, что точка находится внутри буферной зоны препятствия.
+     Мы не можем найти путь к точке вне графа, поэтому мы пытаемся найти ближайшую
+     точку на графе и найти путь вместо этого.
+     */
+    if pointNode.connectedNodes.isEmpty {
+      
+      //TODO: Реализовать поиск ближайшей валидной точки
+      
+      graph.remove([pointNode])
+      return nil
+    }
+    
+    return pointNode
+  }
 }
-
-
 
 
 //MARK: - Physics
@@ -185,7 +213,6 @@ extension LevelScene: SKPhysicsContactDelegate {
         }
       }
     }
-    
   }
   
   private func collisionDirection(_ contact: SKPhysicsContact) -> CollisionCategory.Direction {

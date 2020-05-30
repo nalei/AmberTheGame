@@ -22,7 +22,7 @@ class Bat: GKEntity {
     spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     
     addComponent(FlyComponent(
-      maxSpeed: 800,
+      maxSpeed: 400,
       maxAcceleration: 40,
       radius: Float(spriteComponent.node.size.width / 2),
       entityManager: entityManager
