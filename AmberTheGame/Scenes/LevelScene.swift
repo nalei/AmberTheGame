@@ -18,8 +18,8 @@ class LevelScene: SKScene {
   // MARK: - Pathfinding
   
   lazy var obstacleSpriteNodes: [SKSpriteNode] = self["Ground"] as! [SKSpriteNode]
-  lazy var polygonObstacles: [GKPolygonObstacle] = SKNode.obstacles(fromNodePhysicsBodies: self.obstacleSpriteNodes)
-  let graph = GKObstacleGraph(obstacles: [], bufferRadius: 30.0)
+  lazy var polygonObstacles: [GKPolygonObstacle] = []
+  let graph = GKObstacleGraph(obstacles: [], bufferRadius: 25)
   
   
   // MARK: - Pathfinding Debug
@@ -47,7 +47,7 @@ class LevelScene: SKScene {
     // Создаем физическое тело для `ForegroundMap`
     if let foregroundMap = childNode(withName: "ForegroundMap") as? SKTileMapNode {
       giveTileMapPhysicsBody(tileMap: foregroundMap)
-      polygonObstacles += SKNode.obstacles(fromNodeBounds: foregroundMap["Ground"] as! [SKSpriteNode])
+      obstacleSpriteNodes += foregroundMap["Ground"] as! [SKSpriteNode]
     }
     
     if let amberSprite = childNode(withName: "Amber") {
@@ -100,6 +100,7 @@ class LevelScene: SKScene {
     }
     
     // Добавляем препятствия в граф поиска пути
+    polygonObstacles += SKNode.obstacles(fromNodeBounds: obstacleSpriteNodes)
     graph.addObstacles(polygonObstacles)
     
     guard let centerNode = connectedNode(forPoint: vector_float2(self.position)),

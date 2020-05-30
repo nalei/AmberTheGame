@@ -21,6 +21,7 @@
 		1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */; };
 		1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */; };
 		1E60B25F242D1F4F00ABB505 /* Goblin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */; };
+		1E61B3482482C99900AEBC76 /* EnemyBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61B3472482C99900AEBC76 /* EnemyBehavior.swift */; };
 		1E64B54324798B9500883809 /* LevelScene+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E64B54224798B9500883809 /* LevelScene+Debug.swift */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
 		1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E99C9CD2469966E00930779 /* Bat.xcassets */; };
@@ -60,6 +61,7 @@
 		1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
 		1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxBg.swift; sourceTree = "<group>"; };
 		1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Goblin.xcassets; sourceTree = "<group>"; };
+		1E61B3472482C99900AEBC76 /* EnemyBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyBehavior.swift; sourceTree = "<group>"; };
 		1E64B54224798B9500883809 /* LevelScene+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelScene+Debug.swift"; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
 		1E99C9CD2469966E00930779 /* Bat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bat.xcassets; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */,
 				1E50353823DDA8CA0010B16E /* Animation States */,
 				1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */,
+				1E61B3472482C99900AEBC76 /* EnemyBehavior.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 			files = (
 				1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */,
 				1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */,
+				1E61B3482482C99900AEBC76 /* EnemyBehavior.swift in Sources */,
 				1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */,
 				1EC1660A23CA2E2F0055452D /* LevelScene.swift in Sources */,
 				1EC1660C23CA2E2F0055452D /* GameViewController.swift in Sources */,

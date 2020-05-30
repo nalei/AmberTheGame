@@ -3,8 +3,8 @@ import GameplayKit
 
 class FlyComponent: GKAgent2D, GKAgentDelegate {
   let entityManager: EntityManager
-  
   var debugNode = SKNode()
+  var shift = CGPoint(x: 0, y: 0)
   
   init(maxSpeed: Float, maxAcceleration: Float, radius: Float, entityManager: EntityManager) {
     self.entityManager = entityManager
@@ -15,7 +15,7 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
     self.radius = radius
     self.mass = 0.01
     
-    //    drawDebugPath(color: SKColor.orange, radius: radius) // Debug!!!!!
+    drawDebugPath(color: SKColor.orange, radius: radius) // Debug!!!!!
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -28,7 +28,7 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
       return
     }
     
-    position = vector_float2(spriteComponent.node.position)
+    position = vector_float2(CGPoint(x: spriteComponent.node.position.x + shift.x, y: spriteComponent.node.position.y + shift.y))
   }
   
   /// После того, как агент обновит позицию, устанавливаем спрайт в позицию агента
@@ -37,7 +37,7 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
       return
     }
     
-    spriteComponent.node.position = CGPoint(position)
+    spriteComponent.node.position = CGPoint(x: CGFloat(position.x) - shift.x, y: CGFloat(position.y) - shift.y)
     
     debugNode.position = CGPoint(position) // Debug!!!!!
   }
@@ -69,17 +69,18 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
     // Поведение
     behavior = EnemyMoveBehavior(targetSpeed: maxSpeed, seek: targetFlyComponent, avoid: alliedFlyComponents)
   }
+
   
   // MARK: - Debug Path Drawing
   
-  func drawDebugPath(path: [CGPoint], color: SKColor, radius: Float) {
-    guard path.count > 1 else { return }
+  func drawDebugPath(color: SKColor, radius: Float) {
+//    guard path.count > 1 else { return }
     
     debugNode.removeAllChildren()
     
-    var drawPath = path
+//    var drawPath = path
     
-    drawPath += [drawPath.first!]
+//    drawPath += [drawPath.first!]
     
     var red: CGFloat = 0
     var green: CGFloat = 0

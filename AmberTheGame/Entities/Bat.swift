@@ -9,8 +9,7 @@ class Bat: GKEntity {
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 65, height: 65))
     addComponent(spriteComponent)
     
-    let path = UIBezierPath(roundedRect: CGRect(x: -19, y: -8, width: 42, height: 33), cornerRadius: 0).cgPath
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(polygonFrom: path))
+    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 42, height: 33), center: CGPoint(x: 0, y: 10)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.ENEMY
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.mass = 0.10
@@ -19,14 +18,11 @@ class Bat: GKEntity {
     
     /// Connect the `PhysicsComponent` and the `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
-    spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     
-    addComponent(FlyComponent(
-      maxSpeed: 400,
-      maxAcceleration: 40,
-      radius: Float(spriteComponent.node.size.width / 2),
-      entityManager: entityManager
-    ))
+    let flyComponent = FlyComponent(maxSpeed: 400, maxAcceleration: 40, radius: Float(spriteComponent.node.size.width / 2.5), entityManager: entityManager)
+    flyComponent.shift = CGPoint(x: 0, y: 10)
+    
+    addComponent(flyComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {

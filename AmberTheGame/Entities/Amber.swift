@@ -6,10 +6,10 @@ class Amber: GKEntity {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "amber-idle"), size: CGSize(width: 100, height: 100))
+    spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0)
     addComponent(spriteComponent)
     
-    let path = UIBezierPath(roundedRect: CGRect(x: -21, y: 3, width: 42, height: 64), cornerRadius: 0).cgPath
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(polygonFrom: path))
+    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 42, height: 64), center: CGPoint(x: 0, y: 30)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
@@ -31,13 +31,11 @@ class Amber: GKEntity {
       jumpDown: SKTexture(imageNamed: "amber-jump-down")
     ))
     
-    addComponent(FlyComponent(
-      maxSpeed: 0,
-      maxAcceleration: 0,
-      radius: Float(spriteComponent.node.size.width / 2),
-      entityManager: entityManager
-    ))
+    let flyComponent = FlyComponent(maxSpeed: 0, maxAcceleration: 0, radius: Float(spriteComponent.node.size.width / 2), entityManager: entityManager)
+    flyComponent.shift = CGPoint(x: 0, y: 30)
+    addComponent(flyComponent)
   }
+  
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")

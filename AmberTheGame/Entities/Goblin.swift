@@ -7,10 +7,10 @@ class Goblin: GKEntity {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "goblin-idle"), size: CGSize(width: 100, height: 100))
+    spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0)
     addComponent(spriteComponent)
     
-    let path = UIBezierPath(roundedRect: CGRect(x: -21, y: 3, width: 42, height: 50), cornerRadius: 0).cgPath
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(polygonFrom: path))
+    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 42, height: 50), center: CGPoint(x: 0, y: 25)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.ENEMY
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
@@ -20,7 +20,7 @@ class Goblin: GKEntity {
     /// Connect the `PhysicsComponent` and the `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
-    addComponent(MovementComponent(walkSpeed: 300, maxJump: 150, accel: 300, decel: 300))
+    addComponent(MovementComponent(walkSpeed: 100, maxJump: 150, accel: 300, decel: 300))
     
     addComponent(AnimationComponent(
       idle: SKTexture(imageNamed: "goblin-idle"),
@@ -30,12 +30,9 @@ class Goblin: GKEntity {
       jumpDown: nil
     ))
     
-    addComponent(FlyComponent(
-      maxSpeed: 800,
-      maxAcceleration: 40,
-      radius: Float(spriteComponent.node.size.width / 2),
-      entityManager: entityManager
-    ))
+    let flyComponent = FlyComponent(maxSpeed: 100, maxAcceleration: 40, radius: Float(spriteComponent.node.size.width / 2.5), entityManager: entityManager)
+    flyComponent.shift = CGPoint(x: 0, y: 25)
+    addComponent(flyComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {

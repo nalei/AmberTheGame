@@ -3,7 +3,7 @@ import SpriteKit
 import GameplayKit
 
 class EntityManager {
-  let scene: SKScene
+  let scene: LevelScene
   var entities = Set<GKEntity>()
   var toRemove = Set<GKEntity>()
   
@@ -16,7 +16,7 @@ class EntityManager {
     return [moveSystem, flySystem, animationSystem, parallaxSystem]
   }()
   
-  init(scene: SKScene) {
+  init(scene: LevelScene) {
     self.scene = scene
   }
   
