@@ -38,7 +38,6 @@
 		1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1661223CA2E310055452D /* LaunchScreen.storyboard */; };
 		1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662123CB20670055452D /* TouchControlInputNode.swift */; };
 		1EC1662623CB78920055452D /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662523CB78920055452D /* ButtonNode.swift */; };
-		1EE7C21924750B9700789FA4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1EE7C21824750B9700789FA4 /* .gitignore */; };
 		1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */; };
 		1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEFBD2123E2240900DE1B08 /* JumpingState.swift */; };
 		1EF7755B240317A700534AB7 /* FallingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF7755A240317A700534AB7 /* FallingState.swift */; };
@@ -80,7 +79,6 @@
 		1EC1661523CA2E310055452D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC1662123CB20670055452D /* TouchControlInputNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchControlInputNode.swift; sourceTree = "<group>"; };
 		1EC1662523CB78920055452D /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
-		1EE7C21824750B9700789FA4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Amber.xcassets; sourceTree = "<group>"; };
 		1EEFBD2123E2240900DE1B08 /* JumpingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpingState.swift; sourceTree = "<group>"; };
 		1EF7755A240317A700534AB7 /* FallingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallingState.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 		1EC165F723CA2E2F0055452D = {
 			isa = PBXGroup;
 			children = (
-				1EE7C21824750B9700789FA4 /* .gitignore */,
 				1EC1660223CA2E2F0055452D /* AmberTheGame */,
 				1EC1660123CA2E2F0055452D /* Products */,
 			);
@@ -302,7 +299,6 @@
 				1EC1660F23CA2E2F0055452D /* Main.storyboard in Resources */,
 				1EC1660623CA2E2F0055452D /* LevelScene.sks in Resources */,
 				1EC1661123CA2E310055452D /* images.xcassets in Resources */,
-				1EE7C21924750B9700789FA4 /* .gitignore in Resources */,
 				1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */,
 				1E362EF523EEECD60006B6AE /* MyTileSet.sks in Resources */,
 				1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */,
