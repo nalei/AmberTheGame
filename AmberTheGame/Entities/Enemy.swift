@@ -33,6 +33,8 @@ class Enemy: GKEntity, GKAgentDelegate {
       debugNode.removeAllChildren()
     }
     
+    //    agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
+    
     return agentBehavior
   }
   

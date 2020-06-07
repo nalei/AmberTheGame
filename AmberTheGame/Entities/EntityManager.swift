@@ -20,11 +20,6 @@ class EntityManager {
     self.scene = scene
   }
   
-  /// Возвращает `GKAgent2D` игрока
-  func getAmberFlyComponent() -> GKAgent2D? {
-    return scene.character?.component(ofType: FlyComponent.self)
-  }
-  
   /// Возвращает массив всех `FlyComponent`
   func getAllFlyComponents() -> [FlyComponent] {
     var flyComponents = [FlyComponent]()
@@ -42,7 +37,7 @@ class EntityManager {
   }
   
   /// Возвращает массив всех `AgentComponent`
-  func getAllAgentComponents() -> [AgentComponent] {
+  func getAllAgentComponents() -> [GKAgent2D] {
     var agentComponents = [AgentComponent]()
     for entity in entities {
       if let agentComponent = entity.component(ofType: AgentComponent.self) {

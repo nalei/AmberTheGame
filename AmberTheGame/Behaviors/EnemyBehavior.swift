@@ -7,12 +7,14 @@ class EnemyBehavior: GKBehavior {
   static func behaviorAndPathPoints(forAgent agent: GKAgent2D, huntingAgent target: GKAgent2D, pathRadius: Float, inScene scene: LevelScene) -> (behavior: GKBehavior, pathPoints: [CGPoint]) {
     let behavior = EnemyBehavior()
     
-    // Добавляем основные цели: достичь максимальной скорости избегать союзников и избегать препятствий.
+    // Добавляем основные цели: достичь максимальной скорости и избегать препятствий.
     behavior.addTargetSpeedGoal(speed: agent.maxSpeed)
-    behavior.addAvoidAgentsGoal(forAgents: scene.entityManager.getAllAgentComponents())
     behavior.addAvoidObstaclesGoal(forScene: scene)
     
-    // Добавляем цели, чтобы следовать расчетному пути до цели.
+    // Добавляем цель: избегать приближения к другим агентам.
+    behavior.addAvoidAgentsGoal(forAgents: scene.entityManager.getAllAgentComponents())
+    
+    // Добавляем цель: следовать расчетному пути.
     let pathPoints = behavior.addGoalsToFollowPath(from: agent.position, to: target.position, pathRadius: pathRadius, inScene: scene)
     
     // Возвращаем кортеж, содержащий новое поведение и найденные точки пути для отладочной отрисовки.
@@ -20,7 +22,7 @@ class EnemyBehavior: GKBehavior {
   }
   
   /// Создает поведение, чтобы патрулировать путь, избегая препятствий на пути.
-  static func behavior(forAgent agent: GKAgent2D, patrollingPathWithPoints patrolPathPoints: [CGPoint], pathRadius: Float, inScene scene: LevelScene) -> GKBehavior {
+  static func behaviorPatrol(forAgent agent: GKAgent2D, patrollingPathWithPoints patrolPathPoints: [CGPoint], pathRadius: Float, inScene scene: LevelScene) -> GKBehavior {
     let behavior = EnemyBehavior()
     
     // Добавляем основные цели: достичь максимальной скорости и избегать препятствий.
@@ -35,6 +37,18 @@ class EnemyBehavior: GKBehavior {
     
     // Добавляем цели "следовать по пути" и "остаться на пути".
     behavior.addFollowAndStayOnPathGoals(for: path)
+    
+    return behavior
+  }
+  
+  /// Создает поведение, для движения к цели по прямой.
+  static func behaviorFollow(forAgent agent: GKAgent2D, huntingAgent target: GKAgent2D, inScene scene: LevelScene) -> GKBehavior {
+    let behavior = EnemyBehavior()
+    
+    // Добавляем основные цели: достичь максимальной скорости и избегать препятствий.
+    behavior.addTargetSpeedGoal(speed: agent.maxSpeed)
+    behavior.addAvoidObstaclesGoal(forScene: scene)
+    behavior.addSeekAgentGoal(forAgent: target)
     
     return behavior
   }
