@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class PlayerControlComponent: GKComponent, ControlInputSourceDelegate {
+class InputComponent: GKComponent, ControlInputSourceDelegate {
   var touchControlInputNode : TouchControlInputNode?
   
   init(camera: SKCameraNode?, scene: SKScene) {

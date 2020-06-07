@@ -1,9 +1,10 @@
 import SpriteKit
 import GameplayKit
 
-class Goblin: GKEntity {
+class Goblin: Enemy {
+  // MARK: - Initialization
   
-  init(entityManager: EntityManager) {
+  required init(entityManager: EntityManager) {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "goblin-idle"), size: CGSize(width: 100, height: 100))
@@ -14,10 +15,10 @@ class Goblin: GKEntity {
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.ENEMY
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
-    physicsComponent.physicsBody.mass = 0.10
+    physicsComponent.physicsBody.mass = 0.20
     addComponent(physicsComponent)
     
-    /// Connect the `PhysicsComponent` and the `SpriteComponent`.
+    // Связываем `PhysicsComponent` и `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
     addComponent(MovementComponent(walkSpeed: 100, maxJump: 150, accel: 300, decel: 300))
@@ -30,9 +31,19 @@ class Goblin: GKEntity {
       jumpDown: nil
     ))
     
-    let flyComponent = FlyComponent(maxSpeed: 100, maxAcceleration: 40, radius: Float(spriteComponent.node.size.width / 2.5), entityManager: entityManager)
-    flyComponent.shift = CGPoint(x: 0, y: 25)
-    addComponent(flyComponent)
+    let agent = AgentComponent()
+    agent.delegate = self
+    agent.maxSpeed = 200
+    agent.maxAcceleration = 40
+    agent.mass = 0.01
+    agent.radius = 35
+    agent.behavior = GKBehavior()
+    agentOffset = CGPoint(x: 0, y: 25)
+    addComponent(agent)
+    
+//    let flyComponent = FlyComponent(maxSpeed: 100, maxAcceleration: 40, radius: Float(spriteComponent.node.size.width / 2.5), entityManager: entityManager)
+//    flyComponent.shift = CGPoint(x: 0, y: 25)
+//    addComponent(flyComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {

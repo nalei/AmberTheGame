@@ -42,16 +42,10 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
     debugNode.position = CGPoint(position) // Debug!!!!!
   }
   
-  /// Возвращает FlyComponent игрока
-  func getAmberFlyComponent() -> GKAgent2D? {
-    let playerEntity = entityManager.getAmberEntity()
-    return playerEntity?.component(ofType: FlyComponent.self)
-  }
-  
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
-    guard let targetFlyComponent = getAmberFlyComponent() else {
+    guard let target = entityManager.getAmberAgent() else {
       return
     }
     
@@ -67,20 +61,14 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
     }
     
     // Поведение
-    behavior = EnemyMoveBehavior(targetSpeed: maxSpeed, seek: targetFlyComponent, avoid: alliedFlyComponents)
+    behavior = EnemyMoveBehavior(targetSpeed: maxSpeed, seek: target, avoid: alliedFlyComponents)
   }
 
   
   // MARK: - Debug Path Drawing
   
   func drawDebugPath(color: SKColor, radius: Float) {
-//    guard path.count > 1 else { return }
-    
     debugNode.removeAllChildren()
-    
-//    var drawPath = path
-    
-//    drawPath += [drawPath.first!]
     
     var red: CGFloat = 0
     var green: CGFloat = 0
@@ -93,26 +81,6 @@ class FlyComponent: GKAgent2D, GKAgentDelegate {
     let strokeColor = SKColor(red: red, green: green, blue: blue, alpha: 0.4)
     let fillColor = SKColor(red: red, green: green, blue: blue, alpha: 0.2)
     
-//    for index in 0..<drawPath.count - 1 {
-//      let current = CGPoint(x: drawPath[index].x, y: drawPath[index].y)
-//      let next = CGPoint(x: drawPath[index + 1].x, y: drawPath[index + 1].y)
-//
-//      let circleNode = SKShapeNode(circleOfRadius: CGFloat(radius))
-//      circleNode.strokeColor = strokeColor
-//      circleNode.fillColor = fillColor
-//      circleNode.position = current
-//      debugNode.addChild(circleNode)
-//
-//      let deltaX = next.x - current.x
-//      let deltaY = next.y - current.y
-//      let rectNode = SKShapeNode(rectOf: CGSize(width: hypot(deltaX, deltaY), height: CGFloat(radius) * 2))
-//      rectNode.strokeColor = strokeColor
-//      rectNode.fillColor = fillColor
-//      rectNode.zRotation = atan(deltaY / deltaX)
-//      rectNode.position = CGPoint(x: current.x + (deltaX / 2.0), y: current.y + (deltaY / 2.0))
-//      debugNode.addChild(rectNode)
-//    }
-//
     let circleNode = SKShapeNode(circleOfRadius: CGFloat(radius))
     circleNode.strokeColor = strokeColor
     circleNode.fillColor = fillColor

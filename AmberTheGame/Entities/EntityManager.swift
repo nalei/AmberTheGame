@@ -7,26 +7,22 @@ class EntityManager {
   var entities = Set<GKEntity>()
   var toRemove = Set<GKEntity>()
   
-  
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
     let flySystem = GKComponentSystem(componentClass: FlyComponent.self)
+    let agentSystem = GKComponentSystem(componentClass: AgentComponent.self)
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
-    return [moveSystem, flySystem, animationSystem, parallaxSystem]
+    return [moveSystem, flySystem, agentSystem, animationSystem, parallaxSystem]
   }()
   
   init(scene: LevelScene) {
     self.scene = scene
   }
   
-  func getAmberEntity() -> GKEntity? {
-    for entity in entities {
-      if let _ = entity.component(ofType: PlayerControlComponent.self) {
-        return entity
-      }
-    }
-    return nil
+  /// Возвращает `GKAgent2D` игрока
+  func getAmberFlyComponent() -> GKAgent2D? {
+    return scene.character?.component(ofType: FlyComponent.self)
   }
   
   /// Возвращает массив всех `FlyComponent`
@@ -38,6 +34,22 @@ class EntityManager {
       }
     }
     return flyComponents
+  }
+  
+  /// Возвращает `GKAgent2D` игрока
+  func getAmberAgent() -> GKAgent2D? {
+    return scene.character?.agent
+  }
+  
+  /// Возвращает массив всех `AgentComponent`
+  func getAllAgentComponents() -> [AgentComponent] {
+    var agentComponents = [AgentComponent]()
+    for entity in entities {
+      if let agentComponent = entity.component(ofType: AgentComponent.self) {
+        agentComponents.append(agentComponent)
+      }
+    }
+    return agentComponents
   }
   
   func add(_ entity: GKEntity) {

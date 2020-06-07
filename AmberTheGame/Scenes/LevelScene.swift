@@ -6,7 +6,7 @@ class LevelScene: SKScene {
   var graphs = [String : GKGraph]()
   
   // Playable character
-  var character: GKEntity?
+  var character: Amber?
   
   // Update time
   var lastUpdateTimeInterval: TimeInterval = 0
@@ -19,7 +19,7 @@ class LevelScene: SKScene {
   
   lazy var obstacleSpriteNodes: [SKSpriteNode] = self["Ground"] as! [SKSpriteNode]
   lazy var polygonObstacles: [GKPolygonObstacle] = []
-  let graph = GKObstacleGraph(obstacles: [], bufferRadius: 25)
+  let graph = GKObstacleGraph(obstacles: [], bufferRadius: GameplayConfiguration.Enemy.pathfindingGraphBufferRadius)
   
   
   // MARK: - Pathfinding Debug
@@ -54,6 +54,7 @@ class LevelScene: SKScene {
       // Создаем инстанс `Amber` entity
       character = Amber(camera: self.camera, scene: self, entityManager: entityManager)
       entityManager.add(character!)
+      graphLayer.addChild(character!.debugNode)
       
       if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
         spriteComponent.node.position = amberSprite.position
@@ -70,18 +71,20 @@ class LevelScene: SKScene {
       if let spriteComponent = goblin.component(ofType: SpriteComponent.self) {
         spriteComponent.node.position = node.position
         spriteComponent.node.name = node.name
+        graphLayer.addChild(goblin.debugNode)
         node.removeFromParent()
       }
       
-      if let movementComponent = goblin.component(ofType: MovementComponent.self) {
-        movementComponent.moveTo(.left)
-      }
+      //      if let movementComponent = goblin.component(ofType: MovementComponent.self) {
+      //        movementComponent.moveTo(.left)
+      //      }
     }
     
     self["Bat"].forEach { node in
       // Создаем инстанс `Bat` entity
       let bat = Bat(entityManager: self.entityManager)
       self.entityManager.add(bat)
+      graphLayer.addChild(bat.debugNode)
       
       if let spriteComponent = bat.component(ofType: SpriteComponent.self) {
         spriteComponent.node.position = node.position
@@ -103,15 +106,10 @@ class LevelScene: SKScene {
     polygonObstacles += SKNode.obstacles(fromNodeBounds: obstacleSpriteNodes)
     graph.addObstacles(polygonObstacles)
     
-    guard let centerNode = connectedNode(forPoint: vector_float2(self.position)),
-      let characterNode = connectedNode(forPoint: vector_float2(character!.component(ofType: SpriteComponent.self)!.node.position)) else { return }
-    
-    let pathNodes = graph.findPath(from: centerNode, to: characterNode) as! [GKGraphNode2D]
-    
     #if DEBUG
     self.addChild(graphLayer)
     
-    debugDrawingEnabled = !debugDrawingEnabled
+    debugDrawingEnabled = true
     
     view.showsPhysics   = debugDrawingEnabled
     view.showsFPS       = debugDrawingEnabled
@@ -146,36 +144,12 @@ class LevelScene: SKScene {
     entityManager.update(deltaTime: deltaTime)
   }
   
-  // MARK: - Methods
-  
-  /**
-   Создает узел на графе поиска пути для заданной точки,
-   игнорируя радиус буфера  препятствий.
-   
-   Возвращает `nil` если соединение не может быть установлено.
-   */
-  func connectedNode(forPoint point: vector_float2) -> GKGraphNode2D? {
-    // Создаем узел графа для этой точки.
-    let pointNode = GKGraphNode2D(point: point)
-    
-    // Попробуем подключить этот узел к графу.
-    graph.connectUsingObstacles(node: pointNode)
-    
+  override func didFinishUpdate() {
     /*
-     Проверяем, смогли ли мы подключить узел к графу.
-     Если нет, это означает, что точка находится внутри буферной зоны препятствия.
-     Мы не можем найти путь к точке вне графа, поэтому мы пытаемся найти ближайшую
-     точку на графе и найти путь вместо этого.
+     Обновляем позицию агента, чтобы она соответствовала позиции `Amber`.
+     Это гарантирует, что агент находится в допустимом местоположении в начале следующего фрейма.
      */
-    if pointNode.connectedNodes.isEmpty {
-      
-      //TODO: Реализовать поиск ближайшей валидной точки
-      
-      graph.remove([pointNode])
-      return nil
-    }
-    
-    return pointNode
+    character?.updateAgentPositionToMatchNodePosition()
   }
 }
 
@@ -196,24 +170,24 @@ extension LevelScene: SKPhysicsContactDelegate {
       }
     }
     
-    let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-    if collision == CollisionCategory.ENEMY | CollisionCategory.GROUND {
-      if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
-        if collisionDirection(contact) == .left && movementComponent.facing == .left {
-          movementComponent.moveTo(.right)
-        }
-        if collisionDirection(contact) == .right && movementComponent.facing == .right {
-          movementComponent.moveTo(.left)
-        }
-      } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
-        if collisionDirection(contact) == .left && movementComponent.facing == .left {
-          movementComponent.moveTo(.right)
-        }
-        if collisionDirection(contact) == .right && movementComponent.facing == .right {
-          movementComponent.moveTo(.left)
-        }
-      }
-    }
+    //    let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+    //    if collision == CollisionCategory.ENEMY | CollisionCategory.GROUND {
+    //      if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
+    //        if collisionDirection(contact) == .left && movementComponent.facing == .left {
+    //          movementComponent.moveTo(.right)
+    //        }
+    //        if collisionDirection(contact) == .right && movementComponent.facing == .right {
+    //          movementComponent.moveTo(.left)
+    //        }
+    //      } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
+    //        if collisionDirection(contact) == .left && movementComponent.facing == .left {
+    //          movementComponent.moveTo(.right)
+    //        }
+    //        if collisionDirection(contact) == .right && movementComponent.facing == .right {
+    //          movementComponent.moveTo(.left)
+    //        }
+    //      }
+    //    }
   }
   
   private func collisionDirection(_ contact: SKPhysicsContact) -> CollisionCategory.Direction {
