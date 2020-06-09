@@ -48,6 +48,11 @@ class EnemyBehavior: GKBehavior {
     // Добавляем основные цели: достичь максимальной скорости и избегать препятствий.
     behavior.addTargetSpeedGoal(speed: agent.maxSpeed)
     behavior.addAvoidObstaclesGoal(forScene: scene)
+    
+    // Добавляем цель: избегать приближения к другим агентам.
+    behavior.addAvoidAgentsGoal(forAgents: scene.entityManager.getAllAgentComponents())
+    
+    // Добавляем цель: двигаться к агенту
     behavior.addSeekAgentGoal(forAgent: target)
     
     return behavior

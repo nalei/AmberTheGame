@@ -9,26 +9,14 @@ class EntityManager {
   
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
-    let flySystem = GKComponentSystem(componentClass: FlyComponent.self)
     let agentSystem = GKComponentSystem(componentClass: AgentComponent.self)
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
-    return [moveSystem, flySystem, agentSystem, animationSystem, parallaxSystem]
+    return [moveSystem, agentSystem, animationSystem, parallaxSystem]
   }()
   
   init(scene: LevelScene) {
     self.scene = scene
-  }
-  
-  /// Возвращает массив всех `FlyComponent`
-  func getAllFlyComponents() -> [FlyComponent] {
-    var flyComponents = [FlyComponent]()
-    for entity in entities {
-      if let flyComponent = entity.component(ofType: FlyComponent.self) {
-        flyComponents.append(flyComponent)
-      }
-    }
-    return flyComponents
   }
   
   /// Возвращает `GKAgent2D` игрока
@@ -54,8 +42,8 @@ class EntityManager {
       scene.addChild(spriteNode)
     }
     
-    if let debugNode = entity.component(ofType: FlyComponent.self)?.debugNode {
-      scene.addChild(debugNode)
+    if let enemy = entity as? Enemy {
+      scene.graphLayer.addChild(enemy.debugNode)
     }
     
     for componentSystem in componentSystems {

@@ -16,16 +16,16 @@ class Enemy: GKEntity, GKAgentDelegate {
     
     let agentBehavior: GKBehavior
     let radius: Float
-    
+
     // `debugPathPoints`, `debugPathShouldCycle`, `debugColor` используются только для отладочной отрисовки
     let debugPathPoints: [CGPoint]
     let debugPathShouldCycle = false
     let debugColor: SKColor
-    
+
     radius = GameplayConfiguration.Enemy.huntPathRadius
     (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
     debugColor = SKColor.red
-    
+
     if levelScene.debugDrawingEnabled {
       drawDebugPath(path: debugPathPoints, cycle: debugPathShouldCycle, color: debugColor, radius: radius)
     }
@@ -33,7 +33,7 @@ class Enemy: GKEntity, GKAgentDelegate {
       debugNode.removeAllChildren()
     }
     
-    //    agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
+//    agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
     
     return agentBehavior
   }

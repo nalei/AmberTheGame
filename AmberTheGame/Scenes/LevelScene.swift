@@ -53,45 +53,34 @@ class LevelScene: SKScene {
     if let amberSprite = childNode(withName: "Amber") {
       // Создаем инстанс `Amber` entity
       character = Amber(camera: self.camera, scene: self, entityManager: entityManager)
+      character!.spriteComponent.node.position = amberSprite.position
+      character!.spriteComponent.node.name = amberSprite.name
       entityManager.add(character!)
       graphLayer.addChild(character!.debugNode)
-      
-      if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
-        spriteComponent.node.position = amberSprite.position
-        spriteComponent.node.name = amberSprite.name
-        amberSprite.removeFromParent()
-      }
+      amberSprite.removeFromParent()
     }
     
     self["Goblin"].forEach { node in
       // Создаем инстанс`Goblin` entity
       let goblin = Goblin(entityManager: self.entityManager)
+      goblin.spriteComponent.node.position = node.position
+      goblin.spriteComponent.node.name = node.name
       self.entityManager.add(goblin)
+      node.removeFromParent()
       
-      if let spriteComponent = goblin.component(ofType: SpriteComponent.self) {
-        spriteComponent.node.position = node.position
-        spriteComponent.node.name = node.name
-        graphLayer.addChild(goblin.debugNode)
-        node.removeFromParent()
-      }
-      
-      //      if let movementComponent = goblin.component(ofType: MovementComponent.self) {
-      //        movementComponent.moveTo(.left)
-      //      }
+      //if let movementComponent = goblin.component(ofType: MovementComponent.self) {
+      //  movementComponent.moveTo(.left)
+      //}
     }
     
     self["Bat"].forEach { node in
       // Создаем инстанс `Bat` entity
       let bat = Bat(entityManager: self.entityManager)
+      bat.spriteComponent.node.name = node.name
+      bat.spriteComponent.node.position = node.position
+      bat.spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
       self.entityManager.add(bat)
-      graphLayer.addChild(bat.debugNode)
-      
-      if let spriteComponent = bat.component(ofType: SpriteComponent.self) {
-        spriteComponent.node.position = node.position
-        spriteComponent.node.name = node.name
-        spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
-        node.removeFromParent()
-      }
+      node.removeFromParent()
     }
     
     self["ParallaxBg"].forEach { node in
