@@ -4,7 +4,7 @@ import GameplayKit
 class Bat: Enemy {
   // MARK: - Initialization
   
-  required init(entityManager: EntityManager) {
+  required init(patrolPoints: [CGPoint], entityManager: EntityManager) {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 65, height: 65))
@@ -27,17 +27,14 @@ class Bat: Enemy {
     agent.mass = 0.03
     agent.radius = 25
     agent.behavior = GKBehavior()
-    agentOffset = CGPoint(x: 0, y: 10)
+    self.agentOffset = CGPoint(x: 0, y: 10)
+    self.patrolPoints = patrolPoints
 
     /*
      `GKAgent2D` является подклассом `GKComponent`. Добавляем его в список компонентов `Enemy`,
      чтобы он был обновлен на каждом цикле обновления компонентов.
      */
     addComponent(agent)
-    
-//    let flyComponent = FlyComponent(maxSpeed: 300, maxAcceleration: 40, radius: Float(spriteComponent.node.size.width / 2.5), entityManager: entityManager)
-//    flyComponent.shift = CGPoint(x: 0, y: 10)
-//    addComponent(flyComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {

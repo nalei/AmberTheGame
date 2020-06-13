@@ -27,7 +27,7 @@ class EnemyBehavior: GKBehavior {
     
     // Добавляем основные цели: достичь максимальной скорости и избегать препятствий.
     behavior.addTargetSpeedGoal(speed: agent.maxSpeed)
-    behavior.addAvoidObstaclesGoal(forScene: scene)
+//    behavior.addAvoidObstaclesGoal(forScene: scene)
     
     // Преобразуем путь патрулирования в массив `[vector_float2]`.
     let pathVectorPoints = patrolPathPoints.map { vector_float2($0) }

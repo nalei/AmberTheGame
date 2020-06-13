@@ -50,6 +50,14 @@ class LevelScene: SKScene {
       obstacleSpriteNodes += foregroundMap["Ground"] as! [SKSpriteNode]
     }
     
+    // Функция для поиска местоположений узлов по набору имен узлов.
+    func nodePointsFromNodeNames(nodeNames: [String]) -> [CGPoint] {
+      let pointsNode = childNode(withName: "/PatrolPoints")!
+      return nodeNames.map {
+        pointsNode[$0].first!.position
+      }
+    }
+    
     if let amberSprite = childNode(withName: "Amber") {
       // Создаем инстанс `Amber` entity
       character = Amber(camera: self.camera, scene: self, entityManager: entityManager)
@@ -67,21 +75,19 @@ class LevelScene: SKScene {
       goblin.spriteComponent.node.name = node.name
       self.entityManager.add(goblin)
       node.removeFromParent()
-      
-      //if let movementComponent = goblin.component(ofType: MovementComponent.self) {
-      //  movementComponent.moveTo(.left)
-      //}
     }
     
     self["Bat"].forEach { node in
+      let patrolPoints = nodePointsFromNodeNames(nodeNames: ["goblin1_point01", "goblin1_point02", "goblin1_point03", "goblin1_point04"])
       // Создаем инстанс `Bat` entity
-      let bat = Bat(entityManager: self.entityManager)
+      let bat = Bat(patrolPoints: patrolPoints, entityManager: self.entityManager)
       bat.spriteComponent.node.name = node.name
       bat.spriteComponent.node.position = node.position
       bat.spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
       self.entityManager.add(bat)
       node.removeFromParent()
     }
+    
     
     self["ParallaxBg"].forEach { node in
       if let parralaxBgSprite = node as? SKSpriteNode {
@@ -97,8 +103,9 @@ class LevelScene: SKScene {
     
     #if DEBUG
     self.addChild(graphLayer)
+    graphLayer.zPosition = 1
     
-    debugDrawingEnabled = true
+    debugDrawingEnabled = false
     
     view.showsPhysics   = debugDrawingEnabled
     view.showsFPS       = debugDrawingEnabled

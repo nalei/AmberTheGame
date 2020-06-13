@@ -16,6 +16,7 @@ class Goblin: Enemy {
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.mass = 0.20
+//    physicsComponent.physicsBody.affectedByGravity = false
     addComponent(physicsComponent)
     
     // Связываем `PhysicsComponent` и `SpriteComponent`.
@@ -34,16 +35,12 @@ class Goblin: Enemy {
     let agent = AgentComponent()
     agent.delegate = self
     agent.maxSpeed = 200
-    agent.maxAcceleration = 40
-    agent.mass = 0.01
+    agent.maxAcceleration = 300
+    agent.mass = 0.03
     agent.radius = 35
     agent.behavior = GKBehavior()
-    agentOffset = CGPoint(x: 0, y: 25)
+    self.agentOffset = CGPoint(x: 0, y: 25)
     addComponent(agent)
-    
-//    let flyComponent = FlyComponent(maxSpeed: 100, maxAcceleration: 40, radius: Float(spriteComponent.node.size.width / 2.5), entityManager: entityManager)
-//    flyComponent.shift = CGPoint(x: 0, y: 25)
-//    addComponent(flyComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {
