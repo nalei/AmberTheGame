@@ -23,8 +23,9 @@
 		1E61B3482482C99900AEBC76 /* EnemyBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61B3472482C99900AEBC76 /* EnemyBehavior.swift */; };
 		1E64B54324798B9500883809 /* LevelScene+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E64B54224798B9500883809 /* LevelScene+Debug.swift */; };
 		1E6E5108248CDF5300C640E9 /* GeometryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E5107248CDF5300C640E9 /* GeometryExtensions.swift */; };
+		1E6E510A2494B7CD00C640E9 /* RulesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E51092494B7CD00C640E9 /* RulesComponent.swift */; };
+		1E6E510D2494BB3E00C640E9 /* LevelStateSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
-		1E8F34B22493D44800E27BBD /* Terrain.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E8F34B12493D44800E27BBD /* Terrain.xcassets */; };
 		1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E99C9CD2469966E00930779 /* Bat.xcassets */; };
 		1E99C9D02469997E00930779 /* Bat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E99C9CF2469997E00930779 /* Bat.swift */; };
 		1EB7B4AF2416237800F0FA54 /* ParallaxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */; };
@@ -65,8 +66,9 @@
 		1E61B3472482C99900AEBC76 /* EnemyBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyBehavior.swift; sourceTree = "<group>"; };
 		1E64B54224798B9500883809 /* LevelScene+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelScene+Debug.swift"; sourceTree = "<group>"; };
 		1E6E5107248CDF5300C640E9 /* GeometryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryExtensions.swift; sourceTree = "<group>"; };
+		1E6E51092494B7CD00C640E9 /* RulesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesComponent.swift; sourceTree = "<group>"; };
+		1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelStateSnapshot.swift; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
-		1E8F34B12493D44800E27BBD /* Terrain.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Terrain.xcassets; sourceTree = "<group>"; };
 		1E99C9CD2469966E00930779 /* Bat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bat.xcassets; sourceTree = "<group>"; };
 		1E99C9CF2469997E00930779 /* Bat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bat.swift; sourceTree = "<group>"; };
 		1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxComponent.swift; sourceTree = "<group>"; };
@@ -122,6 +124,14 @@
 			path = "Animation States";
 			sourceTree = "<group>";
 		};
+		1E6E510B2494BABE00C640E9 /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */,
+			);
+			path = Rules;
+			sourceTree = "<group>";
+		};
 		1E829E9423D1A8AC0026F495 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +173,7 @@
 				1E3DF9E923F7F55100B69080 /* Physics Contacts and Collisions */,
 				1EFDAA5323CFA8A30081527C /* Entities */,
 				1EFDAA5623CFA9AF0081527C /* Components */,
+				1E6E510B2494BABE00C640E9 /* Rules */,
 				1EDF96912483D61A009A3765 /* Behaviors */,
 				1E829E9423D1A8AC0026F495 /* Scenes */,
 				1EC1662423CB78710055452D /* Helpers */,
@@ -190,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				1EC1661023CA2E310055452D /* images.xcassets */,
-				1E8F34B12493D44800E27BBD /* Terrain.xcassets */,
 				1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */,
 				1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */,
 				1E99C9CD2469966E00930779 /* Bat.xcassets */,
@@ -250,6 +260,7 @@
 				1E50353823DDA8CA0010B16E /* Animation States */,
 				1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */,
 				1EDF968F24839FD4009A3765 /* AgentComponent.swift */,
+				1E6E51092494B7CD00C640E9 /* RulesComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -320,7 +331,6 @@
 				1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */,
 				1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */,
 				1EC1660823CA2E2F0055452D /* Actions.sks in Resources */,
-				1E8F34B22493D44800E27BBD /* Terrain.xcassets in Resources */,
 				1EDF96932483DC64009A3765 /* TileSet.sks in Resources */,
 				1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */,
 			);
@@ -352,6 +362,7 @@
 				1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */,
 				1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */,
 				1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */,
+				1E6E510A2494B7CD00C640E9 /* RulesComponent.swift in Sources */,
 				1EB7B4AF2416237800F0FA54 /* ParallaxComponent.swift in Sources */,
 				1E5AD008242735F9002CEE01 /* Utils.swift in Sources */,
 				1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */,
@@ -360,6 +371,7 @@
 				1E64B54324798B9500883809 /* LevelScene+Debug.swift in Sources */,
 				1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */,
 				1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */,
+				1E6E510D2494BB3E00C640E9 /* LevelStateSnapshot.swift in Sources */,
 				1EC1662623CB78920055452D /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

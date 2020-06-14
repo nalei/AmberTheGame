@@ -101,7 +101,7 @@ class MovementComponent : GKComponent {
       physicsComponent.physicsBody.velocity.dy *= 0.5
     }
     
-    // Если тело движется вниз и не имеет контакта с землёй
+    // Если тело движется вниз и не имеет контакта с землёй перходим в `FallingState`
     if physicsComponent.physicsBody.velocity.dy < -100 && !physicsComponent.isContactByGround() {
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
         if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {

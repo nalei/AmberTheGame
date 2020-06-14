@@ -78,7 +78,7 @@ class LevelScene: SKScene {
     }
     
     self["Bat"].forEach { node in
-      let patrolPoints = nodePointsFromNodeNames(nodeNames: ["goblin1_point01", "goblin1_point02", "goblin1_point03", "goblin1_point04"])
+      let patrolPoints = nodePointsFromNodeNames(nodeNames: ["bat_point01", "bat_point02", "bat_point03", "bat_point04"])
       // Создаем инстанс `Bat` entity
       let bat = Bat(patrolPoints: patrolPoints, entityManager: self.entityManager)
       bat.spriteComponent.node.name = node.name
