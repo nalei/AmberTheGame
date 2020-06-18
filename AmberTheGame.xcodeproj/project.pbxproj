@@ -28,6 +28,7 @@
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
 		1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E99C9CD2469966E00930779 /* Bat.xcassets */; };
 		1E99C9D02469997E00930779 /* Bat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E99C9CF2469997E00930779 /* Bat.swift */; };
+		1EB51715249A9F9D00F83165 /* HitState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB51714249A9F9D00F83165 /* HitState.swift */; };
 		1EB7B4AF2416237800F0FA54 /* ParallaxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */; };
 		1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EBF079E23EED26800BB2A80 /* Tiles.xcassets */; };
 		1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1660323CA2E2F0055452D /* AppDelegate.swift */; };
@@ -71,6 +72,7 @@
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
 		1E99C9CD2469966E00930779 /* Bat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bat.xcassets; sourceTree = "<group>"; };
 		1E99C9CF2469997E00930779 /* Bat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bat.swift; sourceTree = "<group>"; };
+		1EB51714249A9F9D00F83165 /* HitState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitState.swift; sourceTree = "<group>"; };
 		1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxComponent.swift; sourceTree = "<group>"; };
 		1EBF079E23EED26800BB2A80 /* Tiles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tiles.xcassets; sourceTree = "<group>"; };
 		1EC1660023CA2E2F0055452D /* AmberTheGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmberTheGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,6 +122,7 @@
 				1E50353B23DDA92B0010B16E /* WalkingState.swift */,
 				1EEFBD2123E2240900DE1B08 /* JumpingState.swift */,
 				1EF7755A240317A700534AB7 /* FallingState.swift */,
+				1EB51714249A9F9D00F83165 /* HitState.swift */,
 			);
 			path = "Animation States";
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */,
+				1EB51715249A9F9D00F83165 /* HitState.swift in Sources */,
 				1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */,
 				1E61B3482482C99900AEBC76 /* EnemyBehavior.swift in Sources */,
 				1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */,

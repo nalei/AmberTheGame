@@ -20,6 +20,7 @@ class TouchControlInputNode: SKSpriteNode {
     let buttonDirLeft  = ButtonNode(iconName: "shevron-arrow", color: .clear)
     let buttonDirRight = ButtonNode(iconName: "shevron-arrow", color: .clear)
     let buttonJump     = ButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonHit      = ButtonNode(iconName: "shevron-cross", color: .clear)
     
     addButton(button: buttonDirLeft,
               position: CGPoint(
@@ -41,6 +42,13 @@ class TouchControlInputNode: SKSpriteNode {
                 y: -(size.height / 2)  + 100),
               rotation: -(.pi / 2),
               name: "jump")
+    
+    addButton(button: buttonHit,
+              position: CGPoint(
+                x: (size.width / 2 ) - 250,
+                y: -(size.height / 2)  + 100),
+              rotation: -(.pi / 2),
+              name: "hit")
     
     isUserInteractionEnabled = true
   }

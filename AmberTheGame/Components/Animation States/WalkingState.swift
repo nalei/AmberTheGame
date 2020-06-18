@@ -18,6 +18,8 @@ class WalkingState: GKState {
       return true
     case is FallingState.Type:
       return true
+    case is HitState.Type:
+      return true
     default:
       return false
     }
@@ -28,7 +30,7 @@ class WalkingState: GKState {
     
     spriteComponent.node.run(animationComponent.run!, withKey: "run")
     
-    if let _ = previousState as? FallingState {
+    if let _ = previousState as? JumpingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
     }
   }

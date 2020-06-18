@@ -69,7 +69,7 @@ class LevelScene: SKScene {
     }
     
     self["Goblin"].forEach { node in
-      // Создаем инстанс`Goblin` entity
+      // Создаем инстанс `Goblin` entity
       let goblin = Goblin(entityManager: self.entityManager)
       goblin.spriteComponent.node.position = node.position
       goblin.spriteComponent.node.name = node.name

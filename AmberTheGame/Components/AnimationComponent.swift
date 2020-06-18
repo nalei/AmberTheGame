@@ -14,6 +14,7 @@ class AnimationComponent: GKComponent {
   var jumpUp: SKTexture?
   var jumpMiddle: SKTexture?
   var jumpDown: SKTexture?
+  var hit = SKAction(named: "amber-hit")
   
   init(idle: SKTexture?, run: SKAction?, jumpUp: SKTexture?, jumpMiddle: SKTexture?, jumpDown: SKTexture?) {
     super.init()
@@ -28,7 +29,8 @@ class AnimationComponent: GKComponent {
       IdleState(animationComponent: self),
       WalkingState(animationComponent: self),
       JumpingState(animationComponent: self),
-      FallingState(animationComponent: self)
+      FallingState(animationComponent: self),
+      HitState(animationComponent: self)
     ])
     
     stateMachine.enter(IdleState.self)

@@ -18,6 +18,8 @@ class JumpingState : GKState {
       return false
     case is FallingState.Type:
       return true
+    case is HitState.Type:
+      return true
     default:
       return false
     }

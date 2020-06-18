@@ -18,6 +18,8 @@ class FallingState : GKState {
       return true
     case is FallingState.Type:
       return false
+    case is HitState.Type:
+      return true
     default:
       return false
     }

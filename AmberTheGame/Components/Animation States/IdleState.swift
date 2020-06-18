@@ -18,6 +18,8 @@ class IdleState: GKState {
       return true
     case is FallingState.Type:
       return true
+    case is HitState.Type:
+      return true
     default:
       return false
     }
@@ -28,6 +30,7 @@ class IdleState: GKState {
     
     spriteComponent.node.removeAllActions()
     spriteComponent.node.texture = animationComponent.idle
+    spriteComponent.node.size = CGSize(width: 100, height: 100)
     
     if let _ = previousState as? FallingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)

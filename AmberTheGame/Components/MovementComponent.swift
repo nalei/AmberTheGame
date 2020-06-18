@@ -8,7 +8,7 @@ class MovementComponent : GKComponent {
   }
   
   var walkSpeed: CGFloat = 320 //Default value
-  var maxJump: CGFloat  = 150 //Default value
+  var maxJump: CGFloat  = 130 //Default value
   var facing: FacingType = .right
   
   var accel: CGFloat  = 40 //Default value
@@ -79,6 +79,14 @@ class MovementComponent : GKComponent {
     jumpButtonPressed = false
   }
   
+  func hit() {
+    if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+      if (animationComponent.stateMachine?.canEnterState(HitState.self))! {
+        animationComponent.stateMachine?.enter(HitState.self)
+      }
+    }
+  }
+  
   // MARK: - GKComponent Life Cycle
   
   override func update(deltaTime seconds: TimeInterval) {
@@ -103,24 +111,28 @@ class MovementComponent : GKComponent {
     
     // Если тело движется вниз и не имеет контакта с землёй перходим в `FallingState`
     if physicsComponent.physicsBody.velocity.dy < -100 && !physicsComponent.isContactByGround() {
-      if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-        if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
-          animationComponent.stateMachine?.enter(FallingState.self)
-        }
-      }
+//      if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+//        if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
+//          animationComponent.stateMachine?.enter(FallingState.self)
+//        }
+//      }
       onGround = false
     }
-    
+  
     // Анимация
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-      if onGround {
-        if hSpeed == 0 || !moveButtonPressed {
-          if (animationComponent.stateMachine?.canEnterState(IdleState.self))! {
-            animationComponent.stateMachine?.enter(IdleState.self)
-          }
-        } else {
+      if let _ = spriteComponent.node.action(forKey: "hit") {
+        if (animationComponent.stateMachine?.canEnterState(HitState.self))! {
+          animationComponent.stateMachine?.enter(HitState.self)
+        }
+      } else if onGround {
+        if moveButtonPressed {
           if (animationComponent.stateMachine?.canEnterState(WalkingState.self))! {
             animationComponent.stateMachine?.enter(WalkingState.self)
+          }
+        } else {
+          if (animationComponent.stateMachine?.canEnterState(IdleState.self))! {
+            animationComponent.stateMachine?.enter(IdleState.self)
           }
         }
       }

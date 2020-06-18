@@ -22,7 +22,7 @@ class Amber: GKEntity {
   init(camera: SKCameraNode?, scene: SKScene, entityManager: EntityManager) {
     agent = GKAgent2D()
     agent.radius = GameplayConfiguration.Amber.agentRadius
-    agentOffset = CGPoint(x: 0, y: 30)
+    agentOffset = CGPoint(x: 0, y: 33)
     
     super.init()
     
@@ -32,7 +32,7 @@ class Amber: GKEntity {
     
     addComponent(InputComponent(camera: camera, scene: scene))
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 42, height: 64), center: CGPoint(x: 0, y: 32)))
+    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 42, height: 64), center: CGPoint(x: 0, y: 33)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND

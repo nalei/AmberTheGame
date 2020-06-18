@@ -21,13 +21,13 @@ class EnemyBehavior: GKBehavior {
     return (behavior, pathPoints)
   }
   
-  /// Создает поведение, чтобы патрулировать путь, избегая препятствий на пути.
+  /// Создает поведение, чтобы патрулировать путь.
   static func behaviorPatrol(forAgent agent: GKAgent2D, patrollingPathWithPoints patrolPathPoints: [CGPoint], pathRadius: Float, inScene scene: LevelScene) -> GKBehavior {
     let behavior = EnemyBehavior()
     
     // Добавляем основные цели: достичь максимальной скорости и избегать препятствий.
     behavior.addTargetSpeedGoal(speed: agent.maxSpeed)
-//    behavior.addAvoidObstaclesGoal(forScene: scene)
+    behavior.addAvoidObstaclesGoal(forScene: scene)
     
     // Преобразуем путь патрулирования в массив `[vector_float2]`.
     let pathVectorPoints = patrolPathPoints.map { vector_float2($0) }
