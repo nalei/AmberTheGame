@@ -30,7 +30,7 @@ class JumpingState : GKState {
     
     spriteComponent.node.removeAllActions()
     spriteComponent.node.texture = animationComponent.jumpUp
-    
+
     spriteComponent.squashAndSretch(xScale: 0.7, yScale: 1.4)
   }
   

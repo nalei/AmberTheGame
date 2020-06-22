@@ -29,6 +29,5 @@ class HitState: GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
     spriteComponent.node.run(animationComponent.hit!, withKey: "hit")
-    spriteComponent.node.size = CGSize(width: 267, height: 267)
   }
 }

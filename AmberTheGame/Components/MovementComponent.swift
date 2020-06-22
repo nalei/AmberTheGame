@@ -109,30 +109,31 @@ class MovementComponent : GKComponent {
       physicsComponent.physicsBody.velocity.dy *= 0.5
     }
     
-    // Если тело движется вниз и не имеет контакта с землёй перходим в `FallingState`
-    if physicsComponent.physicsBody.velocity.dy < -100 && !physicsComponent.isContactByGround() {
-//      if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-//        if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
-//          animationComponent.stateMachine?.enter(FallingState.self)
-//        }
-//      }
+    // Если тело не имеет контакта с землёй, `onGround` переводим в false
+    if !physicsComponent.isContactByGround() {
       onGround = false
     }
   
     // Анимация
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-      if let _ = spriteComponent.node.action(forKey: "hit") {
-        if (animationComponent.stateMachine?.canEnterState(HitState.self))! {
-          animationComponent.stateMachine?.enter(HitState.self)
-        }
-      } else if onGround {
-        if moveButtonPressed {
-          if (animationComponent.stateMachine?.canEnterState(WalkingState.self))! {
-            animationComponent.stateMachine?.enter(WalkingState.self)
+      
+      // Если запущена анимация удара
+      if spriteComponent.node.action(forKey: "hit") != nil {
+
+      } else {
+        if onGround {
+          if moveButtonPressed {
+            if (animationComponent.stateMachine?.canEnterState(WalkingState.self))! {
+              animationComponent.stateMachine?.enter(WalkingState.self)
+            }
+          } else {
+            if (animationComponent.stateMachine?.canEnterState(IdleState.self))! {
+              animationComponent.stateMachine?.enter(IdleState.self)
+            }
           }
-        } else {
-          if (animationComponent.stateMachine?.canEnterState(IdleState.self))! {
-            animationComponent.stateMachine?.enter(IdleState.self)
+        } else if physicsComponent.physicsBody.velocity.dy < -100 {
+          if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
+            animationComponent.stateMachine?.enter(FallingState.self)
           }
         }
       }

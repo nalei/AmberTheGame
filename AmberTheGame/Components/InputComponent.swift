@@ -36,8 +36,7 @@ class InputComponent: GKComponent, ControlInputSourceDelegate {
       case "hit":
         movementComponent.hit()
       case "stop hit":
-        print()
-
+        break
       default:
         print("command: \(String(describing: command))")
       }

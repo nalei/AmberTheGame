@@ -88,7 +88,6 @@ class LevelScene: SKScene {
       node.removeFromParent()
     }
     
-    
     self["ParallaxBg"].forEach { node in
       if let parralaxBgSprite = node as? SKSpriteNode {
         // Создаем инстанс `ParallaxBg` entity
