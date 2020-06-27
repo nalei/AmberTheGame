@@ -5,7 +5,10 @@ struct GameplayConfiguration {
   
   struct Amber {
     /// The radius of the agent associated with this `Amber` for pathfinding.
-    static let agentRadius: Float = 50
+    static let agentRadius: Float = 40
+    
+    /// Период времени, в течение которого `Amber` остается в состоянии `AttackState`.
+    static let hitStateDuration: TimeInterval = 0.4
   }
   
   struct Enemy {

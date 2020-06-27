@@ -17,7 +17,7 @@ extension LevelScene {
       graphLayer.removeAllChildren()
       return
     }
-    
+
     for node in graph.nodes as! [GKGraphNode2D] {
       for destination in node.connectedNodes as! [GKGraphNode2D] {
         var points = [CGPoint(node.position), CGPoint(destination.position)]

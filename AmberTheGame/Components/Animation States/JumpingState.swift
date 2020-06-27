@@ -8,23 +8,6 @@ class JumpingState : GKState {
     self.animationComponent = animationComponent
   }
   
-  override func isValidNextState(_ stateClass: AnyClass) -> Bool {
-    switch stateClass {
-    case is IdleState.Type:
-      return true
-    case is WalkingState.Type:
-      return true
-    case is JumpingState.Type:
-      return false
-    case is FallingState.Type:
-      return true
-    case is HitState.Type:
-      return true
-    default:
-      return false
-    }
-  }
-  
   override func didEnter(from previousState: GKState?) {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
@@ -39,9 +22,18 @@ class JumpingState : GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
 
     if (spriteComponent.node.physicsBody?.velocity.dy)! < 0 {
-      if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
-        animationComponent.stateMachine?.enter(FallingState.self)
-      }
+      stateMachine?.enter(FallingState.self)
+    }
+  }
+  
+  override func isValidNextState(_ stateClass: AnyClass) -> Bool {
+    switch stateClass {
+    case is IdleState.Type, is WalkingState.Type, is FallingState.Type, is HitState.Type:
+      return true
+    case is JumpingState.Type:
+      return false
+    default:
+      return false
     }
   }
 }

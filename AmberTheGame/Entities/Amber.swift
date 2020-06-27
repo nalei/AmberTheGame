@@ -51,6 +51,8 @@ class Amber: GKEntity {
       jumpMiddle: SKTexture(imageNamed: "amber-jump-middle"),
       jumpDown: SKTexture(imageNamed: "amber-jump-down")
     ))
+    
+    addComponent(AttackComponent())
   }
   
   required init?(coder aDecoder: NSCoder) {

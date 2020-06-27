@@ -2,6 +2,8 @@ import SpriteKit
 import GameplayKit
 
 class MovementComponent : GKComponent {
+  // MARK: - Properties
+  
   enum FacingType: CGFloat {
     case left = -1
     case right = 1
@@ -35,6 +37,9 @@ class MovementComponent : GKComponent {
     return physicsComponent
   }
   
+  
+  // MARK: - Initializers
+  
   init(walkSpeed: CGFloat, maxJump: CGFloat, accel: CGFloat, decel: CGFloat) {
     super.init()
     self.walkSpeed = walkSpeed
@@ -67,9 +72,7 @@ class MovementComponent : GKComponent {
     if onGround {
       physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-        if (animationComponent.stateMachine?.canEnterState(JumpingState.self))! {
-          animationComponent.stateMachine?.enter(JumpingState.self)
-        }
+        animationComponent.stateMachine?.enter(JumpingState.self)
       }
       onGround = false
     }
@@ -77,14 +80,6 @@ class MovementComponent : GKComponent {
   
   func stopJump() {
     jumpButtonPressed = false
-  }
-  
-  func hit() {
-    if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-      if (animationComponent.stateMachine?.canEnterState(HitState.self))! {
-        animationComponent.stateMachine?.enter(HitState.self)
-      }
-    }
   }
   
   // MARK: - GKComponent Life Cycle
@@ -117,24 +112,18 @@ class MovementComponent : GKComponent {
     // Анимация
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       
-      // Если запущена анимация удара
-      if spriteComponent.node.action(forKey: "hit") != nil {
+      // Если объект находится в состоянии удара
+      if (animationComponent.stateMachine?.currentState is HitState) {
 
       } else {
         if onGround {
           if moveButtonPressed {
-            if (animationComponent.stateMachine?.canEnterState(WalkingState.self))! {
-              animationComponent.stateMachine?.enter(WalkingState.self)
-            }
+            animationComponent.stateMachine?.enter(WalkingState.self)
           } else {
-            if (animationComponent.stateMachine?.canEnterState(IdleState.self))! {
-              animationComponent.stateMachine?.enter(IdleState.self)
-            }
+            animationComponent.stateMachine?.enter(IdleState.self)
           }
         } else if physicsComponent.physicsBody.velocity.dy < -100 {
-          if (animationComponent.stateMachine?.canEnterState(FallingState.self))! {
-            animationComponent.stateMachine?.enter(FallingState.self)
-          }
+          animationComponent.stateMachine?.enter(FallingState.self)
         }
       }
     }

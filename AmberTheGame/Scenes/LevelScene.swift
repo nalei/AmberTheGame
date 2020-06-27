@@ -46,7 +46,7 @@ class LevelScene: SKScene {
     
     // Создаем физическое тело для `ForegroundMap`
     if let foregroundMap = childNode(withName: "ForegroundMap") as? SKTileMapNode {
-      giveTileMapPhysicsBody(tileMap: foregroundMap)
+      foregroundMap.giveTileMapPhysicsBody()
       obstacleSpriteNodes += foregroundMap["Ground"] as! [SKSpriteNode]
     }
     

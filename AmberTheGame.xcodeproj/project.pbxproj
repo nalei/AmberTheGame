@@ -15,7 +15,6 @@
 		1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353423D63B9F0010B16E /* MovementComponent.swift */; };
 		1E50353A23DDA9190010B16E /* IdleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353923DDA9190010B16E /* IdleState.swift */; };
 		1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353B23DDA92B0010B16E /* WalkingState.swift */; };
-		1E5AD008242735F9002CEE01 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD007242735F9002CEE01 /* Utils.swift */; };
 		1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD009242738F1002CEE01 /* Goblin.swift */; };
 		1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */; };
 		1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */; };
@@ -30,6 +29,8 @@
 		1E99C9D02469997E00930779 /* Bat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E99C9CF2469997E00930779 /* Bat.swift */; };
 		1EB51715249A9F9D00F83165 /* HitState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB51714249A9F9D00F83165 /* HitState.swift */; };
 		1EB7B4AF2416237800F0FA54 /* ParallaxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */; };
+		1EB867E724A735E80016ABDB /* TileMapNodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB867E624A735E80016ABDB /* TileMapNodeExtensions.swift */; };
+		1EB867ED24A777C20016ABDB /* AttackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB867EC24A777C20016ABDB /* AttackComponent.swift */; };
 		1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EBF079E23EED26800BB2A80 /* Tiles.xcassets */; };
 		1EC1660423CA2E2F0055452D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1660323CA2E2F0055452D /* AppDelegate.swift */; };
 		1EC1660623CA2E2F0055452D /* LevelScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1660523CA2E2F0055452D /* LevelScene.sks */; };
@@ -59,7 +60,6 @@
 		1E50353423D63B9F0010B16E /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
 		1E50353923DDA9190010B16E /* IdleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleState.swift; sourceTree = "<group>"; };
 		1E50353B23DDA92B0010B16E /* WalkingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingState.swift; sourceTree = "<group>"; };
-		1E5AD007242735F9002CEE01 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1E5AD009242738F1002CEE01 /* Goblin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goblin.swift; sourceTree = "<group>"; };
 		1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
 		1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxBg.swift; sourceTree = "<group>"; };
@@ -74,6 +74,8 @@
 		1E99C9CF2469997E00930779 /* Bat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bat.swift; sourceTree = "<group>"; };
 		1EB51714249A9F9D00F83165 /* HitState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitState.swift; sourceTree = "<group>"; };
 		1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxComponent.swift; sourceTree = "<group>"; };
+		1EB867E624A735E80016ABDB /* TileMapNodeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileMapNodeExtensions.swift; sourceTree = "<group>"; };
+		1EB867EC24A777C20016ABDB /* AttackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackComponent.swift; sourceTree = "<group>"; };
 		1EBF079E23EED26800BB2A80 /* Tiles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Tiles.xcassets; sourceTree = "<group>"; };
 		1EC1660023CA2E2F0055452D /* AmberTheGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmberTheGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EC1660323CA2E2F0055452D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -224,7 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				1EC1662523CB78920055452D /* ButtonNode.swift */,
-				1E5AD007242735F9002CEE01 /* Utils.swift */,
+				1EB867E624A735E80016ABDB /* TileMapNodeExtensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -259,6 +261,7 @@
 				1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */,
 				1E50353423D63B9F0010B16E /* MovementComponent.swift */,
 				1EFDAA5723CFAAA70081527C /* InputComponent.swift */,
+				1EB867EC24A777C20016ABDB /* AttackComponent.swift */,
 				1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */,
 				1E50353823DDA8CA0010B16E /* Animation States */,
 				1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */,
@@ -351,6 +354,7 @@
 				1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */,
 				1E61B3482482C99900AEBC76 /* EnemyBehavior.swift in Sources */,
 				1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */,
+				1EB867ED24A777C20016ABDB /* AttackComponent.swift in Sources */,
 				1EC1660A23CA2E2F0055452D /* LevelScene.swift in Sources */,
 				1E46ACDC2486F18C00D3E976 /* Enemy.swift in Sources */,
 				1EC1660C23CA2E2F0055452D /* GameViewController.swift in Sources */,
@@ -368,7 +372,7 @@
 				1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */,
 				1E6E510A2494B7CD00C640E9 /* RulesComponent.swift in Sources */,
 				1EB7B4AF2416237800F0FA54 /* ParallaxComponent.swift in Sources */,
-				1E5AD008242735F9002CEE01 /* Utils.swift in Sources */,
+				1EB867E724A735E80016ABDB /* TileMapNodeExtensions.swift in Sources */,
 				1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */,
 				1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */,
 				1E99C9D02469997E00930779 /* Bat.swift in Sources */,
