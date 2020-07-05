@@ -9,6 +9,8 @@ class JumpingState : GKState {
   }
   
   override func didEnter(from previousState: GKState?) {
+    super.didEnter(from: previousState)
+    
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
     spriteComponent.node.removeAllActions()
@@ -28,7 +30,7 @@ class JumpingState : GKState {
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
-    case is IdleState.Type, is WalkingState.Type, is FallingState.Type, is HitState.Type:
+    case is IdleState.Type, is WalkingState.Type, is FallingState.Type, is HitState.Type, is DamageState.Type:
       return true
     case is JumpingState.Type:
       return false

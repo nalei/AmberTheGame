@@ -10,15 +10,20 @@ class HitState: GKState {
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { fatalError("A HitState's entity must have an SpriteComponent.") }
+    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
+      fatalError("A HitState's entity must have an SpriteComponent.")
+    }
     return spriteComponent
   }
   
-  /// Вычисляемое свойство указывающее на `SpriteComponent`.
+  /// Вычисляемое свойство указывающее на `AttackComponent`.
   var attackComponent: AttackComponent {
-    guard let attackComponent = animationComponent.entity?.component(ofType: AttackComponent.self) else { fatalError("A HitState's entity must have an AttackComponent.") }
+    guard let attackComponent = animationComponent.entity?.component(ofType: AttackComponent.self) else {
+      fatalError("A HitState's entity must have an AttackComponent.")
+    }
     return attackComponent
   }
+  
   
   // MARK: - Initializers
   
@@ -29,11 +34,15 @@ class HitState: GKState {
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
+    guard let physicsComponent = animationComponent.entity?.component(ofType: PhysicsComponent.self) else { return }
+    
     // Сбросываем счетчик времени при входе в это состояние.
     elapsedTime = 0.0
     
     spriteComponent.node.removeAllActions()
     spriteComponent.node.run(animationComponent.hit!, withKey: "hit")
+    
+//    physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * 30), dy: 0.0))
   }
   
   
@@ -62,9 +71,6 @@ class HitState: GKState {
     if spriteComponent.node.action(forKey: "hit") == nil {
       stateMachine?.enter(IdleState.self)
     }
-    
-    if elapsedTime >= GameplayConfiguration.Amber.hitStateDuration {
-    }
   }
   
   override func willExit(to nextState: GKState) {
@@ -77,7 +83,7 @@ class HitState: GKState {
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
-    case is IdleState.Type, is WalkingState.Type, is JumpingState.Type, is FallingState.Type:
+    case is IdleState.Type, is WalkingState.Type, is JumpingState.Type, is FallingState.Type, is DamageState.Type:
       return true
     case is HitState.Type:
       return false

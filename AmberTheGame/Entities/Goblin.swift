@@ -4,7 +4,7 @@ import GameplayKit
 class Goblin: Enemy {
   // MARK: - Initialization
   
-  required init(entityManager: EntityManager) {
+  required override init() {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "goblin-idle"), size: CGSize(width: 100, height: 100))
@@ -29,7 +29,8 @@ class Goblin: Enemy {
       run: SKAction(named: "goblin-run"),
       jumpUp: nil,
       jumpMiddle: nil,
-      jumpDown: nil
+      jumpDown: nil,
+      damage: nil
     ))
     
     let agent = AgentComponent()

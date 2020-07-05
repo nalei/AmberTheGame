@@ -26,13 +26,13 @@ class Amber: GKEntity {
     
     super.init()
     
-    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "amber-idle"), size: CGSize(width: 208, height: 208))
+    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "amber-idle"), size: CGSize(width: 200, height: 200))
     spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.3)
     addComponent(spriteComponent)
     
     addComponent(InputComponent(camera: camera, scene: scene))
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 32, height: 52), center: CGPoint(x: 0, y: 32)))
+    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 30)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
@@ -49,10 +49,14 @@ class Amber: GKEntity {
       run: SKAction(named: "amber-run"),
       jumpUp: SKTexture(imageNamed: "amber-jump-up"),
       jumpMiddle: SKTexture(imageNamed: "amber-jump-middle"),
-      jumpDown: SKTexture(imageNamed: "amber-jump-down")
+      jumpDown: SKTexture(imageNamed: "amber-jump-down"),
+      damage: nil
     ))
     
-    addComponent(AttackComponent())
+    let attackComponent = AttackComponent(hitBoxSize: CGSize(width: 50, height: 50), hurtBoxSize: CGSize(width: 30, height: 52))
+    attackComponent.hurtBox.position = CGPoint(x: 0, y: 30)
+    spriteComponent.node.addChild(attackComponent.hurtBox)
+    addComponent(attackComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {

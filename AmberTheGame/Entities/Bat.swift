@@ -4,7 +4,7 @@ import GameplayKit
 class Bat: Enemy {
   // MARK: - Initialization
   
-  required init(patrolPoints: [CGPoint], entityManager: EntityManager) {
+  required init(patrolPoints: [CGPoint]) {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 65, height: 65))

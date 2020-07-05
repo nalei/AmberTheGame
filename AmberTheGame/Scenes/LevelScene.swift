@@ -59,7 +59,6 @@ class LevelScene: SKScene {
     }
     
     if let amberSprite = childNode(withName: "Amber") {
-      // Создаем инстанс `Amber` entity
       character = Amber(camera: self.camera, scene: self, entityManager: entityManager)
       character!.spriteComponent.node.position = amberSprite.position
       character!.spriteComponent.node.name = amberSprite.name
@@ -69,18 +68,27 @@ class LevelScene: SKScene {
     }
     
     self["Goblin"].forEach { node in
-      // Создаем инстанс `Goblin` entity
-      let goblin = Goblin(entityManager: self.entityManager)
+      let goblin = Goblin()
       goblin.spriteComponent.node.position = node.position
+      goblin.spriteComponent.node.xScale = node.xScale
       goblin.spriteComponent.node.name = node.name
       self.entityManager.add(goblin)
       node.removeFromParent()
     }
     
+    self["Skeleton"].forEach { node in
+      let skeleton = Skeleton()
+      skeleton.spriteComponent.node.position = node.position
+      skeleton.spriteComponent.node.xScale = node.xScale
+      skeleton.spriteComponent.node.name = node.name
+      self.entityManager.add(skeleton)
+      node.removeFromParent()
+    }
+    
     self["Bat"].forEach { node in
       let patrolPoints = nodePointsFromNodeNames(nodeNames: ["bat_point01", "bat_point02", "bat_point03", "bat_point04"])
-      // Создаем инстанс `Bat` entity
-      let bat = Bat(patrolPoints: patrolPoints, entityManager: self.entityManager)
+      
+      let bat = Bat(patrolPoints: patrolPoints)
       bat.spriteComponent.node.name = node.name
       bat.spriteComponent.node.position = node.position
       bat.spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
@@ -90,7 +98,6 @@ class LevelScene: SKScene {
     
     self["ParallaxBg"].forEach { node in
       if let parralaxBgSprite = node as? SKSpriteNode {
-        // Создаем инстанс `ParallaxBg` entity
         let parralaxBg = ParallaxBg(spriteNode: parralaxBgSprite, camera: self.camera)
         self.entityManager.add(parralaxBg)
       }

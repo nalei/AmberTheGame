@@ -14,7 +14,7 @@ class MovementComponent : GKComponent {
   var facing: FacingType = .right
   
   var accel: CGFloat  = 40 //Default value
-  var decel: CGFloat  = 30 //Default value
+  var decel: CGFloat  = 80 //Default value
   var hSpeed: CGFloat = 0
   
   var moveButtonPressed: Bool = false
@@ -99,6 +99,11 @@ class MovementComponent : GKComponent {
       physicsComponent.physicsBody.velocity.dx = hSpeed
     }
     
+    // Проверка на случай если горизонтальная скорость была получена от физических взаимодействий
+    if hSpeed == 0 && physicsComponent.physicsBody.velocity.dx != 0 {
+      hSpeed = physicsComponent.physicsBody.velocity.dx
+    }
+    
     // Прерываем прыжок, если кнопка отпущена
     if !jumpButtonPressed && physicsComponent.physicsBody.velocity.dy > 0 {
       physicsComponent.physicsBody.velocity.dy *= 0.5
@@ -113,7 +118,7 @@ class MovementComponent : GKComponent {
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       
       // Если объект находится в состоянии удара
-      if (animationComponent.stateMachine?.currentState is HitState) {
+      if animationComponent.stateMachine?.currentState is HitState {
 
       } else {
         if onGround {
