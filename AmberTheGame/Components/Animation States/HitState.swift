@@ -34,8 +34,6 @@ class HitState: GKState {
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    guard let physicsComponent = animationComponent.entity?.component(ofType: PhysicsComponent.self) else { return }
-    
     // Сбросываем счетчик времени при входе в это состояние.
     elapsedTime = 0.0
     
