@@ -19,7 +19,7 @@ class Amber: GKEntity {
   /// Используется для фигур, представляющих текущий путь для отладочной отрисовки.
   var debugNode = SKNode()
   
-  init(camera: SKCameraNode?, scene: SKScene, entityManager: EntityManager) {
+  init(camera: SKCameraNode?, scene: SKScene) {
     agent = GKAgent2D()
     agent.radius = GameplayConfiguration.Amber.agentRadius
     agentOffset = CGPoint(x: 0, y: 33)

@@ -59,11 +59,10 @@ class LevelScene: SKScene {
     }
     
     if let amberSprite = childNode(withName: "Amber") {
-      character = Amber(camera: self.camera, scene: self, entityManager: entityManager)
+      character = Amber(camera: self.camera, scene: self)
       character!.spriteComponent.node.position = amberSprite.position
       character!.spriteComponent.node.name = amberSprite.name
       entityManager.add(character!)
-      graphLayer.addChild(character!.debugNode)
       amberSprite.removeFromParent()
     }
     

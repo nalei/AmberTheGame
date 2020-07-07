@@ -39,8 +39,6 @@ class HitState: GKState {
     
     spriteComponent.node.removeAllActions()
     spriteComponent.node.run(animationComponent.hit!, withKey: "hit")
-    
-//    physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * 30), dy: 0.0))
   }
   
   

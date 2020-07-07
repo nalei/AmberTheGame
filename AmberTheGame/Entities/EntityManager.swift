@@ -12,7 +12,8 @@ class EntityManager {
     let agentSystem = GKComponentSystem(componentClass: AgentComponent.self)
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
-    return [moveSystem, agentSystem, animationSystem, parallaxSystem]
+    let attackSystem = GKComponentSystem(componentClass: AttackComponent.self)
+    return [moveSystem, agentSystem, animationSystem, parallaxSystem, attackSystem]
   }()
   
   init(scene: LevelScene) {
@@ -40,6 +41,10 @@ class EntityManager {
     
     if let spriteNode = entity.component(ofType: SpriteComponent.self)?.node {
       scene.addChild(spriteNode)
+    }
+    
+    if let amber = entity as? Amber {
+      scene.graphLayer.addChild(amber.debugNode)
     }
     
     if let enemy = entity as? Enemy {

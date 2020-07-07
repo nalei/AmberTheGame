@@ -47,7 +47,7 @@ class DamageState: GKState {
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
     case is IdleState.Type, is WalkingState.Type, is JumpingState.Type, is FallingState.Type, is HitState.Type:
-      return false
+      return true
     case is DamageState.Type:
       return false
     default:
