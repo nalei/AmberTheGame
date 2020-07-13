@@ -19,6 +19,9 @@ class Amber: GKEntity {
   /// Используется для фигур, представляющих текущий путь для отладочной отрисовки.
   var debugNode = SKNode()
   
+  
+    // MARK: - Initialization
+  
   init(camera: SKCameraNode?, scene: SKScene) {
     agent = GKAgent2D()
     agent.radius = GameplayConfiguration.Amber.agentRadius
@@ -32,7 +35,7 @@ class Amber: GKEntity {
     
     addComponent(InputComponent(camera: camera, scene: scene))
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 30)))
+    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 29)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
@@ -50,11 +53,15 @@ class Amber: GKEntity {
       jumpUp: SKTexture(imageNamed: "amber-jump-up"),
       jumpMiddle: SKTexture(imageNamed: "amber-jump-middle"),
       jumpDown: SKTexture(imageNamed: "amber-jump-down"),
+      hit: SKAction(named: "amber-hit"),
       damage: nil
     ))
     
-    let attackComponent = AttackComponent(hitBoxSize: CGSize(width: 50, height: 50), hurtBoxSize: CGSize(width: 30, height: 52))
-    attackComponent.hurtBox.position = CGPoint(x: 0, y: 30)
+    let attackComponent = AttackComponent()
+    attackComponent.hitBox.position = CGPoint(x: 60, y: 30)
+    attackComponent.hitBox.size = CGSize(width: 50, height: 50)
+    attackComponent.hurtBox.position = CGPoint(x: 0, y: 29)
+    attackComponent.hurtBox.size = CGSize(width: 30, height: 52)
     spriteComponent.node.addChild(attackComponent.hurtBox)
     addComponent(attackComponent)
   }

@@ -13,33 +13,33 @@ class Enemy: GKEntity, GKAgentDelegate {
       return GKBehavior()
     }
     
-//    guard let targetAgent = levelScene.character?.agent else {
-//      return GKBehavior()
-//    }
-    
-    guard let pathPoints = patrolPoints else {
+    guard let targetAgent = levelScene.character?.agent else {
       return GKBehavior()
     }
+    
+//    guard let pathPoints = patrolPoints else {
+//      return GKBehavior()
+//    }
     
     let agentBehavior: GKBehavior
     let radius: Float
     
     // `debugPathPoints`, `debugPathShouldCycle`, `debugColor` используются только для отладочной отрисовки
     let debugPathPoints: [CGPoint]
-    var debugPathShouldCycle = false
+    let debugPathShouldCycle = false
     let debugColor: SKColor
     
-//    radius = GameplayConfiguration.Enemy.huntPathRadius
-//    (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
-//    debugColor = SKColor.red
+    radius = GameplayConfiguration.Enemy.huntPathRadius
+    (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
+    debugColor = SKColor.red
 
 //    agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
     
-    radius = GameplayConfiguration.Enemy.patrolPathRadius
-    agentBehavior = EnemyBehavior.behaviorPatrol(forAgent: agent, patrollingPathWithPoints: pathPoints, pathRadius: radius, inScene: levelScene)
-    debugPathPoints = pathPoints
-    debugPathShouldCycle = true
-    debugColor = SKColor.green
+//    radius = GameplayConfiguration.Enemy.patrolPathRadius
+//    agentBehavior = EnemyBehavior.behaviorPatrol(forAgent: agent, patrollingPathWithPoints: pathPoints, pathRadius: radius, inScene: levelScene)
+//    debugPathPoints = pathPoints
+//    debugPathShouldCycle = true
+//    debugColor = SKColor.green
     
     
     if levelScene.debugDrawingEnabled {

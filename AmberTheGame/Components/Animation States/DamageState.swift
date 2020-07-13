@@ -29,17 +29,6 @@ class DamageState: GKState {
   
   // MARK: - GKState Life Cycle
   
-  override func update(deltaTime seconds: TimeInterval) {
-    super.update(deltaTime: seconds)
-    
-    // `spriteComponent` является вычисляемым свойством. Объявляем локальную версию, чтобы мы не вычисляли его несколько раз.
-    let spriteComponent = self.spriteComponent
-    
-    if spriteComponent.node.action(forKey: "damage") == nil {
-      stateMachine?.enter(IdleState.self)
-    }
-  }
-  
   override func willExit(to nextState: GKState) {
     spriteComponent.node.removeAction(forKey: "damage")
   }
@@ -47,7 +36,7 @@ class DamageState: GKState {
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
     case is IdleState.Type, is WalkingState.Type, is JumpingState.Type, is FallingState.Type, is HitState.Type:
-      return true
+      return spriteComponent.node.action(forKey: "damage") == nil
     case is DamageState.Type:
       return false
     default:

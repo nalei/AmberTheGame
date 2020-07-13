@@ -14,10 +14,10 @@ class AnimationComponent: GKComponent {
   var jumpUp: SKTexture?
   var jumpMiddle: SKTexture?
   var jumpDown: SKTexture?
-  var hit = SKAction(named: "amber-hit")
+  var hit: SKAction?
   var damage: SKAction?
   
-  init(idle: SKTexture?, run: SKAction?, jumpUp: SKTexture?, jumpMiddle: SKTexture?, jumpDown: SKTexture?, damage: SKAction?) {
+  init(idle: SKTexture?, run: SKAction?, jumpUp: SKTexture?, jumpMiddle: SKTexture?, jumpDown: SKTexture?, hit: SKAction?, damage: SKAction?) {
     super.init()
     
     self.idle = idle
@@ -25,6 +25,7 @@ class AnimationComponent: GKComponent {
     self.jumpUp = jumpUp ?? idle
     self.jumpMiddle = jumpMiddle ?? jumpUp ?? idle
     self.jumpDown = jumpDown ?? jumpMiddle ?? jumpUp ?? idle
+    self.hit = hit
     self.damage = damage
     
     stateMachine = GKStateMachine(states: [
@@ -36,7 +37,8 @@ class AnimationComponent: GKComponent {
       DamageState(animationComponent: self)
     ])
     
-    stateMachine.enter(IdleState.self)
+    // При инициализации не входим не в какое состояние, объект сам войдет в нужное состояние в момент начала игры
+    //stateMachine.enter(IdleState.self)
   }
   
   required init?(coder: NSCoder) {

@@ -7,7 +7,7 @@ class Bat: Enemy {
   required init(patrolPoints: [CGPoint]) {
     super.init()
     
-    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 65, height: 65))
+    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 64, height: 64))
     addComponent(spriteComponent)
     
     let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30, height: 30), center: CGPoint(x: 0, y: 10)))
@@ -35,6 +35,14 @@ class Bat: Enemy {
      чтобы он был обновлен на каждом цикле обновления компонентов.
      */
     addComponent(agent)
+    
+    let attackComponent = AttackComponent()
+    attackComponent.hitBox.position = CGPoint(x: 0, y: 10)
+    attackComponent.hitBox.size = CGSize(width: 30, height: 30)
+    attackComponent.hurtBox.position = CGPoint(x: 0 , y: 10)
+    attackComponent.hurtBox.size = CGSize(width: 30, height: 30)
+    spriteComponent.node.addChild(attackComponent.hurtBox)
+    addComponent(attackComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {

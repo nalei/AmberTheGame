@@ -17,7 +17,7 @@ class WalkingState: GKState {
     spriteComponent.node.run(animationComponent.run!, withKey: "run")
     
     if let _ = previousState as? FallingState {
-      spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.8)
+      spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
     }
   }
   

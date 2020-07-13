@@ -15,6 +15,18 @@ class JumpingState : GKState {
     
     spriteComponent.node.removeAllActions()
     spriteComponent.node.texture = animationComponent.jumpUp
+    
+    if let levelScene = spriteComponent.node.scene as? LevelScene, let missileEmitter = SKEmitterNode(fileNamed: "jump.sks") {
+      missileEmitter.targetNode = levelScene
+      missileEmitter.particleZPosition = -1
+      missileEmitter.name = "MissileEmitter"
+      spriteComponent.node.addChild(missileEmitter)
+      
+      let emitterDuration = Double(missileEmitter.numParticlesToEmit) / Double(missileEmitter.particleBirthRate) + Double(missileEmitter.particleLifetime + missileEmitter.particleLifetimeRange/2)
+      let wait = SKAction.wait(forDuration: TimeInterval(emitterDuration))
+      let remove = SKAction.removeFromParent()
+      missileEmitter.run(SKAction.sequence([wait, remove]))
+    }
 
     spriteComponent.squashAndSretch(xScale: 0.7, yScale: 1.4)
   }

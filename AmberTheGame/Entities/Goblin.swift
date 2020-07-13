@@ -30,6 +30,7 @@ class Goblin: Enemy {
       jumpUp: nil,
       jumpMiddle: nil,
       jumpDown: nil,
+      hit: nil,
       damage: nil
     ))
     

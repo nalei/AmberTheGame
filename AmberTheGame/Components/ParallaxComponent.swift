@@ -41,8 +41,8 @@ class ParallaxComponent: GKComponent {
       dX = 1.3
       dY = 1.25
     case 7:
-      dX = 1.1
-      dY = 1.2
+      dX = 1.05
+      dY = 1.1
     default:
       print("not valid layer value")
     }

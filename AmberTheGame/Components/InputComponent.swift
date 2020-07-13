@@ -19,8 +19,7 @@ class InputComponent: GKComponent, ControlInputSourceDelegate {
   }
   
   func follow(command: String?) {
-    if let movementComponent = entity?.component(ofType: MovementComponent.self),
-      let attackComponent = entity?.component(ofType: AttackComponent.self) {
+    if let movementComponent = entity?.component(ofType: MovementComponent.self) {
       switch command! {
       case "left":
         movementComponent.moveTo(.left)
@@ -35,6 +34,7 @@ class InputComponent: GKComponent, ControlInputSourceDelegate {
       case "stop jump":
         movementComponent.stopJump()
       case "hit":
+        guard let attackComponent = entity?.component(ofType: AttackComponent.self) else { break }
         attackComponent.hit()
       case "stop hit":
         break

@@ -46,6 +46,8 @@ extension SKTileMapNode {
     for t in tLE {
       let size = CGSize(width: abs(t.x - tRE[ti2].x), height: abs(t.y - tRE[ti2].y))
       let loadnode = SKSpriteNode()
+      loadnode.color = #colorLiteral(red: 0.08749931306, green: 0.02683358826, blue: 0.1405134499, alpha: 1)
+      loadnode.zPosition = -1
       loadnode.anchorPoint = CGPoint(x: 0, y: 0)
       loadnode.size = CGSize(width: size.width, height: size.height)
       loadnode.position = CGPoint(x: t.x, y: t.y)

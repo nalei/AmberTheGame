@@ -39,6 +39,10 @@ class HitState: GKState {
     
     spriteComponent.node.removeAllActions()
     spriteComponent.node.run(animationComponent.hit!, withKey: "hit")
+    
+    if let _ = previousState as? FallingState {
+      spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
+    }
   }
   
   
@@ -55,7 +59,6 @@ class HitState: GKState {
     
     if elapsedTime >= 0.1 && elapsedTime <= 0.3 {
       if attackComponent.hitBox.parent == nil {
-        attackComponent.hitBox.position = CGPoint(x: 60, y: 30)
         spriteComponent.node.addChild(attackComponent.hitBox)
       }
     } else {

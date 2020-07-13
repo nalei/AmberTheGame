@@ -2,8 +2,8 @@ import SpriteKit
 import GameplayKit
 
 class AttackComponent: GKComponent {
-  let hitBox: SKShapeNode
-  let hurtBox: SKShapeNode
+  let hitBox: SKSpriteNode
+  let hurtBox: SKSpriteNode
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
@@ -13,66 +13,63 @@ class AttackComponent: GKComponent {
     return spriteComponent
   }
   
-  /// Используется для фигур, представляющих  hitBox для отладочной отрисовки.
-  var debugNode = SKNode()
-  
-  init(hitBoxSize: CGSize, hurtBoxSize: CGSize) {
-    self.hitBox = SKShapeNode(rectOf: hitBoxSize)
-    self.hurtBox = SKShapeNode(rectOf: hurtBoxSize)
+  override init() {
+    self.hitBox = SKSpriteNode(color: .clear, size: .zero)
+    self.hurtBox = SKSpriteNode(color: .clear, size: .zero)
     
     super.init()
-    
-    var red: CGFloat = 0
-    var green: CGFloat = 0
-    var blue: CGFloat = 0
-    var alpha: CGFloat = 0
-
-    // Use RGB component accessor common between `UIColor` and `NSColor`.
-    SKColor.red.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-
-    hitBox.strokeColor = SKColor(red: red, green: green, blue: blue, alpha: 0.9)
-    hitBox.fillColor = SKColor(red: red, green: green, blue: blue, alpha: 0.5)
-
-    // Use RGB component accessor common between `UIColor` and `NSColor`.
-    SKColor.green.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-
-    hurtBox.strokeColor = SKColor(red: red, green: green, blue: blue, alpha: 0.4)
-    hurtBox.fillColor = SKColor(red: red, green: green, blue: blue, alpha: 0.2)
-    
-    hitBox.zPosition = 1
-    hurtBox.zPosition = 1
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func hit() {
+  override func update(deltaTime seconds: TimeInterval) {
+    super.update(deltaTime: seconds)
+    
+    if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+      if animationComponent.stateMachine?.currentState is HitState {
+        damageEntity()
+      }
+    }
+  }
+  
+  public func hit() {
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       animationComponent.stateMachine?.enter(HitState.self)
     }
   }
   
-  
-  // MARK: - GKComponent Life Cycle
-  
-  override func update(deltaTime seconds: TimeInterval) {
-    super.update(deltaTime: seconds)
-    
+  ///  Перебираем все объекты сцены, если `hitBox` и `hurtBox` пересекаются, то объект содержащий `hurtBox` получает damage
+  private func damageEntity() {
     guard let levelScene = spriteComponent.node.scene as? LevelScene else { return }
     
-    for enemy in levelScene.entityManager.entities {
-      
+    levelScene.entityManager.entities.forEach { enemy in
       if let enemyHurtBox = enemy.component(ofType: AttackComponent.self)?.hurtBox {
         if self.hitBox.intersects(enemyHurtBox) {
           
-          enemy.component(ofType: AnimationComponent.self)?.stateMachine?.enter(DamageState.self)
-          
-          if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
-            physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * 20), dy: 0.0))
+          if let enemyAnimationComponent = enemy.component(ofType: AnimationComponent.self) {
+            enemyAnimationComponent.stateMachine?.enter(DamageState.self)
           }
+          
+          bounceBack(force: 20)
         }
       }
+    }
+    
+    if let foregroundMap = levelScene.childNode(withName: "ForegroundMap") as? SKTileMapNode {
+      foregroundMap["Ground"].forEach { node in
+        if self.hitBox.intersects(node) {
+          
+          bounceBack(force: 10)
+        }
+      }
+    }
+  }
+  
+  private func bounceBack(force: CGFloat) {
+    if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
+      physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * force), dy: 0.0))
     }
   }
 }

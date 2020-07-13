@@ -58,7 +58,7 @@ class LevelScene: SKScene {
       }
     }
     
-    if let amberSprite = childNode(withName: "Amber") {
+    if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
       character = Amber(camera: self.camera, scene: self)
       character!.spriteComponent.node.position = amberSprite.position
       character!.spriteComponent.node.name = amberSprite.name
@@ -79,6 +79,9 @@ class LevelScene: SKScene {
       let skeleton = Skeleton()
       skeleton.spriteComponent.node.position = node.position
       skeleton.spriteComponent.node.xScale = node.xScale
+      if let movementComponent = skeleton.component(ofType: MovementComponent.self) {
+        movementComponent.facing = MovementComponent.FacingType(rawValue: node.xScale)!
+      }
       skeleton.spriteComponent.node.name = node.name
       self.entityManager.add(skeleton)
       node.removeFromParent()
@@ -114,7 +117,7 @@ class LevelScene: SKScene {
     
     view.showsPhysics   = debugDrawingEnabled
     view.showsFPS       = debugDrawingEnabled
-    view.showsNodeCount = debugDrawingEnabled
+    view.showsNodeCount = true
     view.showsDrawCount = debugDrawingEnabled
     #endif
   }
@@ -160,7 +163,6 @@ class LevelScene: SKScene {
 extension LevelScene: SKPhysicsContactDelegate {
   
   func didBegin(_ contact: SKPhysicsContact) {
-    
     if contact.bodyA.categoryBitMask == CollisionCategory.GROUND || contact.bodyB.categoryBitMask == CollisionCategory.GROUND {
       if collisionDirection(contact) == .bottom {
         if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {

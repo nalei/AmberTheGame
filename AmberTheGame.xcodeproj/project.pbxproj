@@ -21,6 +21,14 @@
 		1E60B25F242D1F4F00ABB505 /* Goblin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */; };
 		1E61B3482482C99900AEBC76 /* EnemyBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61B3472482C99900AEBC76 /* EnemyBehavior.swift */; };
 		1E64B54324798B9500883809 /* LevelScene+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E64B54224798B9500883809 /* LevelScene+Debug.swift */; };
+		1E6C065124BCD8370084359E /* SavePoint.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E6C065024BCD8370084359E /* SavePoint.xcassets */; };
+		1E6C065424BCD87B0084359E /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C065224BCD87B0084359E /* Rules.swift */; };
+		1E6C065524BCD87B0084359E /* FuzzyEnemyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6C065324BCD87B0084359E /* FuzzyEnemyRule.swift */; };
+		1E6C065C24BCD94F0084359E /* magic.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E6C065724BCD94F0084359E /* magic.sks */; };
+		1E6C065D24BCD94F0084359E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E6C065824BCD94F0084359E /* Assets.xcassets */; };
+		1E6C065E24BCD94F0084359E /* jump.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E6C065924BCD94F0084359E /* jump.sks */; };
+		1E6C065F24BCD94F0084359E /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E6C065A24BCD94F0084359E /* fire.sks */; };
+		1E6C066024BCD94F0084359E /* missile.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E6C065B24BCD94F0084359E /* missile.sks */; };
 		1E6E5108248CDF5300C640E9 /* GeometryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E5107248CDF5300C640E9 /* GeometryExtensions.swift */; };
 		1E6E510A2494B7CD00C640E9 /* RulesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E51092494B7CD00C640E9 /* RulesComponent.swift */; };
 		1E6E510D2494BB3E00C640E9 /* LevelStateSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */; };
@@ -69,6 +77,14 @@
 		1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Goblin.xcassets; sourceTree = "<group>"; };
 		1E61B3472482C99900AEBC76 /* EnemyBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyBehavior.swift; sourceTree = "<group>"; };
 		1E64B54224798B9500883809 /* LevelScene+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelScene+Debug.swift"; sourceTree = "<group>"; };
+		1E6C065024BCD8370084359E /* SavePoint.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SavePoint.xcassets; sourceTree = "<group>"; };
+		1E6C065224BCD87B0084359E /* Rules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
+		1E6C065324BCD87B0084359E /* FuzzyEnemyRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuzzyEnemyRule.swift; sourceTree = "<group>"; };
+		1E6C065724BCD94F0084359E /* magic.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = magic.sks; sourceTree = "<group>"; };
+		1E6C065824BCD94F0084359E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1E6C065924BCD94F0084359E /* jump.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = jump.sks; sourceTree = "<group>"; };
+		1E6C065A24BCD94F0084359E /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fire.sks; sourceTree = "<group>"; };
+		1E6C065B24BCD94F0084359E /* missile.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = missile.sks; sourceTree = "<group>"; };
 		1E6E5107248CDF5300C640E9 /* GeometryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryExtensions.swift; sourceTree = "<group>"; };
 		1E6E51092494B7CD00C640E9 /* RulesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesComponent.swift; sourceTree = "<group>"; };
 		1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelStateSnapshot.swift; sourceTree = "<group>"; };
@@ -136,9 +152,23 @@
 			path = "Animation States";
 			sourceTree = "<group>";
 		};
+		1E6C065624BCD94F0084359E /* Particle Effects */ = {
+			isa = PBXGroup;
+			children = (
+				1E6C065724BCD94F0084359E /* magic.sks */,
+				1E6C065924BCD94F0084359E /* jump.sks */,
+				1E6C065A24BCD94F0084359E /* fire.sks */,
+				1E6C065B24BCD94F0084359E /* missile.sks */,
+				1E6C065824BCD94F0084359E /* Assets.xcassets */,
+			);
+			path = "Particle Effects";
+			sourceTree = "<group>";
+		};
 		1E6E510B2494BABE00C640E9 /* Rules */ = {
 			isa = PBXGroup;
 			children = (
+				1E6C065324BCD87B0084359E /* FuzzyEnemyRule.swift */,
+				1E6C065224BCD87B0084359E /* Rules.swift */,
 				1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */,
 			);
 			path = Rules;
@@ -187,10 +217,11 @@
 				1EFDAA5623CFA9AF0081527C /* Components */,
 				1E6E510B2494BABE00C640E9 /* Rules */,
 				1EDF96912483D61A009A3765 /* Behaviors */,
-				1E829E9423D1A8AC0026F495 /* Scenes */,
 				1EC1662423CB78710055452D /* Helpers */,
 				1EC1662023CB19930055452D /* Player Control */,
+				1E829E9423D1A8AC0026F495 /* Scenes */,
 				1EC1661B23CA2E900055452D /* View Controllers */,
+				1E6C065624BCD94F0084359E /* Particle Effects */,
 				1EC1661F23CB17DF0055452D /* Assets */,
 				1EC1660723CA2E2F0055452D /* Actions.sks */,
 				1EC1660323CA2E2F0055452D /* AppDelegate.swift */,
@@ -212,8 +243,9 @@
 		1EC1661F23CB17DF0055452D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				1EFD7E9924AB8979005113EF /* Skeleton.xcassets */,
+				1E6C065024BCD8370084359E /* SavePoint.xcassets */,
 				1EC1661023CA2E310055452D /* images.xcassets */,
+				1EFD7E9924AB8979005113EF /* Skeleton.xcassets */,
 				1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */,
 				1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */,
 				1E99C9CD2469966E00930779 /* Bat.xcassets */,
@@ -338,15 +370,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E6C065C24BCD94F0084359E /* magic.sks in Resources */,
 				1E60B25F242D1F4F00ABB505 /* Goblin.xcassets in Resources */,
+				1E6C065E24BCD94F0084359E /* jump.sks in Resources */,
 				1EC1660F23CA2E2F0055452D /* Main.storyboard in Resources */,
 				1EC1660623CA2E2F0055452D /* LevelScene.sks in Resources */,
+				1E6C065D24BCD94F0084359E /* Assets.xcassets in Resources */,
 				1EC1661123CA2E310055452D /* images.xcassets in Resources */,
 				1EFD7E9A24AB8979005113EF /* Skeleton.xcassets in Resources */,
+				1E6C066024BCD94F0084359E /* missile.sks in Resources */,
 				1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */,
 				1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */,
+				1E6C065124BCD8370084359E /* SavePoint.xcassets in Resources */,
 				1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */,
 				1EC1660823CA2E2F0055452D /* Actions.sks in Resources */,
+				1E6C065F24BCD94F0084359E /* fire.sks in Resources */,
 				1EDF96932483DC64009A3765 /* TileSet.sks in Resources */,
 				1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */,
 			);
@@ -378,11 +416,13 @@
 				1E3DF9EB23F7F5B200B69080 /* Collision.swift in Sources */,
 				1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */,
 				1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */,
+				1E6C065424BCD87B0084359E /* Rules.swift in Sources */,
 				1E50353A23DDA9190010B16E /* IdleState.swift in Sources */,
 				1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */,
 				1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */,
 				1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */,
 				1E6E510A2494B7CD00C640E9 /* RulesComponent.swift in Sources */,
+				1E6C065524BCD87B0084359E /* FuzzyEnemyRule.swift in Sources */,
 				1EB7B4AF2416237800F0FA54 /* ParallaxComponent.swift in Sources */,
 				1EB867E724A735E80016ABDB /* TileMapNodeExtensions.swift in Sources */,
 				1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */,
