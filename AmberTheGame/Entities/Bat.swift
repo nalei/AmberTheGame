@@ -13,6 +13,7 @@ class Bat: Enemy {
     let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30, height: 30), center: CGPoint(x: 0, y: 10)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.ENEMY
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
+    physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.10
     physicsComponent.physicsBody.affectedByGravity = false
     addComponent(physicsComponent)

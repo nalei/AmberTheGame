@@ -39,6 +39,7 @@ class Amber: GKEntity {
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
+    physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.15
     addComponent(physicsComponent)
     

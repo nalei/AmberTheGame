@@ -106,9 +106,11 @@ class LevelScene: SKScene {
     }
     
     if let bokehEmitter = SKEmitterNode(fileNamed: "bokeh.sks") {
+      bokehEmitter.targetNode = self
       bokehEmitter.particleZPosition = 1
+      bokehEmitter.fieldBitMask = 1 << 0
       bokehEmitter.name = "BokehEmitter"
-      self.addChild(bokehEmitter)
+      self.camera!.addChild(bokehEmitter)
     }
     
     // Добавляем препятствия в граф поиска пути

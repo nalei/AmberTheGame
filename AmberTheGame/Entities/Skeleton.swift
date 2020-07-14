@@ -15,6 +15,7 @@ class Skeleton: Enemy {
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.ENEMY
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
+    physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.50
     addComponent(physicsComponent)
 
