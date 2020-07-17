@@ -113,6 +113,15 @@ class LevelScene: SKScene {
       self.camera!.addChild(bokehEmitter)
     }
     
+    // Свет вокруг персонажа
+    let lightNode = SKLightNode()
+    lightNode.position = character!.spriteComponent.node.position
+    lightNode.categoryBitMask = 1 << 0
+    lightNode.lightColor = .white
+    lightNode.falloff = 5
+    lightNode.name = "LightNode"
+    self.addChild(lightNode)
+    
     // Добавляем препятствия в граф поиска пути
     polygonObstacles += SKNode.obstacles(fromNodeBounds: obstacleSpriteNodes)
     graph.addObstacles(polygonObstacles)
@@ -143,6 +152,8 @@ class LevelScene: SKScene {
   }
   
   override func update(_ currentTime: TimeInterval) {
+    
+    self.childNode(withName: "LightNode")?.position = character!.spriteComponent.node.position
     
     // Инициализируем `lastUpdateTime`, если ешё не был инициализирован
     if (self.lastUpdateTimeInterval == 0) {

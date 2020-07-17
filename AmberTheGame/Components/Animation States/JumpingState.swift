@@ -19,7 +19,6 @@ class JumpingState : GKState {
     if let levelScene = spriteComponent.node.scene as? LevelScene, let missileEmitter = SKEmitterNode(fileNamed: "jump.sks") {
       missileEmitter.targetNode = levelScene
       missileEmitter.particleZPosition = -1
-      missileEmitter.name = "MissileEmitter"
       spriteComponent.node.addChild(missileEmitter)
       
       let emitterDuration = Double(missileEmitter.numParticlesToEmit) / Double(missileEmitter.particleBirthRate) + Double(missileEmitter.particleLifetime + missileEmitter.particleLifetimeRange/2)
