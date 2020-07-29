@@ -13,7 +13,6 @@ class JumpingState : GKState {
     
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
-    spriteComponent.node.removeAllActions()
     spriteComponent.node.texture = animationComponent.jumpUp
     
     if let levelScene = spriteComponent.node.scene as? LevelScene, let missileEmitter = SKEmitterNode(fileNamed: "jump.sks") {

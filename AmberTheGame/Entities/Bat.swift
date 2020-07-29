@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class Bat: Enemy {
+class Bat: Enemy, RulesComponentDelegate {
   // MARK: - Initialization
   
   required init(patrolPoints: [CGPoint]) {
@@ -17,9 +17,17 @@ class Bat: Enemy {
     physicsComponent.physicsBody.mass = 0.10
     physicsComponent.physicsBody.affectedByGravity = false
     addComponent(physicsComponent)
-
+    
     // Связываем `PhysicsComponent` и `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
+    
+    let attackComponent = AttackComponent()
+    attackComponent.hitBox.position = CGPoint(x: 0, y: 10)
+    attackComponent.hitBox.size = CGSize(width: 30, height: 30)
+    attackComponent.hurtBox.position = CGPoint(x: 0 , y: 10)
+    attackComponent.hurtBox.size = CGSize(width: 30, height: 30)
+    spriteComponent.node.addChild(attackComponent.hurtBox)
+    addComponent(attackComponent)
     
     let agent = AgentComponent()
     agent.delegate = self
@@ -30,23 +38,33 @@ class Bat: Enemy {
     agent.behavior = GKBehavior()
     self.agentOffset = CGPoint(x: 0, y: 10)
     self.patrolPoints = patrolPoints
-
+    
     /*
      `GKAgent2D` является подклассом `GKComponent`. Добавляем его в список компонентов `Enemy`,
      чтобы он был обновлен на каждом цикле обновления компонентов.
      */
     addComponent(agent)
     
-    let attackComponent = AttackComponent()
-    attackComponent.hitBox.position = CGPoint(x: 0, y: 10)
-    attackComponent.hitBox.size = CGSize(width: 30, height: 30)
-    attackComponent.hurtBox.position = CGPoint(x: 0 , y: 10)
-    attackComponent.hurtBox.size = CGSize(width: 30, height: 30)
-    spriteComponent.node.addChild(attackComponent.hurtBox)
-    addComponent(attackComponent)
+    let rulesComponent = RulesComponent(rules: [
+      PlayerBotNearRule(),
+      PlayerBotMediumRule(),
+      PlayerBotFarRule()
+    ])
+    addComponent(rulesComponent)
+    rulesComponent.delegate = self
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  
+  // MARK: - RulesComponentDelegate
+  
+  func rulesComponent(rulesComponent: RulesComponent, didFinishEvaluatingRuleSystem ruleSystem: GKRuleSystem) {
+    let state = ruleSystem.state["snapshot"] as! EntitySnapshot
+    
+    
+  }
+  
 }

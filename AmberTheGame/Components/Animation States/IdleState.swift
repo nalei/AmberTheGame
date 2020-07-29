@@ -21,9 +21,20 @@ class IdleState: GKState {
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    spriteComponent.node.removeAllActions()
     spriteComponent.node.texture = animationComponent.idle
-    spriteComponent.node.run(SKAction(named: "Breathe")!, withKey: "breathe")
+    
+    //    let pulsed = SKAction.sequence([
+    //      SKAction.fadeAlpha(to: 1, duration: 0.1),
+    //      SKAction.wait(forDuration: 0.1),
+    //      SKAction.fadeAlpha(to: 0 , duration: 0.1)])
+    //    spriteComponent.node.run(SKAction.repeatForever(pulsed))
+    
+    let breathe = SKAction.sequence([
+      SKAction.resize(toWidth: 190, height: 215, duration: 1),
+      SKAction.wait(forDuration: 0.5),
+      SKAction.resize(toWidth: 200, height: 200, duration: 0.7),
+      SKAction.wait(forDuration: 0.5)])
+    spriteComponent.node.run(SKAction.repeatForever(breathe), withKey: "breathe")
     
     startTimer()
     
@@ -64,7 +75,7 @@ class IdleState: GKState {
       self.totalSeconds += 1
       self.startTimer()
     }
-
+    
     let seq:SKAction = SKAction.sequence([wait, finishTimer])
     spriteComponent.node.run(seq, withKey: "timer")
   }

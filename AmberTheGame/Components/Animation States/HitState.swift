@@ -37,7 +37,6 @@ class HitState: GKState {
     // Сбросываем счетчик времени при входе в это состояние.
     elapsedTime = 0.0
     
-    spriteComponent.node.removeAllActions()
     spriteComponent.node.run(animationComponent.hit!, withKey: "hit")
     
     if let _ = previousState as? FallingState {

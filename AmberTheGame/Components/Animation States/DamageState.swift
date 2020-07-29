@@ -22,7 +22,6 @@ class DamageState: GKState {
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    spriteComponent.node.removeAllActions()
     spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
   }
   

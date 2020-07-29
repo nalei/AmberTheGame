@@ -13,7 +13,6 @@ class WalkingState: GKState {
     
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
     
-    spriteComponent.node.removeAllActions()
     spriteComponent.node.run(animationComponent.run!, withKey: "run")
     
     if let _ = previousState as? FallingState {

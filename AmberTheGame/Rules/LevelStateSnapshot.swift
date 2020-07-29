@@ -38,7 +38,7 @@ class LevelStateSnapshot {
         return amber.agent
       }
       
-      fatalError("All entities in a level must have an accessible associated GKEntity")
+      return GKAgent2D()
     }
     
     // Словарь, который будет содержать временный массив экземпляров EntityDistance для каждой сущности.

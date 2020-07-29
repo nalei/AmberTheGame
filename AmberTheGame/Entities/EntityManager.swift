@@ -13,7 +13,8 @@ class EntityManager {
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
     let attackSystem = GKComponentSystem(componentClass: AttackComponent.self)
-    return [moveSystem, agentSystem, animationSystem, parallaxSystem, attackSystem]
+    let rulesSystem = GKComponentSystem(componentClass: RulesComponent.self)
+    return [moveSystem, agentSystem, animationSystem, parallaxSystem, attackSystem, rulesSystem]
   }()
   
   init(scene: LevelScene) {

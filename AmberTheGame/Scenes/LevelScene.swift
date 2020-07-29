@@ -2,6 +2,8 @@ import SpriteKit
 import GameplayKit
 
 class LevelScene: SKScene {
+  // MARK: - Properties
+  
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
@@ -14,15 +16,13 @@ class LevelScene: SKScene {
   // Entity manager
   var entityManager: EntityManager!
   
-  
-  // MARK: - Pathfinding
+  // MARK: Pathfinding
   
   lazy var obstacleSpriteNodes: [SKSpriteNode] = self["Ground"] as! [SKSpriteNode]
   lazy var polygonObstacles: [GKPolygonObstacle] = []
   let graph = GKObstacleGraph(obstacles: [], bufferRadius: GameplayConfiguration.Enemy.pathfindingGraphBufferRadius)
   
-  
-  // MARK: - Pathfinding Debug
+  // MARK: Pathfinding Debug
   
   var debugDrawingEnabled = false {
     didSet {
@@ -31,6 +31,20 @@ class LevelScene: SKScene {
   }
   
   var graphLayer = SKNode()
+  
+  // MARK: Rule State
+  
+  var levelStateSnapshot: LevelStateSnapshot?
+  
+  func entitySnapshotForEntity(entity: GKEntity) -> EntitySnapshot? {
+    // Создайте снимок состояния уровня, для этого цикла обновления.
+    if levelStateSnapshot == nil {
+      levelStateSnapshot = LevelStateSnapshot(scene: self)
+    }
+    
+    // Возвращаем `entitySnapshots` объекта.
+    return levelStateSnapshot!.entitySnapshots[entity]
+  }
   
   
   // MARK: - Scene Life Cycle
@@ -59,11 +73,25 @@ class LevelScene: SKScene {
     }
     
     if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
-      character = Amber(camera: self.camera, scene: self)
-      character!.spriteComponent.node.position = amberSprite.position
-      character!.spriteComponent.node.name = amberSprite.name
-      entityManager.add(character!)
+      
+      let amber = Amber(camera: self.camera, scene: self)
+      self.character = amber
+      amber.spriteComponent.node.position = amberSprite.position
+      amber.spriteComponent.node.name = amberSprite.name
+      entityManager.add(amber)
       amberSprite.removeFromParent()
+      
+      // Свет вокруг персонажа
+      let lightNode = SKLightNode()
+      lightNode.position = CGPoint(
+        x: amber.spriteComponent.node.position.x,
+        y: amber.spriteComponent.node.position.y + 30)
+      lightNode.categoryBitMask = 1
+      lightNode.falloff = 5
+      lightNode.lightColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+      lightNode.ambientColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+      lightNode.name = "LightNode"
+      self.addChild(lightNode)
     }
     
     self["Goblin"].forEach { node in
@@ -108,19 +136,10 @@ class LevelScene: SKScene {
     if let bokehEmitter = SKEmitterNode(fileNamed: "bokeh.sks") {
       bokehEmitter.targetNode = self
       bokehEmitter.particleZPosition = 1
-      bokehEmitter.fieldBitMask = 1 << 0
+      bokehEmitter.fieldBitMask = 1
       bokehEmitter.name = "BokehEmitter"
       self.camera!.addChild(bokehEmitter)
     }
-    
-    // Свет вокруг персонажа
-    let lightNode = SKLightNode()
-    lightNode.position = character!.spriteComponent.node.position
-    lightNode.categoryBitMask = 1 << 0
-    lightNode.lightColor = .white
-    lightNode.falloff = 5
-    lightNode.name = "LightNode"
-    self.addChild(lightNode)
     
     // Добавляем препятствия в граф поиска пути
     polygonObstacles += SKNode.obstacles(fromNodeBounds: obstacleSpriteNodes)
@@ -153,8 +172,6 @@ class LevelScene: SKScene {
   
   override func update(_ currentTime: TimeInterval) {
     
-    self.childNode(withName: "LightNode")?.position = character!.spriteComponent.node.position
-    
     // Инициализируем `lastUpdateTime`, если ешё не был инициализирован
     if (self.lastUpdateTimeInterval == 0) {
       self.lastUpdateTimeInterval = currentTime
@@ -173,6 +190,12 @@ class LevelScene: SKScene {
      Это гарантирует, что агент находится в допустимом местоположении в начале следующего фрейма.
      */
     character?.updateAgentPositionToMatchNodePosition()
+    
+    // Обновляем позицию `LightNode`, чтобы она соответствовала позиции `Amber`.
+    self.childNode(withName: "LightNode")?.position = CGPoint(
+      x: character!.spriteComponent.node.position.x,
+      y: character!.spriteComponent.node.position.y + 30
+    )
   }
 }
 
