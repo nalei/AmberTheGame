@@ -2,6 +2,7 @@ import GameplayKit
 import SpriteKit
 
 class ParallaxComponent: GKComponent {
+  // MARK: - Properties
   
   var camera: SKCameraNode?
   var previousPosition: CGPoint?
@@ -15,6 +16,9 @@ class ParallaxComponent: GKComponent {
     }
     return spriteComponent
   }
+  
+  
+  // MARK: - Initializers
   
   init(layer: Int, camera: SKCameraNode?) {
     super.init()
@@ -51,6 +55,9 @@ class ParallaxComponent: GKComponent {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  
+    // MARK: - GKComponent Life Cycle
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)

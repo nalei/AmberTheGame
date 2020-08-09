@@ -17,12 +17,13 @@ enum Fact: String {
 }
 
 /// Утверждает, `Enemy` близко к `Amber`.
-class PlayerBotNearRule: FuzzyTaskBotRule {
+class PlayerBotNearRule: FuzzyEnemyRule {
   // MARK: Properties
   
   override func grade() -> Float {
     guard let distance = snapshot.amberTarget?.distance else { return 0.0 }
-    return distance
+    let oneThird = snapshot.proximityFactor / 3
+    return (oneThird - distance) / oneThird
   }
   
   // MARK: Initializers
@@ -31,12 +32,13 @@ class PlayerBotNearRule: FuzzyTaskBotRule {
 }
 
 /// Утверждает, `Enemy` находится на среднем расстоянии к `Amber`.
-class PlayerBotMediumRule: FuzzyTaskBotRule {
+class PlayerBotMediumRule: FuzzyEnemyRule {
   // MARK: Properties
   
   override func grade() -> Float {
     guard let distance = snapshot.amberTarget?.distance else { return 0.0 }
-    return distance
+    let oneThird = snapshot.proximityFactor / 3
+    return 1 - (abs(distance - oneThird) / oneThird)
   }
   
   // MARK: Initializers
@@ -45,12 +47,13 @@ class PlayerBotMediumRule: FuzzyTaskBotRule {
 }
 
 /// Утверждает, `Enemy` далеко от `Amber`.
-class PlayerBotFarRule: FuzzyTaskBotRule {
+class PlayerBotFarRule: FuzzyEnemyRule {
   // MARK: Properties
   
   override func grade() -> Float {
     guard let distance = snapshot.amberTarget?.distance else { return 0.0 }
-    return distance
+    let oneThird = snapshot.proximityFactor / 3
+    return (distance - oneThird) / oneThird
   }
   
   // MARK: Initializers

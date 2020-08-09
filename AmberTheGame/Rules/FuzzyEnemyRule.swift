@@ -1,13 +1,13 @@
 /*
  Abstract: `FuzzyEnemyRule` является подклассом `GKRule`, который утверждает `Fact` тогда и только тогда,
- когда его функция `grade()` возвращает ненулевое значение.
+ когда его функция `grade()` значение большее 0.
  Подклассы для правил, используемых в игре, можно найти в Rules.swift.
  */
 
 import GameplayKit
 
-class FuzzyTaskBotRule: GKRule {
-  // MARK: Properties
+class FuzzyEnemyRule: GKRule {
+  // MARK: - Properties
   
   var snapshot: EntitySnapshot!
   
@@ -15,18 +15,20 @@ class FuzzyTaskBotRule: GKRule {
   
   let fact: Fact
   
-  // MARK: Initializers
+  
+  // MARK: - Initializers
   
   init(fact: Fact) {
     self.fact = fact
     
     super.init()
     
-    // Устанавливаем salience так чтобы 'fuzzy' rules были оценены в первую очередь.
+    // Устанавливаем salience так чтобы "Fuzzy rules" были оценены в первую очередь.
     salience = Int.max
   }
   
-  // MARK: GPRule Overrides
+  
+  // MARK: - GPRule Overrides
   
   override func evaluatePredicate(in system: GKRuleSystem) -> Bool {
     snapshot = system.state["snapshot"] as? EntitySnapshot

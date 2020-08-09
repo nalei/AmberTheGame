@@ -36,13 +36,13 @@ class LevelScene: SKScene {
   
   var levelStateSnapshot: LevelStateSnapshot?
   
+  /// Возвращает снимок состояния,  для переданного объекта, в последствии этот снимок используется для "Fuzzy rules".
   func entitySnapshotForEntity(entity: GKEntity) -> EntitySnapshot? {
-    // Создайте снимок состояния уровня, для этого цикла обновления.
+    
     if levelStateSnapshot == nil {
       levelStateSnapshot = LevelStateSnapshot(scene: self)
     }
     
-    // Возвращаем `entitySnapshots` объекта.
     return levelStateSnapshot!.entitySnapshots[entity]
   }
   
@@ -180,6 +180,9 @@ class LevelScene: SKScene {
     // Рассчитываем время с момента последнего обновления
     let deltaTime = currentTime - self.lastUpdateTimeInterval
     self.lastUpdateTimeInterval = currentTime
+    
+    // Get rid of the now-stale `LevelStateSnapshot` if it exists. It will be regenerated when next needed.
+    levelStateSnapshot = nil
     
     entityManager.update(deltaTime: deltaTime)
   }

@@ -64,7 +64,32 @@ class Bat: Enemy, RulesComponentDelegate {
   func rulesComponent(rulesComponent: RulesComponent, didFinishEvaluatingRuleSystem ruleSystem: GKRuleSystem) {
     let state = ruleSystem.state["snapshot"] as! EntitySnapshot
     
+    // Определяем `mandate` на основе результата оценки правил.
     
+    // Ряд ситуаций, в которых `Enemy`, будет охотиться на `Amber`.
+    let huntAmberRaw = [
+      
+      // Amber находится на близком расстоянии.
+      ruleSystem.minimumGrade(forFacts: [
+        Fact.playerBotNear.rawValue as AnyObject
+      ]),
+      
+      // Amber находится на среднем расстоянии.
+      ruleSystem.minimumGrade(forFacts: [
+          Fact.playerBotMedium.rawValue as AnyObject,
+      ])
+    ]
+    
+    // Find the maximum of the minima from above.
+    let huntAmber = huntAmberRaw.reduce(0.0, max)
+    
+    if huntAmber > 0.0 {
+      // Правила обеспечили большую мотивацию для охоты на `Amber`.
+       guard let amberAgent = state.amberTarget?.target.agent else { return }
+      // mandate = .huntAgent(amberAgent)
+    } else {
+      // mandate = .returnToPositionOnPath(SIMD2<Float>(closestPointOnBadPath))
+    }
   }
   
 }

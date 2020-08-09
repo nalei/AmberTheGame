@@ -1,5 +1,5 @@
 /*
- Abstract: Данные типы используются игровым ИИ для захвата и оценки снимка состояния игры.
+ Abstract: Данные классы используются игровым ИИ для захвата и оценки снимка состояния игры.
  `EntityDistance` - инкапсулирует расстояние между двумя объектами.
  `LevelStateSnapshot` = хранит `EntitySnapshot` для каждой сущности уровня.
  `EntitySnapshot` хранит расстояния от сущности до любой другй сущности на уровне.
@@ -88,17 +88,21 @@ class LevelStateSnapshot {
 class EntitySnapshot {
   // MARK: - Properties
   
+  /// Коэффициент, используемый для нормализации  расстояний между персонажами  для  "Fuzzy rules"
+  let proximityFactor: Float = 800
+  
   /// Расстояние до `Amber`
   let amberTarget: (target: Amber, distance: Float)?
   
   /// Отсортированный массив расстояний от текущего объекта до каждого другого объекта на уровне.
   let entityDistances: [EntityDistance]
   
-  // MARK: Initialization
+  
+  // MARK: - Initialization
   
   init(entityDistances: [EntityDistance]) {
     
-    // Сортируем массив `entityDistances` по расстоянию (ближайший первый) и сохраните отсортированную версию.
+    // Сортируем массив `entityDistances` по расстоянию (ближайший первый), сохраняем отсортированную версию.
     self.entityDistances = entityDistances.sorted {
       return $0.distance < $1.distance
     }
@@ -106,14 +110,14 @@ class EntitySnapshot {
     var amberTarget: (target: Amber, distance: Float)?
     
     /*
-     Переберите отсортированный массив entityDistances, чтобы найти `Amber`
+     Перебираем отсортированный массив entityDistances, чтобы найти `Amber`
      */
     for entityDistance in self.entityDistances {
       if let target = entityDistance.target as? Amber, amberTarget == nil {
         amberTarget = (target: target, distance: entityDistance.distance)
       }
       
-      // Прекратите итерацию по массиву, как только мы найдем `Amber`
+      // Прекращаем итерацию по массиву, как только мы найдем `Amber`
       if amberTarget != nil {
         break
       }

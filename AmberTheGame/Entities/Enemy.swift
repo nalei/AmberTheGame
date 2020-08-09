@@ -2,6 +2,22 @@ import SpriteKit
 import GameplayKit
 
 class Enemy: GKEntity, GKAgentDelegate {
+  /// Encapsulates a `TaskBot`'s current mandate, i.e. the aim that the `TaskBot` is setting out to achieve.
+  enum TaskBotMandate {
+    // Hunt another agent (either a `PlayerBot` or a "good" `TaskBot`).
+    case huntAgent(GKAgent2D)
+    
+    // Follow the `TaskBot`'s "good" patrol path.
+    case followGoodPatrolPath
+    
+    // Follow the `TaskBot`'s "bad" patrol path.
+    case followBadPatrolPath
+    
+    // Return to a given position on a patrol path.
+    case returnToPositionOnPath(SIMD2<Float>)
+  }
+  
+  
   // MARK: - Properties
   
   /// Точки, который `Enemy` должен патрулировать, когда не охотится
@@ -13,9 +29,9 @@ class Enemy: GKEntity, GKAgentDelegate {
       return GKBehavior()
     }
     
-//    guard let targetAgent = levelScene.character?.agent else {
-//      return GKBehavior()
-//    }
+    //    guard let targetAgent = levelScene.character?.agent else {
+    //      return GKBehavior()
+    //    }
     
     guard let pathPoints = patrolPoints else {
       return GKBehavior()
@@ -29,11 +45,11 @@ class Enemy: GKEntity, GKAgentDelegate {
     var debugPathShouldCycle = false
     let debugColor: SKColor
     
-//    radius = GameplayConfiguration.Enemy.huntPathRadius
-//    (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
-//    debugColor = SKColor.red
-
-//    agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
+    //    radius = GameplayConfiguration.Enemy.huntPathRadius
+    //    (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
+    //    debugColor = SKColor.red
+    
+    //    agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
     
     radius = GameplayConfiguration.Enemy.patrolPathRadius
     agentBehavior = EnemyBehavior.behaviorPatrol(forAgent: agent, patrollingPathWithPoints: pathPoints, pathRadius: radius, inScene: levelScene)
@@ -69,6 +85,9 @@ class Enemy: GKEntity, GKAgentDelegate {
   
   /// Используется для фигур, представляющих текущий путь для отладочной отрисовки.
   var debugNode = SKNode()
+  
+  
+  // MARK: - Initialization
   
   
   // MARK: - GKAgentDelegate

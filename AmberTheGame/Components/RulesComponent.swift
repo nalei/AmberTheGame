@@ -1,7 +1,7 @@
 import GameplayKit
 
 protocol RulesComponentDelegate: class {
-  // Called whenever the rules component finishes evaluating its rules.
+  // Вызывается каждый раз, когда `RulesComponent` заканчивает оценку своих правил.
   func rulesComponent(rulesComponent: RulesComponent, didFinishEvaluatingRuleSystem ruleSystem: GKRuleSystem)
 }
 
@@ -12,7 +12,7 @@ class RulesComponent: GKComponent {
   
   var ruleSystem: GKRuleSystem
   
-  /// The amount of time that has passed since the `TaskBot` last evaluated its rules.
+  /// Количество времени, прошедшее с момента, когда `Enemy` последний раз оценивал свои правила.
   private var timeSinceRulesUpdate: TimeInterval = 0.0
   
   
@@ -44,8 +44,8 @@ class RulesComponent: GKComponent {
     timeSinceRulesUpdate = 0.0
     
     if let enemy = entity as? Enemy,
-      let level = enemy.component(ofType: SpriteComponent.self)?.node.scene as? LevelScene,
-      let entitySnapshot = level.entitySnapshotForEntity(entity: enemy) {
+      let levelScene = enemy.component(ofType: SpriteComponent.self)?.node.scene as? LevelScene,
+      let entitySnapshot = levelScene.entitySnapshotForEntity(entity: enemy) {
       
       ruleSystem.reset()
       
