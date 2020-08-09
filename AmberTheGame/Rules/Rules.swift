@@ -1,5 +1,5 @@
 /*
- Abstract: Этот файл представляет правила, используемые системой правил `Enemy` для определения соответствующего действия.
+ Abstract: Этот файл представляет правила, используемые системой правил для определения соответствующего действия `Enemy`.
  Правила представлены перечислением:
  Насколько близко `Enemy` к `Amber` (near, medium, far):
  `PlayerBotNearRule`
@@ -16,7 +16,7 @@ enum Fact: String {
   case playerBotFar = "PlayerBotFar"
 }
 
-/// Утверждает, `Enemy` близко к `Amber`.
+/// Утверждает, что `Amber` находится близко к `Enemy`.
 class PlayerBotNearRule: FuzzyEnemyRule {
   // MARK: Properties
   
@@ -31,7 +31,7 @@ class PlayerBotNearRule: FuzzyEnemyRule {
   init() { super.init(fact: .playerBotNear) }
 }
 
-/// Утверждает, `Enemy` находится на среднем расстоянии к `Amber`.
+/// Утверждает, что `Amber` находится на среднем расстоянии от `Enemy`.
 class PlayerBotMediumRule: FuzzyEnemyRule {
   // MARK: Properties
   
@@ -46,7 +46,7 @@ class PlayerBotMediumRule: FuzzyEnemyRule {
   init() { super.init(fact: .playerBotMedium) }
 }
 
-/// Утверждает, `Enemy` далеко от `Amber`.
+/// Утверждает, что `Amber` находится далеко от `Enemy`.
 class PlayerBotFarRule: FuzzyEnemyRule {
   // MARK: Properties
   

@@ -37,7 +37,7 @@ class AnimationComponent: GKComponent {
       DamageState(animationComponent: self)
     ])
     
-    // При инициализации не входим не в какое состояние, объект сам войдет в нужное состояние в момент начала игры
+    // При инициализации не входим ни в какое состояние, объект сам войдет в нужное состояние в момент начала игры
     //stateMachine.enter(IdleState.self)
   }
   

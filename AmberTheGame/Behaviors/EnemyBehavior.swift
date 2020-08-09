@@ -109,13 +109,13 @@ class EnemyBehavior: GKBehavior {
       
       // Ищем все препятствия мешающие построению.
       let intersectingObstacles = extrudedObstaclesContaining(point: point, inScene: scene)
-
+      
       /*
        Подключаем узел к графу, игнорируя радиус буфера любого
        препятствия, мешающего построению.
        */
       scene.graph.connectUsingObstacles(node: pointNode, ignoringBufferRadiusOf: intersectingObstacles)
-
+      
       // Если по-прежнему невозможно установить соединение, возвращаем `nil`.
       if pointNode.connectedNodes.isEmpty {
         scene.graph.remove([pointNode])

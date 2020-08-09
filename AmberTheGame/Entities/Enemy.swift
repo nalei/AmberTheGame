@@ -2,25 +2,27 @@ import SpriteKit
 import GameplayKit
 
 class Enemy: GKEntity, GKAgentDelegate {
-  /// Encapsulates a `TaskBot`'s current mandate, i.e. the aim that the `TaskBot` is setting out to achieve.
-  enum TaskBotMandate {
-    // Hunt another agent (either a `PlayerBot` or a "good" `TaskBot`).
+  // MARK: - Nested types
+  
+  /// Мандат, то есть цель, которую `Enemy` ставит перед собой.
+  enum EnemyMandate {
+    // Охотиться на другого агента.
     case huntAgent(GKAgent2D)
     
-    // Follow the `TaskBot`'s "good" patrol path.
+    // Следовать по пути патрулирования.
     case followGoodPatrolPath
     
-    // Follow the `TaskBot`'s "bad" patrol path.
-    case followBadPatrolPath
-    
-    // Return to a given position on a patrol path.
-    case returnToPositionOnPath(SIMD2<Float>)
+    // Вернуться на заданную позицию.
+    case returnToPosition(vector_float2)
   }
   
   
   // MARK: - Properties
   
-  /// Точки, который `Enemy` должен патрулировать, когда не охотится
+  /// Цель, которую в настоящее время пытается достичь `Enemy`.
+  var mandate: EnemyMandate = .followGoodPatrolPath
+  
+  /// Точки, которые `Enemy` должен патрулировать, когда не охотится.
   var patrolPoints: [CGPoint]?
   
   /// Вычисляемое свойство `GKBehavior` возвращает поведение для `Enemy`

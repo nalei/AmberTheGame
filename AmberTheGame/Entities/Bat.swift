@@ -76,7 +76,7 @@ class Bat: Enemy, RulesComponentDelegate {
       
       // Amber находится на среднем расстоянии.
       ruleSystem.minimumGrade(forFacts: [
-          Fact.playerBotMedium.rawValue as AnyObject,
+        Fact.playerBotMedium.rawValue as AnyObject,
       ])
     ]
     
@@ -85,11 +85,11 @@ class Bat: Enemy, RulesComponentDelegate {
     
     if huntAmber > 0.0 {
       // Правила обеспечили большую мотивацию для охоты на `Amber`.
-       guard let amberAgent = state.amberTarget?.target.agent else { return }
-      // mandate = .huntAgent(amberAgent)
+      guard let amberAgent = state.amberTarget?.target.agent else { return }
+      mandate = .huntAgent(amberAgent)
+      print(mandate)
     } else {
-      // mandate = .returnToPositionOnPath(SIMD2<Float>(closestPointOnBadPath))
+      mandate = .returnToPosition(vector_float2(CGPoint(x: 0, y: 0)))
     }
   }
-  
 }
