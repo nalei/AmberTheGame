@@ -80,18 +80,6 @@ class LevelScene: SKScene {
       amber.spriteComponent.node.name = amberSprite.name
       entityManager.add(amber)
       amberSprite.removeFromParent()
-      
-      // Свет вокруг персонажа
-      let lightNode = SKLightNode()
-      lightNode.position = CGPoint(
-        x: amber.spriteComponent.node.position.x,
-        y: amber.spriteComponent.node.position.y + 30)
-      lightNode.categoryBitMask = 1
-      lightNode.falloff = 5
-      lightNode.lightColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
-      lightNode.ambientColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-      lightNode.name = "LightNode"
-      self.addChild(lightNode)
     }
     
     self["Goblin"].forEach { node in
@@ -193,12 +181,6 @@ class LevelScene: SKScene {
      Это гарантирует, что агент находится в допустимом местоположении в начале следующего фрейма.
      */
     character?.updateAgentPositionToMatchNodePosition()
-    
-    // Обновляем позицию `LightNode`, чтобы она соответствовала позиции `Amber`.
-    self.childNode(withName: "LightNode")?.position = CGPoint(
-      x: character!.spriteComponent.node.position.x,
-      y: character!.spriteComponent.node.position.y + 30
-    )
   }
 }
 

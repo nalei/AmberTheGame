@@ -31,6 +31,19 @@ class Amber: GKEntity {
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "amber-idle"), size: CGSize(width: 200, height: 200))
     spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.3)
+    
+    // Свет вокруг персонажа
+    let lightNode = SKLightNode()
+    lightNode.position = CGPoint(
+      x: spriteComponent.node.position.x,
+      y: spriteComponent.node.position.y + 30)
+    lightNode.categoryBitMask = 1
+    lightNode.falloff = 5
+    lightNode.lightColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+    lightNode.ambientColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    lightNode.name = "LightNode"
+    spriteComponent.node.addChild(lightNode)
+    
     addComponent(spriteComponent)
     
     addComponent(InputComponent(camera: camera, scene: scene))
