@@ -136,7 +136,7 @@ class LevelScene: SKScene {
     self.addChild(graphLayer)
     graphLayer.zPosition = 1
     
-    debugDrawingEnabled = false
+    debugDrawingEnabled = true
     
     view.showsPhysics   = debugDrawingEnabled
     view.showsFPS       = debugDrawingEnabled

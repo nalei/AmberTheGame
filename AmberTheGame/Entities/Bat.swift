@@ -47,7 +47,7 @@ class Bat: Enemy, RulesComponentDelegate {
     let agent = AgentComponent()
     agent.delegate = self
     agent.maxSpeed = 250
-    agent.maxAcceleration = 100
+    agent.maxAcceleration = 30
     agent.mass = 0.05
     agent.radius = 25
     agent.behavior = GKBehavior()
@@ -91,10 +91,10 @@ class Bat: Enemy, RulesComponentDelegate {
         Fact.playerBotNear.rawValue as AnyObject
       ]),
       
-      //      // Amber находится на среднем расстоянии.
-      //      ruleSystem.minimumGrade(forFacts: [
-      //        Fact.playerBotMedium.rawValue as AnyObject,
-      //      ])
+      // Amber находится на среднем расстоянии.
+      ruleSystem.minimumGrade(forFacts: [
+        Fact.playerBotMedium.rawValue as AnyObject,
+      ])
     ]
     
     // Find the maximum of the minima from above.

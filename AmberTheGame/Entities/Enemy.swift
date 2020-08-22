@@ -44,9 +44,7 @@ class Enemy: GKEntity, GKAgentDelegate {
     
     switch mandate {
       case .sleep:
-        radius = GameplayConfiguration.Enemy.patrolPathRadius
-        (agentBehavior, debugPathPoints) = EnemyBehavior.stopMoving(forAgent: agent, pathRadius: radius, inScene: levelScene)
-        debugColor = SKColor.green
+        return GKBehavior()
         
       case .followPatrolPath:
         guard let pathPoints = patrolPoints else {

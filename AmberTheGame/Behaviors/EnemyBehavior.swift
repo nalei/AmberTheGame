@@ -56,19 +56,6 @@ class EnemyBehavior: GKBehavior {
     return behavior
   }
   
-  /// Создает поведение:  остановиться.
-  static func stopMoving(forAgent agent: GKAgent2D, pathRadius: Float, inScene scene: LevelScene) -> (behavior: GKBehavior, pathPoints: [CGPoint]) {
-    let behavior = EnemyBehavior()
-    
-    // Добавляем основные цели: достичь скорости 0.
-    behavior.addTargetSpeedGoal(speed: 0.0)
-    
-    let pathPoints = [CGPoint(agent.position), CGPoint(agent.position)]
-    
-    // Возвращаем кортеж, содержащий новое поведение и найденные точки пути для отладочной отрисовки.
-    return (behavior, pathPoints)
-  }
-  
   /// Создает поведение, для движения к цели по прямой.
   static func behaviorFollow(forAgent agent: GKAgent2D, huntingAgent target: GKAgent2D, inScene scene: LevelScene) -> GKBehavior {
     let behavior = EnemyBehavior()
@@ -192,7 +179,7 @@ class EnemyBehavior: GKBehavior {
   
   /// Достичь целевой скорости
   private func addTargetSpeedGoal(speed: Float) {
-    setWeight(0.5, for: GKGoal(toReachTargetSpeed: speed))
+    setWeight(0.1, for: GKGoal(toReachTargetSpeed: speed))
   }
   
   /// Избежать сближения с группой других агентов (избежать скученности союзников)
@@ -202,7 +189,7 @@ class EnemyBehavior: GKBehavior {
   
   /// Избегать всех непроходимых препятствий на сцене.
   private func addAvoidObstaclesGoal(forScene scene: LevelScene) {
-    setWeight(1.0, for: GKGoal(toAvoid: scene.polygonObstacles, maxPredictionTime: 1.0))
+    setWeight(2.0, for: GKGoal(toAvoid: scene.polygonObstacles, maxPredictionTime: 1.0))
   }
   
   /// Приследовать цель
@@ -218,5 +205,4 @@ class EnemyBehavior: GKBehavior {
     // Цель "остаться на пути" пытается удержать агента на пути в пределах радиуса пути.
     setWeight(1.0, for: GKGoal(toStayOn: path, maxPredictionTime: 1.0))
   }
-
 }

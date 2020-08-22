@@ -29,16 +29,6 @@ class IdleState: GKState {
     //      SKAction.fadeAlpha(to: 0 , duration: 0.1)])
     //    spriteComponent.node.run(SKAction.repeatForever(pulsed))
     
-    // Анимация дыхания (только `Amber`)
-    if let _ = animationComponent.entity as? Amber {
-      let breathe = SKAction.sequence([
-        SKAction.resize(toWidth: 190, height: 215, duration: 1),
-        SKAction.wait(forDuration: 0.5),
-        SKAction.resize(toWidth: 200, height: 200, duration: 0.7),
-        SKAction.wait(forDuration: 0.5)])
-      spriteComponent.node.run(SKAction.repeatForever(breathe), withKey: "breathe")
-    }
-    
     startTimer()
     
     if let _ = previousState as? FallingState {
@@ -49,7 +39,7 @@ class IdleState: GKState {
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
-    // Анимация моргания (только `Amber`)
+    // `Amber` моргает
     if let _ = animationComponent.entity as? Amber {
       if totalSeconds == 5 {
         spriteComponent.node.run(SKAction(named: "amber-blinks")!, withKey: "blinks")
