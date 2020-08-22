@@ -5,7 +5,7 @@ class HitState: GKState {
   // MARK: - Properties
   unowned var animationComponent: AnimationComponent
   
-  /// Время, в течение которого объект находился в состоянии `AttackState`.
+  /// Время, в течение которого объект находился в состоянии `HitState`.
   var elapsedTime: TimeInterval = 0.0
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
@@ -31,6 +31,9 @@ class HitState: GKState {
     self.animationComponent = animationComponent
   }
   
+  
+  // MARK: - GKState Life Cycle
+  
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
@@ -44,9 +47,6 @@ class HitState: GKState {
     }
   }
   
-  
-  // MARK: - GKState Life Cycle
-  
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
@@ -56,6 +56,7 @@ class HitState: GKState {
     // Обновляем счетчик времени в состоянии `AttackState`.
     elapsedTime += seconds
     
+    // Добавляем `hitBox` в промежутке между 0.1 и 0.3 нахождения в состояни `HitState`.
     if elapsedTime >= 0.1 && elapsedTime <= 0.3 {
       if attackComponent.hitBox.parent == nil {
         spriteComponent.node.addChild(attackComponent.hitBox)

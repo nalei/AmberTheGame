@@ -16,7 +16,7 @@ struct GameplayConfiguration {
     static let huntPathRadius: Float = 5
     
     /// The radius of the path along which an agent patrols.
-    static let patrolPathRadius: Float = 10
+    static let patrolPathRadius: Float = 5
     
     /// The buffer radius (in points) to add to polygon obstacles when calculating agent pathfinding.
     static let pathfindingGraphBufferRadius: Float = 40

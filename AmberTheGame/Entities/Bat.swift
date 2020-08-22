@@ -2,9 +2,14 @@ import SpriteKit
 import GameplayKit
 
 class Bat: Enemy, RulesComponentDelegate {
+  // MARK: - Properties
+  
+  var nestPoint: CGPoint?
+  
+  
   // MARK: - Initialization
   
-  required init(patrolPoints: [CGPoint]) {
+  required init(patrolPoints: [CGPoint], nestPoint: CGPoint) {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 64, height: 64))
@@ -29,11 +34,21 @@ class Bat: Enemy, RulesComponentDelegate {
     spriteComponent.node.addChild(attackComponent.hurtBox)
     addComponent(attackComponent)
     
+    addComponent(AnimationComponent(
+      idle: SKTexture(imageNamed: "bat-idle"),
+      run: SKAction(named: "bat-fly"),
+      jumpUp: nil,
+      jumpMiddle: nil,
+      jumpDown: nil,
+      hit: nil,
+      damage: nil
+    ))
+    
     let agent = AgentComponent()
     agent.delegate = self
-    agent.maxSpeed = 300
-    agent.maxAcceleration = 40
-    agent.mass = 0.03
+    agent.maxSpeed = 250
+    agent.maxAcceleration = 100
+    agent.mass = 0.05
     agent.radius = 25
     agent.behavior = GKBehavior()
     self.agentOffset = CGPoint(x: 0, y: 10)
@@ -52,6 +67,8 @@ class Bat: Enemy, RulesComponentDelegate {
     ])
     addComponent(rulesComponent)
     rulesComponent.delegate = self
+    self.nestPoint = nestPoint
+    
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -74,22 +91,32 @@ class Bat: Enemy, RulesComponentDelegate {
         Fact.playerBotNear.rawValue as AnyObject
       ]),
       
-      // Amber находится на среднем расстоянии.
-      ruleSystem.minimumGrade(forFacts: [
-        Fact.playerBotMedium.rawValue as AnyObject,
-      ])
+      //      // Amber находится на среднем расстоянии.
+      //      ruleSystem.minimumGrade(forFacts: [
+      //        Fact.playerBotMedium.rawValue as AnyObject,
+      //      ])
     ]
     
     // Find the maximum of the minima from above.
     let huntAmber = huntAmberRaw.reduce(0.0, max)
     
     if huntAmber > 0.0 {
-      // Правила обеспечили большую мотивацию для охоты на `Amber`.
+      // Правила обеспечили мотивацию для охоты на `Amber`.
       guard let amberAgent = state.amberTarget?.target.agent else { return }
       mandate = .huntAgent(amberAgent)
-      print(mandate)
+      
+      if let animationComponent = component(ofType: AnimationComponent.self) {
+        animationComponent.stateMachine?.enter(WalkingState.self)
+      }
     } else {
-      mandate = .returnToPosition(vector_float2(CGPoint(x: 0, y: 0)))
+      // Правила не обеспечили мотивации для охоты, поэтому возвращаемся к `nestPoint`.
+      switch mandate {
+        case .sleep:
+          break
+        default:
+          guard let nestPoint = self.nestPoint else { return }
+          mandate = .returnToPosition(vector_float2(nestPoint))
+      }
     }
   }
 }

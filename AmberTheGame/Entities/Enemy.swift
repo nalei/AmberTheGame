@@ -6,11 +6,14 @@ class Enemy: GKEntity, GKAgentDelegate {
   
   /// Мандат, то есть цель, которую `Enemy` ставит перед собой.
   enum EnemyMandate {
+    // Оставаться на месте
+    case sleep
+    
     // Охотиться на другого агента.
     case huntAgent(GKAgent2D)
     
     // Следовать по пути патрулирования.
-    case followGoodPatrolPath
+    case followPatrolPath
     
     // Вернуться на заданную позицию.
     case returnToPosition(vector_float2)
@@ -20,22 +23,14 @@ class Enemy: GKEntity, GKAgentDelegate {
   // MARK: - Properties
   
   /// Цель, которую в настоящее время пытается достичь `Enemy`.
-  var mandate: EnemyMandate = .followGoodPatrolPath
+  var mandate: EnemyMandate = .sleep
   
   /// Точки, которые `Enemy` должен патрулировать, когда не охотится.
   var patrolPoints: [CGPoint]?
   
   /// Вычисляемое свойство `GKBehavior` возвращает поведение для `Enemy`
-  var  behaviorForCurrentMandate: GKBehavior {
+  var behaviorForCurrentMandate: GKBehavior {
     guard let levelScene = component(ofType: SpriteComponent.self)?.node.scene as? LevelScene else {
-      return GKBehavior()
-    }
-    
-    //    guard let targetAgent = levelScene.character?.agent else {
-    //      return GKBehavior()
-    //    }
-    
-    guard let pathPoints = patrolPoints else {
       return GKBehavior()
     }
     
@@ -47,23 +42,37 @@ class Enemy: GKEntity, GKAgentDelegate {
     var debugPathShouldCycle = false
     let debugColor: SKColor
     
-    //    radius = GameplayConfiguration.Enemy.huntPathRadius
-    //    (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
-    //    debugColor = SKColor.red
-    
-    //    agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
-    
-    radius = GameplayConfiguration.Enemy.patrolPathRadius
-    agentBehavior = EnemyBehavior.behaviorPatrol(forAgent: agent, patrollingPathWithPoints: pathPoints, pathRadius: radius, inScene: levelScene)
-    debugPathPoints = pathPoints
-    debugPathShouldCycle = true
-    debugColor = SKColor.green
-    
+    switch mandate {
+      case .sleep:
+        radius = GameplayConfiguration.Enemy.patrolPathRadius
+        (agentBehavior, debugPathPoints) = EnemyBehavior.stopMoving(forAgent: agent, pathRadius: radius, inScene: levelScene)
+        debugColor = SKColor.green
+        
+      case .followPatrolPath:
+        guard let pathPoints = patrolPoints else {
+          return GKBehavior()
+        }
+        radius = GameplayConfiguration.Enemy.patrolPathRadius
+        agentBehavior = EnemyBehavior.behaviorPatrol(forAgent: agent, patrollingPathWithPoints: pathPoints, pathRadius: radius, inScene: levelScene)
+        debugPathPoints = pathPoints
+        debugPathShouldCycle = true
+        debugColor = SKColor.green
+        
+      case let .huntAgent(targetAgent):
+        //        agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
+        radius = GameplayConfiguration.Enemy.huntPathRadius
+        (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
+        debugColor = SKColor.red
+        
+      case let .returnToPosition(position):
+        radius = GameplayConfiguration.Enemy.patrolPathRadius
+        (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, returningToPoint: position, pathRadius: radius, inScene: levelScene)
+        debugColor = SKColor.yellow
+    }
     
     if levelScene.debugDrawingEnabled {
       drawDebugPath(path: debugPathPoints, cycle: debugPathShouldCycle, color: debugColor, radius: radius)
-    }
-    else {
+    } else {
       debugNode.removeAllChildren()
     }
     
@@ -120,6 +129,13 @@ class Enemy: GKEntity, GKAgentDelegate {
   
   
   // MARK: - Convenience
+  
+  func distanceToPoint(otherPoint: vector_float2) -> Float {
+    let deltaX = agent.position.x - otherPoint.x
+    let deltaY = agent.position.y - otherPoint.y
+    
+    return hypot(deltaX, deltaY)
+  }
   
   ///  Устанавливает агента в позицию спрайта (плюс смещение).
   func updateAgentPositionToMatchNodePosition() {

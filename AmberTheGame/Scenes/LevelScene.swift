@@ -7,13 +7,13 @@ class LevelScene: SKScene {
   var entities = [GKEntity]()
   var graphs = [String : GKGraph]()
   
-  // Playable character
+  /// Игровой персонаж, везде далее `Amber`.
   var character: Amber?
   
-  // Update time
+  /// Время, прошедшее с момента последнего обновления.
   var lastUpdateTimeInterval: TimeInterval = 0
   
-  // Entity manager
+  /// Entity manager
   var entityManager: EntityManager!
   
   // MARK: Pathfinding
@@ -106,10 +106,9 @@ class LevelScene: SKScene {
     self["Bat"].forEach { node in
       let patrolPoints = nodePointsFromNodeNames(nodeNames: ["bat_point01", "bat_point02", "bat_point03", "bat_point04"])
       
-      let bat = Bat(patrolPoints: patrolPoints)
+      let bat = Bat(patrolPoints: patrolPoints, nestPoint: node.position)
       bat.spriteComponent.node.name = node.name
       bat.spriteComponent.node.position = node.position
-      bat.spriteComponent.node.run(SKAction(named: "bat-fly")!, withKey: "fly")
       self.entityManager.add(bat)
       node.removeFromParent()
     }
@@ -141,7 +140,7 @@ class LevelScene: SKScene {
     
     view.showsPhysics   = debugDrawingEnabled
     view.showsFPS       = debugDrawingEnabled
-    view.showsNodeCount = true
+    view.showsNodeCount = debugDrawingEnabled
     view.showsDrawCount = debugDrawingEnabled
     #endif
   }
@@ -160,16 +159,16 @@ class LevelScene: SKScene {
   
   override func update(_ currentTime: TimeInterval) {
     
-    // Инициализируем `lastUpdateTime`, если ешё не был инициализирован
+    // Инициализируем `lastUpdateTime`, если ешё не был инициализирован.
     if (self.lastUpdateTimeInterval == 0) {
       self.lastUpdateTimeInterval = currentTime
     }
     
-    // Рассчитываем время с момента последнего обновления
+    // Рассчитываем время с момента последнего обновления.
     let deltaTime = currentTime - self.lastUpdateTimeInterval
     self.lastUpdateTimeInterval = currentTime
     
-    // Get rid of the now-stale `LevelStateSnapshot` if it exists. It will be regenerated when next needed.
+    // Избавляемся от устаревшего `LevelStateSnapshot`. Он будет сгенерирован при следующей необходимости.
     levelStateSnapshot = nil
     
     entityManager.update(deltaTime: deltaTime)
