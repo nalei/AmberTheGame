@@ -56,14 +56,13 @@ class LevelStateSnapshot {
      мы работаем со значениями индекса `Set` напрямую.
      */
     for sourceEntity in scene.entityManager.entities {
-      let sourceIndex = scene.entityManager.entities.firstIndex(of: sourceEntity)!
+//      let sourceIndex = scene.entityManager.entities.firstIndex(of: sourceEntity)!
       
-      // Получаем `GKAgent`.
+      // Получаем `GKAgent2D`.
       let sourceAgent = agentForEntity(entity: sourceEntity)
       
-      // Перебираем оставшиеся сущности, чтобы вычислить их расстояние от исходного агента.
-      for targetEntity in scene.entityManager.entities[scene.entityManager.entities.index(after: sourceIndex) ..< scene.entityManager.entities.endIndex] {
-        // Получаем `GKAgent`.
+      if let targetEntity = scene.entityManager.character {
+        // Получаем `GKAgent2D`.
         let targetAgent = agentForEntity(entity: targetEntity)
         
         // Рассчитываем расстояние между двумя агентами.
@@ -73,8 +72,22 @@ class LevelStateSnapshot {
         
         // Записываем расстояния в массив как для исходного так и для перебираемого
         entityDistances[sourceEntity]!.append(EntityDistance(source: sourceEntity, target: targetEntity, distance: distance))
-        entityDistances[targetEntity]!.append(EntityDistance(source: targetEntity, target: sourceEntity, distance: distance))
       }
+      
+//      // Перебираем оставшиеся сущности, чтобы вычислить их расстояние от исходного агента.
+//      for targetEntity in scene.entityManager.entities[scene.entityManager.entities.index(after: sourceIndex) ..< scene.entityManager.entities.endIndex] {
+//        // Получаем `GKAgent2D`.
+//        let targetAgent = agentForEntity(entity: targetEntity)
+//
+//        // Рассчитываем расстояние между двумя агентами.
+//        let dx = targetAgent.position.x - sourceAgent.position.x
+//        let dy = targetAgent.position.y - sourceAgent.position.y
+//        let distance = hypotf(dx, dy)
+//
+//        // Записываем расстояния в массив как для исходного так и для перебираемого
+//        entityDistances[sourceEntity]!.append(EntityDistance(source: sourceEntity, target: targetEntity, distance: distance))
+//        entityDistances[targetEntity]!.append(EntityDistance(source: targetEntity, target: sourceEntity, distance: distance))
+//      }
     }
     
     // Создаем моментальный снимок объекта в словаре entitySnapshots для каждого объекта.

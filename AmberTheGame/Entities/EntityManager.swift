@@ -4,6 +4,7 @@ import GameplayKit
 
 class EntityManager {
   let scene: LevelScene
+  var character: GKEntity?
   var entities = Set<GKEntity>()
   var toRemove = Set<GKEntity>()
   
@@ -46,6 +47,7 @@ class EntityManager {
     
     if let amber = entity as? Amber {
       scene.graphLayer.addChild(amber.debugNode)
+      self.character = amber
     }
     
     if let enemy = entity as? Enemy {
