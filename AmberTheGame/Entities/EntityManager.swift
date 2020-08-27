@@ -4,8 +4,8 @@ import GameplayKit
 
 class EntityManager {
   let scene: LevelScene
-  var character: GKEntity?
   var entities = Set<GKEntity>()
+  var character: Amber?
   var toRemove = Set<GKEntity>()
   
   lazy var componentSystems: [GKComponentSystem] = {
@@ -46,8 +46,8 @@ class EntityManager {
     }
     
     if let amber = entity as? Amber {
-      scene.graphLayer.addChild(amber.debugNode)
       self.character = amber
+      scene.graphLayer.addChild(amber.debugNode)
     }
     
     if let enemy = entity as? Enemy {
