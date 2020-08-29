@@ -12,7 +12,7 @@ class EnemyBehavior: GKBehavior {
     behavior.addAvoidObstaclesGoal(forScene: scene)
     
     // Добавляем цель: избегать приближения к другим агентам.
-    behavior.addAvoidAgentsGoal(forAgents: scene.entityManager.getAllAgentComponents())
+    behavior.addAvoidAgentsGoal(forAgents: scene.entityManager.getAllAgents())
     
     // Добавляем цель: следовать расчетному пути.
     let pathPoints = behavior.addGoalsToFollowPath(from: agent.position, to: target.position, pathRadius: pathRadius, inScene: scene)
@@ -65,7 +65,7 @@ class EnemyBehavior: GKBehavior {
     behavior.addAvoidObstaclesGoal(forScene: scene)
     
     // Добавляем цель: избегать приближения к другим агентам.
-    behavior.addAvoidAgentsGoal(forAgents: scene.entityManager.getAllAgentComponents())
+    behavior.addAvoidAgentsGoal(forAgents: scene.entityManager.getAllAgents())
     
     // Добавляем цель: двигаться к агенту
     behavior.addSeekAgentGoal(forAgent: target)

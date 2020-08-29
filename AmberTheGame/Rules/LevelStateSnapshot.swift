@@ -1,22 +1,20 @@
 /*
  Abstract: Данные классы используются игровым ИИ для захвата и оценки снимка состояния игры.
- `EntityDistance` - инкапсулирует расстояние между двумя объектами.
- `LevelStateSnapshot` = хранит `EntitySnapshot` для каждой сущности уровня.
- `EntitySnapshot` хранит расстояния от сущности до любой другй сущности на уровне.
+ `EntityDistance` - инкапсулирует расстояние до объекта.
+ `LevelStateSnapshot` = Хранит `EntitySnapshot` для всех `Enemy`
+ `EntitySnapshot` хранит расстояния от сущности до `Amber`.
  */
 
 import GameplayKit
 
-/// Инкапсулирует две сущности и их расстояние друг от друга.
+/// Инкапсулирует сущность и расстояние до нее.
 struct EntityDistance {
   let target: GKEntity
   let distance: Float
 }
 
-/**
- Хранит снимок состояния уровня и всех его entities
- (`Enemy`s и `Amber`) в определенный момент
- */
+
+/// Хранит `EntitySnapshot` для всех `Enemy`
 class LevelStateSnapshot {
   // MARK: - Properties
   
@@ -40,6 +38,7 @@ class LevelStateSnapshot {
       return GKAgent2D()
     }
     
+    // Обходим все объекты на сцене, чтобы вычислить моментальнвй снимок для каждого `Enemy`.
     for entity in scene.entityManager.entities {
       
       if let sourceEntity = entity as? Enemy, let targetEntity = scene.entityManager.character {

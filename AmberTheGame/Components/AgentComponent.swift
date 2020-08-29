@@ -8,6 +8,5 @@ class AgentComponent: GKAgent2D {
     if let entity = entity as? Enemy {
       entity.agent.behavior = entity.behaviorForCurrentMandate
     }
-    
   }
 }

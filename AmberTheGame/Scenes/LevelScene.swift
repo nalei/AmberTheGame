@@ -32,20 +32,6 @@ class LevelScene: SKScene {
   
   var graphLayer = SKNode()
   
-  // MARK: Rule State
-  
-  var levelStateSnapshot: LevelStateSnapshot?
-  
-  /// Возвращает снимок состояния,  для переданного объекта, в последствии этот снимок используется для "Fuzzy rules".
-  func entitySnapshotForEntity(entity: GKEntity) -> EntitySnapshot? {
-    
-    if levelStateSnapshot == nil {
-      levelStateSnapshot = LevelStateSnapshot(scene: self)
-    }
-    
-    return levelStateSnapshot!.entitySnapshots[entity]
-  }
-  
   
   // MARK: - Scene Life Cycle
   
@@ -167,9 +153,6 @@ class LevelScene: SKScene {
     // Рассчитываем время с момента последнего обновления.
     let deltaTime = currentTime - self.lastUpdateTimeInterval
     self.lastUpdateTimeInterval = currentTime
-    
-    // Избавляемся от устаревшего `LevelStateSnapshot`. Он будет сгенерирован при следующей необходимости.
-    levelStateSnapshot = nil
     
     entityManager.update(deltaTime: deltaTime)
   }

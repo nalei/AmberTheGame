@@ -45,7 +45,7 @@ class RulesComponent: GKComponent {
     
     if let enemy = entity as? Enemy,
       let levelScene = enemy.component(ofType: SpriteComponent.self)?.node.scene as? LevelScene,
-      let entitySnapshot = levelScene.entitySnapshotForEntity(entity: enemy) {
+      let entitySnapshot = levelScene.entityManager.entitySnapshotForEntity(entity: enemy) {
       
       ruleSystem.reset()
       

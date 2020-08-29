@@ -3,10 +3,13 @@ import SpriteKit
 import GameplayKit
 
 class EntityManager {
+  // MARK: - Properties
+  
   let scene: LevelScene
   var entities = Set<GKEntity>()
   var character: Amber?
   var toRemove = Set<GKEntity>()
+  var levelStateSnapshot: LevelStateSnapshot?
   
   lazy var componentSystems: [GKComponentSystem] = {
     let moveSystem = GKComponentSystem(componentClass: MovementComponent.self)
@@ -18,9 +21,15 @@ class EntityManager {
     return [moveSystem, agentSystem, animationSystem, parallaxSystem, attackSystem, rulesSystem]
   }()
   
+  
+  // MARK: - Initialization
+  
   init(scene: LevelScene) {
     self.scene = scene
   }
+  
+  
+  // MARK: - Convenience
   
   /// Возвращает `GKAgent2D` игрока
   func getAmberAgent() -> GKAgent2D? {
@@ -28,7 +37,7 @@ class EntityManager {
   }
   
   /// Возвращает массив всех `AgentComponent`
-  func getAllAgentComponents() -> [GKAgent2D] {
+  func getAllAgents() -> [GKAgent2D] {
     var agentComponents = [AgentComponent]()
     for entity in entities {
       if let agentComponent = entity.component(ofType: AgentComponent.self) {
@@ -36,6 +45,18 @@ class EntityManager {
       }
     }
     return agentComponents
+  }
+  
+  // MARK: Rule State
+  
+  /// Возвращает снимок состояния,  для переданного объекта, в последствии этот снимок используется для "Fuzzy rules".
+  func entitySnapshotForEntity(entity: GKEntity) -> EntitySnapshot? {
+    
+    if levelStateSnapshot == nil {
+      levelStateSnapshot = LevelStateSnapshot(scene: self.scene)
+    }
+    
+    return levelStateSnapshot!.entitySnapshots[entity]
   }
   
   func add(_ entity: GKEntity) {
@@ -79,5 +100,8 @@ class EntityManager {
       }
     }
     toRemove.removeAll()
+    
+    // Избавляемся от устаревшего `LevelStateSnapshot`. Он будет сгенерирован при следующей необходимости.
+    levelStateSnapshot = nil
   }
 }

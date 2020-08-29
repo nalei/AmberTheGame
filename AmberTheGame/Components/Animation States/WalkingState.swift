@@ -57,11 +57,11 @@ class WalkingState: GKState {
     if timeSinceBehaviorUpdate >= 0.25 {
       
       // Когда `Bat` возвращается к `nestPoint` и приближается достаточно близко, он должен прекратить движение.
-      if let entity = animationComponent.entity as? Bat {
+      if let bat = animationComponent.entity as? Bat {
         
-        if case let .returnToPosition(position) = entity.mandate, entity.distanceToPoint(otherPoint: position) <= 30 {
+        if case let .returnToPosition(position) = bat.mandate, bat.distanceToPoint(otherPoint: position) <= 10 {
           stateMachine?.enter(IdleState.self)
-          entity.mandate = .sleep
+          bat.mandate = .sleep
         }
       }
       
