@@ -33,10 +33,20 @@ class LevelScene: SKScene {
   var graphLayer = SKNode()
   
   
+  // MARK: - Initializers
+  
+  deinit {
+    unregisterForPauseNotifications()
+  }
+  
+  
   // MARK: - Scene Life Cycle
   
   override func didMove(to view: SKView) {
     super.didMove(to: view)
+    
+    // Региситрируем получение уведомлений о том, что приложение становится неактивным.
+    registerForPauseNotifications()
     
     self.lastUpdateTimeInterval = 0
     

@@ -18,6 +18,8 @@ class InputComponent: GKComponent, ControlInputSourceDelegate {
     fatalError("init(coder:) has not been implemented")
   }
   
+  // MARK: GameInputDelegate
+  
   func follow(command: String?) {
     if let movementComponent = entity?.component(ofType: MovementComponent.self) {
       switch command! {
