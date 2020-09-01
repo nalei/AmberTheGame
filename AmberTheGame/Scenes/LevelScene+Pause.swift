@@ -1,4 +1,5 @@
 import UIKit
+import SpriteKit
 
 extension LevelScene {
   // MARK: - Properties
@@ -8,12 +9,17 @@ extension LevelScene {
     return [UIApplication.willResignActiveNotification]
   }
   
+  /// Уведомления платформы о том, что приложение становится активным.
+  private var activeNotificationNames: [NSNotification.Name] {
+    return [UIApplication.didBecomeActiveNotification]
+  }
+  
   
   // MARK: - Convenience
   
   /**
-   Register for notifications about the app becoming inactive in
-   order to pause the game.
+   Подписываемся на получение уведомлений о том,
+   что приложение становится неактивным, чтобы поставить игру на паузу.
    */
   func registerForPauseNotifications() {
     for notificationName in pauseNotificationNames {
@@ -21,12 +27,38 @@ extension LevelScene {
     }
   }
   
+  /**
+   Подписываемся на получение уведомлений о том,
+   что приложение становится активным, чтобы снять игру с паузы.
+   */
+  func registerForActiveNotifications() {
+    for notificationName in activeNotificationNames {
+      NotificationCenter.default.addObserver(self, selector: #selector(LevelScene.activeGame), name: notificationName, object: nil)
+    }
+  }
+  
   @objc func pauseGame() {
-    print("pause")
+    for agentComponent in entityManager.getAllAgents() {
+      agentComponent.stopAgent()
+    }
+  }
+  
+  @objc func activeGame() {
+    for agentComponent in entityManager.getAllAgents() {
+      let wait = SKAction.wait(forDuration: TimeInterval(0.0))
+      let continueAgent = SKAction.run({ agentComponent.continueAgent() })
+      self.run(SKAction.sequence([wait, continueAgent]))
+    }
   }
   
   func unregisterForPauseNotifications() {
     for notificationName in pauseNotificationNames {
+      NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
+    }
+  }
+  
+  func unregisterForActiveNotifications() {
+    for notificationName in activeNotificationNames {
       NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
     }
   }

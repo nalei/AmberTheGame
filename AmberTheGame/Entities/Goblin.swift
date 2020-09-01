@@ -17,7 +17,6 @@ class Goblin: Enemy {
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.20
-//    physicsComponent.physicsBody.affectedByGravity = false
     addComponent(physicsComponent)
     
     // Связываем `PhysicsComponent` и `SpriteComponent`.

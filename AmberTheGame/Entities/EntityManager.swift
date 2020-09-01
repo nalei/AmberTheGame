@@ -37,7 +37,7 @@ class EntityManager {
   }
   
   /// Возвращает массив всех `AgentComponent`
-  func getAllAgents() -> [GKAgent2D] {
+  func getAllAgents() -> [AgentComponent] {
     var agentComponents = [AgentComponent]()
     for entity in entities {
       if let agentComponent = entity.component(ofType: AgentComponent.self) {

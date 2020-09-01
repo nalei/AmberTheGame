@@ -37,6 +37,7 @@ class LevelScene: SKScene {
   
   deinit {
     unregisterForPauseNotifications()
+    unregisterForActiveNotifications()
   }
   
   
@@ -45,8 +46,9 @@ class LevelScene: SKScene {
   override func didMove(to view: SKView) {
     super.didMove(to: view)
     
-    // Региситрируем получение уведомлений о том, что приложение становится неактивным.
     registerForPauseNotifications()
+    
+    registerForActiveNotifications()
     
     self.lastUpdateTimeInterval = 0
     

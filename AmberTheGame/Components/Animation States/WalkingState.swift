@@ -38,7 +38,7 @@ class WalkingState: GKState {
     // `Bat` падает пока не начнет махать крыльями
     if let entity = animationComponent.entity as? Bat {
       if let physicsComponent = entity.component(ofType: PhysicsComponent.self) {
-        physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: -15))
+        physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: -10))
       }
     }
     
@@ -61,7 +61,8 @@ class WalkingState: GKState {
         
         if case let .returnToPosition(position) = bat.mandate, bat.distanceToPoint(otherPoint: position) <= 10 {
           stateMachine?.enter(IdleState.self)
-          bat.mandate = .sleep
+          spriteComponent.node.position = CGPoint(position)
+          bat.mandate = .stop
         }
       }
       

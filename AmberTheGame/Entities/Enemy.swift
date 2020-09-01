@@ -7,7 +7,7 @@ class Enemy: GKEntity, GKAgentDelegate {
   /// Мандат, то есть цель, которую `Enemy` ставит перед собой.
   enum EnemyMandate {
     // Оставаться на месте
-    case sleep
+    case stop
     
     // Охотиться на другого агента.
     case huntAgent(GKAgent2D)
@@ -23,7 +23,7 @@ class Enemy: GKEntity, GKAgentDelegate {
   // MARK: - Properties
   
   /// Цель, которую в настоящее время пытается достичь `Enemy`.
-  var mandate: EnemyMandate = .sleep
+  var mandate: EnemyMandate = .stop
   
   /// Точки, которые `Enemy` должен патрулировать, когда не охотится.
   var patrolPoints: [CGPoint]?
@@ -43,13 +43,15 @@ class Enemy: GKEntity, GKAgentDelegate {
     let debugColor: SKColor
     
     switch mandate {
-      case .sleep:
+      case .stop:
+        agent.stopAgent()
         return GKBehavior()
         
       case .followPatrolPath:
         guard let pathPoints = patrolPoints else {
           return GKBehavior()
         }
+        agent.continueAgent()
         radius = GameplayConfiguration.Enemy.patrolPathRadius
         agentBehavior = EnemyBehavior.behaviorPatrol(forAgent: agent, patrollingPathWithPoints: pathPoints, pathRadius: radius, inScene: levelScene)
         debugPathPoints = pathPoints
@@ -58,11 +60,13 @@ class Enemy: GKEntity, GKAgentDelegate {
         
       case let .huntAgent(targetAgent):
         //        agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
+        agent.continueAgent()
         radius = GameplayConfiguration.Enemy.huntPathRadius
         (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
         debugColor = SKColor.red
         
       case let .returnToPosition(position):
+        agent.continueAgent()
         radius = GameplayConfiguration.Enemy.patrolPathRadius
         (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, returningToPoint: position, pathRadius: radius, inScene: levelScene)
         debugColor = SKColor.yellow
@@ -105,7 +109,7 @@ class Enemy: GKEntity, GKAgentDelegate {
     /*
      `GKAgent`s не работают в физическом движке SpriteKit и не подвержены физическим столкновениям SpriteKit.
      По этому положение агента может иметь значения, которые недопустимы в физическом моделировании SpriteKit.
-     Чтобы противостоять этому, Прежде чем агент обновит позицию, устанавливаем агента в позицию спрайта.
+     Чтобы противостоять этому. Прежде чем агент обновит позицию, устанавливаем агента в позицию спрайта.
      */
     updateAgentPositionToMatchNodePosition()
   }
@@ -140,7 +144,12 @@ class Enemy: GKEntity, GKAgentDelegate {
     // `spriteComponent` является вычисляемым свойством. Объявляем локальную версию, чтобы мы не вычисляли его несколько раз.
     let spriteComponent = self.spriteComponent
     
-    agent.position = vector_float2(x: Float(spriteComponent.node.position.x + agentOffset.x), y: Float(spriteComponent.node.position.y + agentOffset.y))
+    let spriteComponentPosition = CGPoint(
+      x: spriteComponent.node.position.x + agentOffset.x,
+      y: spriteComponent.node.position.y + agentOffset.y
+    )
+    
+    agent.position = vector_float2(spriteComponentPosition)
   }
   
   /// Устанавливает спрайт в позицию агента  (плюс смещение).

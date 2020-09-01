@@ -111,7 +111,7 @@ class Bat: Enemy, RulesComponentDelegate {
     } else {
       // Правила не обеспечили мотивации для охоты, поэтому возвращаемся к `nestPoint`.
       switch mandate {
-        case .sleep:
+        case .stop:
           break
         default:
           guard let nestPoint = self.nestPoint else { return }
