@@ -41,8 +41,11 @@ class Bat: Enemy, RulesComponentDelegate {
       jumpMiddle: nil,
       jumpDown: nil,
       hit: nil,
-      damage: nil
+      damage: SKAction(named: "bat-died")
     ))
+    
+    let intelligenceComponent = IntelligenceComponent()
+    addComponent(intelligenceComponent)
     
     let agent = AgentComponent()
     agent.delegate = self
@@ -61,9 +64,9 @@ class Bat: Enemy, RulesComponentDelegate {
     addComponent(agent)
     
     let rulesComponent = RulesComponent(rules: [
-      PlayerBotNearRule(),
-      PlayerBotMediumRule(),
-      PlayerBotFarRule()
+      AmberNearRule(),
+      AmberMediumRule(),
+      AmberFarRule()
     ])
     addComponent(rulesComponent)
     rulesComponent.delegate = self
@@ -83,17 +86,17 @@ class Bat: Enemy, RulesComponentDelegate {
     
     // Определяем `mandate` на основе результата оценки правил.
     
-    // Ряд ситуаций, в которых `Enemy`, будет охотиться на `Amber`.
+    // Ряд ситуаций, в которых `Bat`, будет охотиться на `Amber`.
     let huntAmberRaw = [
       
       // Amber находится на близком расстоянии.
       ruleSystem.minimumGrade(forFacts: [
-        Fact.playerBotNear.rawValue as AnyObject
+        Fact.amberNear.rawValue as AnyObject
       ]),
       
       // Amber находится на среднем расстоянии.
       ruleSystem.minimumGrade(forFacts: [
-        Fact.playerBotMedium.rawValue as AnyObject,
+        Fact.amberMedium.rawValue as AnyObject,
       ])
     ]
     

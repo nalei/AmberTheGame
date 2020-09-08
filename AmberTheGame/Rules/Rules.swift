@@ -2,22 +2,22 @@
  Abstract: Этот файл представляет правила, используемые системой правил для определения соответствующего действия `Enemy`.
  Правила представлены перечислением:
  Насколько близко `Enemy` к `Amber` (near, medium, far):
- `PlayerBotNearRule`
- `PlayerBotMediumRule`
- `PlayerBotFarRule`
+   `AmberNearRule`
+   `AmberMediumRule`
+   `AmberFarRule`
  */
 
 import GameplayKit
 
 /// Fuzzy rules насколько близко `Enemy` к `Amber`.
 enum Fact: String {
-  case playerBotNear = "PlayerBotNear"
-  case playerBotMedium = "PlayerBotMedium"
-  case playerBotFar = "PlayerBotFar"
+  case amberNear = "AmberNear"
+  case amberMedium = "AmberMedium"
+  case amberFar = "AmberFar"
 }
 
 /// Утверждает, что `Amber` находится близко к `Enemy`.
-class PlayerBotNearRule: FuzzyEnemyRule {
+class AmberNearRule: FuzzyEnemyRule {
   // MARK: Properties
   
   override func grade() -> Float {
@@ -28,11 +28,11 @@ class PlayerBotNearRule: FuzzyEnemyRule {
   
   // MARK: Initializers
   
-  init() { super.init(fact: .playerBotNear) }
+  init() { super.init(fact: .amberNear) }
 }
 
 /// Утверждает, что `Amber` находится на среднем расстоянии от `Enemy`.
-class PlayerBotMediumRule: FuzzyEnemyRule {
+class AmberMediumRule: FuzzyEnemyRule {
   // MARK: Properties
   
   override func grade() -> Float {
@@ -43,11 +43,11 @@ class PlayerBotMediumRule: FuzzyEnemyRule {
   
   // MARK: Initializers
   
-  init() { super.init(fact: .playerBotMedium) }
+  init() { super.init(fact: .amberMedium) }
 }
 
 /// Утверждает, что `Amber` находится далеко от `Enemy`.
-class PlayerBotFarRule: FuzzyEnemyRule {
+class AmberFarRule: FuzzyEnemyRule {
   // MARK: Properties
   
   override func grade() -> Float {
@@ -58,5 +58,5 @@ class PlayerBotFarRule: FuzzyEnemyRule {
   
   // MARK: Initializers
   
-  init() { super.init(fact: .playerBotFar) }
+  init() { super.init(fact: .amberFar) }
 }

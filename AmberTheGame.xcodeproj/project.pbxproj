@@ -33,6 +33,8 @@
 		1E6E5108248CDF5300C640E9 /* GeometryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E5107248CDF5300C640E9 /* GeometryExtensions.swift */; };
 		1E6E510A2494B7CD00C640E9 /* RulesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E51092494B7CD00C640E9 /* RulesComponent.swift */; };
 		1E6E510D2494BB3E00C640E9 /* LevelStateSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */; };
+		1E78C3BE24FFDC3500E1B673 /* IntelligenceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C3BD24FFDC3500E1B673 /* IntelligenceComponent.swift */; };
+		1E78C3C124FFE33B00E1B673 /* AgentControlledState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C3C024FFE33B00E1B673 /* AgentControlledState.swift */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
 		1E92F7B124BCDEAE000A290E /* bokeh.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E92F7B024BCDEAE000A290E /* bokeh.sks */; };
 		1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E99C9CD2469966E00930779 /* Bat.xcassets */; };
@@ -53,6 +55,7 @@
 		1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1661223CA2E310055452D /* LaunchScreen.storyboard */; };
 		1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662123CB20670055452D /* TouchControlInputNode.swift */; };
 		1EC1662623CB78920055452D /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662523CB78920055452D /* ButtonNode.swift */; };
+		1ECD1DF125053B12007DC626 /* AttackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ECD1DF025053B12007DC626 /* AttackState.swift */; };
 		1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF968F24839FD4009A3765 /* AgentComponent.swift */; };
 		1EDF96932483DC64009A3765 /* TileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EDF96922483DC64009A3765 /* TileSet.sks */; };
 		1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */; };
@@ -91,6 +94,8 @@
 		1E6E5107248CDF5300C640E9 /* GeometryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryExtensions.swift; sourceTree = "<group>"; };
 		1E6E51092494B7CD00C640E9 /* RulesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesComponent.swift; sourceTree = "<group>"; };
 		1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelStateSnapshot.swift; sourceTree = "<group>"; };
+		1E78C3BD24FFDC3500E1B673 /* IntelligenceComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntelligenceComponent.swift; sourceTree = "<group>"; };
+		1E78C3C024FFE33B00E1B673 /* AgentControlledState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentControlledState.swift; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
 		1E92F7B024BCDEAE000A290E /* bokeh.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bokeh.sks; sourceTree = "<group>"; };
 		1E99C9CD2469966E00930779 /* Bat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bat.xcassets; sourceTree = "<group>"; };
@@ -113,6 +118,7 @@
 		1EC1661523CA2E310055452D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC1662123CB20670055452D /* TouchControlInputNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchControlInputNode.swift; sourceTree = "<group>"; };
 		1EC1662523CB78920055452D /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
+		1ECD1DF025053B12007DC626 /* AttackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackState.swift; sourceTree = "<group>"; };
 		1EDF968F24839FD4009A3765 /* AgentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentComponent.swift; sourceTree = "<group>"; };
 		1EDF96922483DC64009A3765 /* TileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TileSet.sks; sourceTree = "<group>"; };
 		1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Amber.xcassets; sourceTree = "<group>"; };
@@ -177,6 +183,15 @@
 				1E6E510C2494BB3E00C640E9 /* LevelStateSnapshot.swift */,
 			);
 			path = Rules;
+			sourceTree = "<group>";
+		};
+		1E78C3BF24FFE15100E1B673 /* Intelligence States */ = {
+			isa = PBXGroup;
+			children = (
+				1E78C3C024FFE33B00E1B673 /* AgentControlledState.swift */,
+				1ECD1DF025053B12007DC626 /* AttackState.swift */,
+			);
+			path = "Intelligence States";
 			sourceTree = "<group>";
 		};
 		1E829E9423D1A8AC0026F495 /* Scenes */ = {
@@ -314,6 +329,8 @@
 				1EB7B4AE2416237800F0FA54 /* ParallaxComponent.swift */,
 				1EDF968F24839FD4009A3765 /* AgentComponent.swift */,
 				1E6E51092494B7CD00C640E9 /* RulesComponent.swift */,
+				1E78C3BD24FFDC3500E1B673 /* IntelligenceComponent.swift */,
+				1E78C3BF24FFE15100E1B673 /* Intelligence States */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -414,8 +431,10 @@
 				1EC1660A23CA2E2F0055452D /* LevelScene.swift in Sources */,
 				1E46ACDC2486F18C00D3E976 /* Enemy.swift in Sources */,
 				1EC1660C23CA2E2F0055452D /* GameViewController.swift in Sources */,
+				1E78C3BE24FFDC3500E1B673 /* IntelligenceComponent.swift in Sources */,
 				1EFDAA5523CFA8E60081527C /* Amber.swift in Sources */,
 				1EFDAA5823CFAAA70081527C /* InputComponent.swift in Sources */,
+				1ECD1DF125053B12007DC626 /* AttackState.swift in Sources */,
 				1EF7755B240317A700534AB7 /* FallingState.swift in Sources */,
 				1EFD7E9C24AB8AC9005113EF /* Skeleton.swift in Sources */,
 				1E6E5108248CDF5300C640E9 /* GeometryExtensions.swift in Sources */,
@@ -425,6 +444,7 @@
 				1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */,
 				1E6C065424BCD87B0084359E /* Rules.swift in Sources */,
 				1E50353A23DDA9190010B16E /* IdleState.swift in Sources */,
+				1E78C3C124FFE33B00E1B673 /* AgentControlledState.swift in Sources */,
 				1E27A21424FA59B7005A2AFF /* LevelScene+Pause.swift in Sources */,
 				1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */,
 				1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */,

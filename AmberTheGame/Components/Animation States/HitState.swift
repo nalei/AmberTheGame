@@ -3,6 +3,7 @@ import GameplayKit
 
 class HitState: GKState {
   // MARK: - Properties
+  
   unowned var animationComponent: AnimationComponent
   
   /// Время, в течение которого объект находился в состоянии `HitState`.
@@ -53,7 +54,7 @@ class HitState: GKState {
     // `spriteComponent` является вычисляемым свойством. Объявляем локальную версию, чтобы мы не вычисляли его несколько раз.
     let spriteComponent = self.spriteComponent
     
-    // Обновляем счетчик времени в состоянии `AttackState`.
+    // Обновляем счетчик времени в состоянии `HitState`.
     elapsedTime += seconds
     
     // Добавляем `hitBox` в промежутке между 0.1 и 0.3 нахождения в состояни `HitState`.

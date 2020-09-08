@@ -18,7 +18,8 @@ class EntityManager {
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
     let attackSystem = GKComponentSystem(componentClass: AttackComponent.self)
     let rulesSystem = GKComponentSystem(componentClass: RulesComponent.self)
-    return [moveSystem, agentSystem, animationSystem, parallaxSystem, attackSystem, rulesSystem]
+    let intelligenceSystem = GKComponentSystem(componentClass: IntelligenceComponent.self)
+    return [moveSystem, agentSystem, animationSystem, parallaxSystem, attackSystem, rulesSystem, intelligenceSystem]
   }()
   
   

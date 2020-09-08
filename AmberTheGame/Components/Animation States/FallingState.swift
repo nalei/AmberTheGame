@@ -21,7 +21,6 @@ class FallingState : GKState {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
 
     if (spriteComponent.node.physicsBody?.velocity.dy)! < -400 {
-      
       spriteComponent.node.texture = animationComponent.jumpDown
     }
   }

@@ -6,13 +6,10 @@ class WalkingState: GKState {
   
   unowned var animationComponent: AnimationComponent
   
-  /// Таймер времени, прошедшего с момента последнего обновления поведения.
-  var timeSinceBehaviorUpdate: TimeInterval = 0.0
-  
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
-      fatalError("A HitState's entity must have an SpriteComponent.")
+      fatalError("A WalkingState's entity must have an SpriteComponent.")
     }
     return spriteComponent
   }
@@ -30,15 +27,12 @@ class WalkingState: GKState {
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    // Сбрасываем таймер времени, прошедшего с момента последнего обновления поведения.
-    timeSinceBehaviorUpdate = 0.0
-    
     spriteComponent.node.run(animationComponent.run!, withKey: "run")
     
     // `Bat` падает пока не начнет махать крыльями
     if let entity = animationComponent.entity as? Bat {
       if let physicsComponent = entity.component(ofType: PhysicsComponent.self) {
-        physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: -10))
+        physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: -8))
       }
     }
     
@@ -49,30 +43,9 @@ class WalkingState: GKState {
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
-    
-    // Обновляем таймер времени, прошедшего с момента последнего обновления поведения.
-    timeSinceBehaviorUpdate += seconds
-    
-    // Проверяем, прошло ли достаточно времени с момента последнего обновления поведения, и обновляем поведение, если это так.
-    if timeSinceBehaviorUpdate >= 0.25 {
-      
-      // Когда `Bat` возвращается к `nestPoint` и приближается достаточно близко, он должен прекратить движение.
-      if let bat = animationComponent.entity as? Bat {
-        
-        if case let .returnToPosition(position) = bat.mandate, bat.distanceToPoint(otherPoint: position) <= 10 {
-          stateMachine?.enter(IdleState.self)
-          spriteComponent.node.position = CGPoint(position)
-          bat.mandate = .stop
-        }
-      }
-      
-      // Сбрасываем таймер времени, прошедшего с момента последнего обновления поведения.
-      timeSinceBehaviorUpdate = 0.0
-    }
   }
   
   override func willExit(to nextState: GKState) {
-    
     spriteComponent.node.removeAction(forKey: "run")
   }
   
