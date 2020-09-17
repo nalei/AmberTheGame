@@ -6,8 +6,8 @@ class Enemy: GKEntity, GKAgentDelegate {
   
   /// Мандат, то есть цель, которую `Enemy` ставит перед собой.
   enum EnemyMandate {
-    // Оставаться на месте
-    case stop
+    // Бездействовать (агент привязан к физическому телу объекта).
+    case passiveAgent
     
     // Охотиться на другого агента.
     case huntAgent(GKAgent2D)
@@ -23,7 +23,7 @@ class Enemy: GKEntity, GKAgentDelegate {
   // MARK: - Properties
   
   /// Цель, которую в настоящее время пытается достичь `Enemy`.
-  var mandate: EnemyMandate = .stop
+  var mandate: EnemyMandate = .passiveAgent
   
   /// Точки, которые `Enemy` должен патрулировать, когда не охотится.
   var patrolPoints: [CGPoint]?
@@ -43,15 +43,11 @@ class Enemy: GKEntity, GKAgentDelegate {
     let debugColor: SKColor
     
     switch mandate {
-      case .stop:
-        agent.stopAgent()
+      case .passiveAgent:
         return GKBehavior()
         
       case .followPatrolPath:
-        guard let pathPoints = patrolPoints else {
-          return GKBehavior()
-        }
-        agent.continueAgent()
+        guard let pathPoints = patrolPoints else { return GKBehavior() }
         radius = GameplayConfiguration.Enemy.patrolPathRadius
         agentBehavior = EnemyBehavior.behaviorPatrol(forAgent: agent, patrollingPathWithPoints: pathPoints, pathRadius: radius, inScene: levelScene)
         debugPathPoints = pathPoints
@@ -59,14 +55,12 @@ class Enemy: GKEntity, GKAgentDelegate {
         debugColor = SKColor.green
         
       case let .huntAgent(targetAgent):
-        //        agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
-        agent.continueAgent()
+        // agentBehavior = EnemyBehavior.behaviorFollow(forAgent: agent, huntingAgent: targetAgent, inScene: levelScene)
         radius = GameplayConfiguration.Enemy.huntPathRadius
         (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, huntingAgent: targetAgent, pathRadius: radius, inScene: levelScene)
         debugColor = SKColor.red
         
       case let .returnToPosition(position):
-        agent.continueAgent()
         radius = GameplayConfiguration.Enemy.patrolPathRadius
         (agentBehavior, debugPathPoints) = EnemyBehavior.behaviorAndPathPoints(forAgent: agent, returningToPoint: position, pathRadius: radius, inScene: levelScene)
         debugColor = SKColor.yellow

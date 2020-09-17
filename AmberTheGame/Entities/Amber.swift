@@ -94,13 +94,13 @@ class Amber: GKEntity {
     
     agent.position = vector_float2(x: Float(spriteComponent.node.position.x + agentOffset.x), y: Float(spriteComponent.node.position.y + agentOffset.y))
     
-    drawDebugPath(color: SKColor.orange, radius: agent.radius)
+    drawDebugAgent(color: SKColor.orange, radius: agent.radius)
   }
   
   
   // MARK: - Debug Path Drawing
   
-  func drawDebugPath(color: SKColor, radius: Float) {
+  func drawDebugAgent(color: SKColor, radius: Float) {
     debugNode.removeAllChildren()
     
     var red: CGFloat = 0

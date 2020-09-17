@@ -44,7 +44,10 @@ class Bat: Enemy, RulesComponentDelegate {
       damage: SKAction(named: "bat-died")
     ))
     
-    let intelligenceComponent = IntelligenceComponent()
+    let intelligenceComponent = IntelligenceComponent(states: [
+      BatSleepState(entity: self),
+      AgentControlledState(entity: self)
+    ])
     addComponent(intelligenceComponent)
     
     let agent = AgentComponent()
@@ -56,11 +59,6 @@ class Bat: Enemy, RulesComponentDelegate {
     agent.behavior = GKBehavior()
     self.agentOffset = CGPoint(x: 0, y: 10)
     self.patrolPoints = patrolPoints
-    
-    /*
-     `GKAgent2D` является подклассом `GKComponent`. Добавляем его в список компонентов `Enemy`,
-     чтобы он был обновлен на каждом цикле обновления компонентов.
-     */
     addComponent(agent)
     
     let rulesComponent = RulesComponent(rules: [
@@ -108,17 +106,24 @@ class Bat: Enemy, RulesComponentDelegate {
       guard let amberAgent = state.amberTarget?.target.agent else { return }
       mandate = .huntAgent(amberAgent)
       
+      if let intelligenceComponent = component(ofType: IntelligenceComponent.self) {
+        intelligenceComponent.stateMachine.enter(AgentControlledState.self)
+      }
+      
       if let animationComponent = component(ofType: AnimationComponent.self) {
         animationComponent.stateMachine?.enter(WalkingState.self)
       }
     } else {
-      // Правила не обеспечили мотивации для охоты, поэтому возвращаемся к `nestPoint`.
+      /*
+       Правила не обеспечили мотивации для охоты, поэтому `Bat` возврвщается к `nestPoint`,
+       (если мандат в состоянии `.passiveAgent` значит уже спит).
+       */
       switch mandate {
-        case .stop:
-          break
-        default:
-          guard let nestPoint = self.nestPoint else { return }
-          mandate = .returnToPosition(vector_float2(nestPoint))
+      case .passiveAgent:
+        break
+      default:
+        guard let nestPoint = self.nestPoint else { return }
+        mandate = .returnToPosition(vector_float2(nestPoint))
       }
     }
   }

@@ -3,20 +3,18 @@ import GameplayKit
 
 class IntelligenceComponent: GKComponent {
   // MARK: - Properties
-
-  var stateMachine: GKStateMachine!
+  
+  var stateMachine: GKStateMachine
+  
+  let initialStateClass: AnyClass
   
   
   // MARK: - Initializers
-  
-  override init() {
+  init(states: [GKState]) {
+    stateMachine = GKStateMachine(states: states)
+    let firstState = states.first!
+    initialStateClass = type(of: firstState)
     super.init()
-    
-    stateMachine = GKStateMachine(states: [
-      AgentControlledState(intelligenceComponent: self)
-    ])
-    
-    stateMachine.enter(AgentControlledState.self)
   }
   
   required init?(coder: NSCoder) {
@@ -27,6 +25,15 @@ class IntelligenceComponent: GKComponent {
   // MARK: - GKComponent Life Cycle
   
   override func update(deltaTime seconds: TimeInterval) {
+    super.update(deltaTime: seconds)
+
     stateMachine.update(deltaTime: seconds)
+  }
+  
+  
+  // MARK: - Actions
+  
+  func enterInitialState() {
+    stateMachine.enter(initialStateClass)
   }
 }

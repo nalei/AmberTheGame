@@ -46,8 +46,8 @@ extension LevelScene {
   @objc func activeGame() {
     for agentComponent in entityManager.getAllAgents() {
       let wait = SKAction.wait(forDuration: TimeInterval(0.0))
-      let continueAgent = SKAction.run({ agentComponent.continueAgent() })
-      self.run(SKAction.sequence([wait, continueAgent]))
+      let startAgent = SKAction.run({agentComponent.startAgent()})
+      self.run(SKAction.sequence([wait, startAgent]))
     }
   }
   

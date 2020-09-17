@@ -14,8 +14,8 @@ class AttackComponent: GKComponent {
   }
   
   override init() {
-    self.hitBox = SKSpriteNode(color: #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 0.5), size: .zero)
-    self.hurtBox = SKSpriteNode(color: #colorLiteral(red: 0, green: 0.5628422499, blue: 0.3188166618, alpha: 0.5), size: .zero)
+    self.hitBox = SKSpriteNode(color: .clear, size: .zero)
+    self.hurtBox = SKSpriteNode(color: .clear, size: .zero)
     
     super.init()
   }

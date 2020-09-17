@@ -18,15 +18,20 @@ class Skeleton: Enemy, RulesComponentDelegate {
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.50
     addComponent(physicsComponent)
-
+    
     // Связываем `PhysicsComponent` и `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
-    addComponent(MovementComponent())
+    addComponent(MovementComponent(
+      walkSpeed: 30,
+      maxJump: 0,
+      accel: 40,
+      decel: 80
+    ))
     
     addComponent(AnimationComponent(
       idle: SKTexture(imageNamed: "skeleton-idle"),
-      run: nil,
+      run: SKAction(named: "skeleton-run"),
       jumpUp: nil,
       jumpMiddle: nil,
       jumpDown: nil,
@@ -42,7 +47,10 @@ class Skeleton: Enemy, RulesComponentDelegate {
     spriteComponent.node.addChild(attackComponent.hurtBox)
     addComponent(attackComponent)
     
-    let intelligenceComponent = IntelligenceComponent()
+    let intelligenceComponent = IntelligenceComponent(states: [
+      AgentControlledState(entity: self),
+      SkeletonMoveState(entity: self)
+    ])
     addComponent(intelligenceComponent)
     
     let agent = AgentComponent()
@@ -50,14 +58,9 @@ class Skeleton: Enemy, RulesComponentDelegate {
     agent.maxSpeed = 250
     agent.maxAcceleration = 30
     agent.mass = 0.05
-    agent.radius = 25
+    agent.radius = 40
     agent.behavior = GKBehavior()
-    self.agentOffset = CGPoint(x: 0, y: 10)
-    
-    /*
-     `GKAgent2D` является подклассом `GKComponent`. Добавляем его в список компонентов `Enemy`,
-     чтобы он был обновлен на каждом цикле обновления компонентов.
-     */
+    self.agentOffset = CGPoint(x: 15, y: 45)
     addComponent(agent)
     
     let rulesComponent = RulesComponent(rules: [
@@ -77,18 +80,10 @@ class Skeleton: Enemy, RulesComponentDelegate {
   // MARK: - RulesComponentDelegate
   
   func rulesComponent(rulesComponent: RulesComponent, didFinishEvaluatingRuleSystem ruleSystem: GKRuleSystem) {
-    let state = ruleSystem.state["snapshot"] as! EntitySnapshot
+    //    let state = ruleSystem.state["snapshot"] as! EntitySnapshot
     
-    // Определяем `mandate` на основе результата оценки правил.
-    
-    // Ряд ситуаций, в которых `Enemy`, будет охотиться на `Amber`.
-    let huntAmberRaw = [
-      
-      // Amber находится на близком расстоянии.
-      ruleSystem.minimumGrade(forFacts: [
-        Fact.amberNear.rawValue as AnyObject
-      ]),
-      
+    // Ряд ситуаций, в которых `Skeleton`, будет двигаться по направлению к `Amber`.
+    let moveRaw = [
       // Amber находится на среднем расстоянии.
       ruleSystem.minimumGrade(forFacts: [
         Fact.amberMedium.rawValue as AnyObject,
@@ -96,17 +91,29 @@ class Skeleton: Enemy, RulesComponentDelegate {
     ]
     
     // Find the maximum of the minima from above.
-    let huntAmber = huntAmberRaw.reduce(0.0, max)
+    let move = moveRaw.reduce(0.0, max)
     
-    if huntAmber > 0.0 {
-      // Правила обеспечили мотивацию для охоты на `Amber`.
+    // Ряд ситуаций, в которых `Skeleton`, будет наносить удар.
+    let hitRaw = [
+      // Amber находится на близком расстоянии.
+      ruleSystem.minimumGrade(forFacts: [
+        Fact.amberNear.rawValue as AnyObject
+      ])
+    ]
+    
+    // Find the maximum of the minima from above.
+    let hit = hitRaw.reduce(0.0, max)
+    
+    if move >= hit && move > 0.0 {
+      // Правила обеспечили мотивацию для движения по направлению к `Amber`.
       if let intelligenceComponent = component(ofType: IntelligenceComponent.self) {
-        intelligenceComponent.stateMachine.enter(AgentControlledState.self)
+        intelligenceComponent.stateMachine.enter(SkeletonMoveState.self)
       }
-      guard let amberAgent = state.amberTarget?.target.agent else { return }
-      mandate = .huntAgent(amberAgent)
-    } else {
-      
+    } else if hit > move {
+      // Правила обеспечили мотивацию для нанесения удара.
+      if let movementComponent = component(ofType: MovementComponent.self) {
+        movementComponent.stopMoving()
+      }
     }
   }
 }

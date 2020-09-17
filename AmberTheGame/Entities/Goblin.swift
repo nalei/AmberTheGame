@@ -22,7 +22,7 @@ class Goblin: Enemy {
     // Связываем `PhysicsComponent` и `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
-    addComponent(MovementComponent(walkSpeed: 100, maxJump: 150, accel: 300, decel: 300))
+    addComponent(MovementComponent())
     
     addComponent(AnimationComponent(
       idle: SKTexture(imageNamed: "goblin-idle"),
