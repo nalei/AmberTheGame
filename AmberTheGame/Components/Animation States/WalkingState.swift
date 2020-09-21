@@ -29,23 +29,14 @@ class WalkingState: GKState {
     
     spriteComponent.node.run(animationComponent.run!, withKey: "run")
     
-    // `Bat` падает пока не начнет махать крыльями
-    if let entity = animationComponent.entity as? Bat {
-      if let physicsComponent = entity.component(ofType: PhysicsComponent.self) {
-        physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: -8))
-      }
-    }
-    
     if let _ = previousState as? FallingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
     }
   }
   
-  override func update(deltaTime seconds: TimeInterval) {
-    super.update(deltaTime: seconds)
-  }
-  
   override func willExit(to nextState: GKState) {
+    super.willExit(to: nextState)
+    
     spriteComponent.node.removeAction(forKey: "run")
   }
   

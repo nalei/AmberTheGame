@@ -36,6 +36,7 @@
 		1E78C3BE24FFDC3500E1B673 /* IntelligenceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C3BD24FFDC3500E1B673 /* IntelligenceComponent.swift */; };
 		1E78C3C124FFE33B00E1B673 /* AgentControlledState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C3C024FFE33B00E1B673 /* AgentControlledState.swift */; };
 		1E8D6DB823DF768200CA57E1 /* AnimationComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */; };
+		1E91861B2519133600FE1A81 /* SkeletonAttackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E91861A2519133600FE1A81 /* SkeletonAttackState.swift */; };
 		1E92F7B124BCDEAE000A290E /* bokeh.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E92F7B024BCDEAE000A290E /* bokeh.sks */; };
 		1E98890B250EB11C00251697 /* BatSleepState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E98890A250EB11C00251697 /* BatSleepState.swift */; };
 		1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E99C9CD2469966E00930779 /* Bat.xcassets */; };
@@ -98,6 +99,7 @@
 		1E78C3BD24FFDC3500E1B673 /* IntelligenceComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntelligenceComponent.swift; sourceTree = "<group>"; };
 		1E78C3C024FFE33B00E1B673 /* AgentControlledState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentControlledState.swift; sourceTree = "<group>"; };
 		1E8D6DB723DF768200CA57E1 /* AnimationComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationComponent.swift; sourceTree = "<group>"; };
+		1E91861A2519133600FE1A81 /* SkeletonAttackState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonAttackState.swift; sourceTree = "<group>"; };
 		1E92F7B024BCDEAE000A290E /* bokeh.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bokeh.sks; sourceTree = "<group>"; };
 		1E98890A250EB11C00251697 /* BatSleepState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatSleepState.swift; sourceTree = "<group>"; };
 		1E99C9CD2469966E00930779 /* Bat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Bat.xcassets; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				1E78C3C024FFE33B00E1B673 /* AgentControlledState.swift */,
 				1E98890A250EB11C00251697 /* BatSleepState.swift */,
 				1EEDA689250ED88A002B43C2 /* SkeletonMoveState.swift */,
+				1E91861A2519133600FE1A81 /* SkeletonAttackState.swift */,
 			);
 			path = "Intelligence States";
 			sourceTree = "<group>";
@@ -365,7 +368,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "com.my-box-project";
 				TargetAttributes = {
 					1EC165FF23CA2E2F0055452D = {
@@ -428,6 +431,7 @@
 				1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */,
 				1EB51715249A9F9D00F83165 /* HitState.swift in Sources */,
 				1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */,
+				1E91861B2519133600FE1A81 /* SkeletonAttackState.swift in Sources */,
 				1E61B3482482C99900AEBC76 /* EnemyBehavior.swift in Sources */,
 				1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */,
 				1EB867ED24A777C20016ABDB /* AttackComponent.swift in Sources */,
@@ -516,6 +520,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -540,7 +545,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -576,6 +581,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -594,7 +600,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

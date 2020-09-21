@@ -39,7 +39,7 @@ class RulesComponent: GKComponent {
   override func update(deltaTime seconds: TimeInterval) {
     timeSinceRulesUpdate += seconds
     
-    if timeSinceRulesUpdate < 1.0 { return }
+    if timeSinceRulesUpdate < 0.25 { return }
     
     timeSinceRulesUpdate = 0.0
     

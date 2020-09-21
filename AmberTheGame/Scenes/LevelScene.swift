@@ -109,6 +109,11 @@ class LevelScene: SKScene {
       bat.spriteComponent.node.position = node.position
       self.entityManager.add(bat)
       node.removeFromParent()
+      
+      // If the entity has an `IntelligenceComponent`, enter its initial state.
+      if let intelligenceComponent = bat.component(ofType: IntelligenceComponent.self) {
+        intelligenceComponent.enterInitialState()
+      }
     }
     
     self["ParallaxBg"].forEach { node in
@@ -134,7 +139,7 @@ class LevelScene: SKScene {
     self.addChild(graphLayer)
     graphLayer.zPosition = 1
     
-    debugDrawingEnabled = true
+    debugDrawingEnabled = false
     
     view.showsPhysics   = debugDrawingEnabled
     view.showsFPS       = debugDrawingEnabled

@@ -6,6 +6,19 @@ class SkeletonMoveState: GKState {
   
   unowned var entity: Skeleton
   
+  /// Вычисляемое свойство указывающее на `SpriteComponent`.
+  var spriteComponent: SpriteComponent {
+    guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
+      fatalError("A SkeletonMoveState's entity must have an SpriteComponent.")
+    }
+    return spriteComponent
+  }
+  
+  var targetPosition: vector_float2 {
+    guard let targetPosition = entity.targetPosition else { fatalError("A SkeletonMoveState's entity must have a targetPosition set.") }
+    return targetPosition
+  }
+  
   
   // MARK: - Initializers
   
@@ -16,21 +29,30 @@ class SkeletonMoveState: GKState {
   
   // MARK: - GKState Life Cycle
   
-  override func didEnter(from previousState: GKState?) {
-    super.didEnter(from: previousState)
+  override func update(deltaTime seconds: TimeInterval) {
+    super.update(deltaTime: seconds)
     
-    if let animationComponent = entity.component(ofType: AnimationComponent.self) {
-      animationComponent.stateMachine?.enter(WalkingState.self)
-    }
+    // 'targetPosition' является вычисляемым свойством. Объявляем локальную переменную, чтобы не вычислять его несколько раз.
+    let targetPosition = self.targetPosition
+    
+    let dx = targetPosition.x - entity.agent.position.x
     
     if let movementComponent = entity.component(ofType: MovementComponent.self) {
-      movementComponent.moveTo(.left)
+      movementComponent.moveTo((dx < 0) ? .left : .right)
+    }
+  }
+  
+  override func willExit(to nextState: GKState) {
+    super.willExit(to: nextState)
+    
+    if let movementComponent = entity.component(ofType: MovementComponent.self) {
+      movementComponent.stopMoving()
     }
   }
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
-    case is AgentControlledState.Type:
+    case is AgentControlledState.Type, is SkeletonAttackState.Type:
       return true
     default:
       return false

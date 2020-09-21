@@ -26,6 +26,17 @@ class BatSleepState: GKState {
     entity.agent.stopAgent()
   }
   
+  override func willExit(to nextState: GKState) {
+    super.willExit(to: nextState)
+    
+    entity.agent.startAgent()
+    
+    // `Bat` падает пока не начнет махать крыльями
+    if let physicsComponent = entity.component(ofType: PhysicsComponent.self) {
+      physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: -10))
+    }
+  }
+  
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
     case is AgentControlledState.Type:
@@ -33,10 +44,5 @@ class BatSleepState: GKState {
     default:
       return false
     }
-  }
-  
-  override func willExit(to nextState: GKState) {
-    super.willExit(to: nextState)
-    entity.agent.startAgent()
   }
 }

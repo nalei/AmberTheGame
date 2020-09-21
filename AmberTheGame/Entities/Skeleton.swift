@@ -4,6 +4,8 @@ import GameplayKit
 class Skeleton: Enemy, RulesComponentDelegate {
   // MARK: - Initialization
   
+  var targetPosition: vector_float2?
+  
   required override init() {
     super.init()
     
@@ -23,7 +25,7 @@ class Skeleton: Enemy, RulesComponentDelegate {
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
     addComponent(MovementComponent(
-      walkSpeed: 30,
+      walkSpeed: 60,
       maxJump: 0,
       accel: 40,
       decel: 80
@@ -55,8 +57,8 @@ class Skeleton: Enemy, RulesComponentDelegate {
     
     let agent = AgentComponent()
     agent.delegate = self
-    agent.maxSpeed = 250
-    agent.maxAcceleration = 30
+    agent.maxSpeed = 60
+    agent.maxAcceleration = 40
     agent.mass = 0.05
     agent.radius = 40
     agent.behavior = GKBehavior()
@@ -80,7 +82,7 @@ class Skeleton: Enemy, RulesComponentDelegate {
   // MARK: - RulesComponentDelegate
   
   func rulesComponent(rulesComponent: RulesComponent, didFinishEvaluatingRuleSystem ruleSystem: GKRuleSystem) {
-    //    let state = ruleSystem.state["snapshot"] as! EntitySnapshot
+    let state = ruleSystem.state["snapshot"] as! EntitySnapshot
     
     // Ряд ситуаций, в которых `Skeleton`, будет двигаться по направлению к `Amber`.
     let moveRaw = [
@@ -90,7 +92,6 @@ class Skeleton: Enemy, RulesComponentDelegate {
       ])
     ]
     
-    // Find the maximum of the minima from above.
     let move = moveRaw.reduce(0.0, max)
     
     // Ряд ситуаций, в которых `Skeleton`, будет наносить удар.
@@ -101,19 +102,29 @@ class Skeleton: Enemy, RulesComponentDelegate {
       ])
     ]
     
-    // Find the maximum of the minima from above.
     let hit = hitRaw.reduce(0.0, max)
     
     if move >= hit && move > 0.0 {
+      guard let amberAgent = state.amberTarget?.target.agent else { return }
+      
+      // Цель по направлению к которой будет двигаться 'Skeleton'
+      targetPosition = amberAgent.position
+      
       // Правила обеспечили мотивацию для движения по направлению к `Amber`.
       if let intelligenceComponent = component(ofType: IntelligenceComponent.self) {
         intelligenceComponent.stateMachine.enter(SkeletonMoveState.self)
       }
     } else if hit > move {
       // Правила обеспечили мотивацию для нанесения удара.
-      if let movementComponent = component(ofType: MovementComponent.self) {
-        movementComponent.stopMoving()
+      if let intelligenceComponent = component(ofType: IntelligenceComponent.self) {
+        intelligenceComponent.stateMachine.enter(SkeletonAttackState.self)
+      }
+    } else {
+      // Правила не обеспечили никаких мотиваций.
+      if let intelligenceComponent = component(ofType: IntelligenceComponent.self) {
+        intelligenceComponent.stateMachine.enter(AgentControlledState.self)
       }
     }
+    
   }
 }

@@ -52,7 +52,7 @@ class Bat: Enemy, RulesComponentDelegate {
     
     let agent = AgentComponent()
     agent.delegate = self
-    agent.maxSpeed = 250
+    agent.maxSpeed = 300
     agent.maxAcceleration = 30
     agent.mass = 0.05
     agent.radius = 25
@@ -98,7 +98,6 @@ class Bat: Enemy, RulesComponentDelegate {
       ])
     ]
     
-    // Find the maximum of the minima from above.
     let huntAmber = huntAmberRaw.reduce(0.0, max)
     
     if huntAmber > 0.0 {

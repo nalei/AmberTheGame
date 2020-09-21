@@ -29,6 +29,8 @@ class DamageState: GKState {
   // MARK: - GKState Life Cycle
   
   override func willExit(to nextState: GKState) {
+    super.willExit(to: nextState)
+    
     spriteComponent.node.removeAction(forKey: "damage")
   }
   

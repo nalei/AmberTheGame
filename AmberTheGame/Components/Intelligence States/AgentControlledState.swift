@@ -68,7 +68,7 @@ class AgentControlledState: GKState {
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
-    case is BatSleepState.Type, is SkeletonMoveState.Type:
+    case is BatSleepState.Type, is SkeletonMoveState.Type, is SkeletonAttackState.Type:
       return true
     default:
       return false

@@ -148,7 +148,7 @@ class Enemy: GKEntity, GKAgentDelegate {
   
   /// Устанавливает спрайт в позицию агента  (плюс смещение).
   func updateNodePositionToMatchAgentPosition() {
-    // `agent` является вычисляемым свойством. Объявляем локальную версию, чтобы мы не вычисляли его несколько раз.
+    // `agent` является вычисляемым свойством. Объявляем локальную версию, чтобы не вычислять его несколько раз.
     let agentPosition = CGPoint(agent.position)
     
     spriteComponent.node.position = CGPoint(x: agentPosition.x - agentOffset.x, y: agentPosition.y - agentOffset.y)

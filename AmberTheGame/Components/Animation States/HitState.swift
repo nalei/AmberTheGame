@@ -74,6 +74,8 @@ class HitState: GKState {
   }
   
   override func willExit(to nextState: GKState) {
+    super.willExit(to: nextState)
+    
     spriteComponent.node.removeAction(forKey: "hit")
     
     if attackComponent.hitBox.parent != nil {

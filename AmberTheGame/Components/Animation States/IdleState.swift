@@ -49,6 +49,8 @@ class IdleState: GKState {
   }
   
   override func willExit(to nextState: GKState) {
+    super.willExit(to: nextState)
+    
     stopTimer()
   }
   
