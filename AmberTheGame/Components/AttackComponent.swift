@@ -14,7 +14,7 @@ class AttackComponent: GKComponent {
   }
   
   override init() {
-    self.hitBox = SKSpriteNode(color: .clear, size: .zero)
+    self.hitBox = SKSpriteNode(color: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), size: .zero)
     self.hurtBox = SKSpriteNode(color: .clear, size: .zero)
     
     super.init()
@@ -52,7 +52,9 @@ class AttackComponent: GKComponent {
             enemyAnimationComponent.stateMachine?.enter(DamageState.self)
           }
           
-          bounceBack(force: 20)
+          if let _ = entity as? Amber {
+            bounceBack(force: 20)
+          }
         }
       }
     }
@@ -60,7 +62,6 @@ class AttackComponent: GKComponent {
     if let foregroundMap = levelScene.childNode(withName: "ForegroundMap") as? SKTileMapNode {
       foregroundMap["Ground"].forEach { node in
         if self.hitBox.intersects(node) {
-          
           bounceBack(force: 10)
         }
       }

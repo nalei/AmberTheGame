@@ -6,17 +6,15 @@ class SkeletonAttackState: GKState {
   
   unowned var entity: Skeleton
   
+  /// Время, в течение которого объект находился в состоянии `SkeletonAttackState`.
+  var elapsedTime: TimeInterval = 0.0
+  
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
     guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
       fatalError("A SkeletonMoveState's entity must have an SpriteComponent.")
     }
     return spriteComponent
-  }
-  
-  var targetPosition: vector_float2 {
-    guard let targetPosition = entity.targetPosition else { fatalError("A SkeletonMoveState's entity must have a targetPosition set.") }
-    return targetPosition
   }
   
   
@@ -31,20 +29,32 @@ class SkeletonAttackState: GKState {
   
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
+    
+    // Сбросываем счетчик времени при входе в это состояние.
+    elapsedTime = 0.0
+    
+    if let attackComponent = entity.component(ofType: AttackComponent.self) {
+      attackComponent.hit()
+    }
   }
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
-  }
-  
-  override func willExit(to nextState: GKState) {
-    super.willExit(to: nextState)
+    
+    // Обновляем счетчик времени в состоянии `SkeletonAttackState`.
+    elapsedTime += seconds
+    
+    if elapsedTime >= 0.6 {
+      stateMachine?.enter(AgentControlledState.self)
+    }
   }
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
-    case is AgentControlledState.Type, is SkeletonAttackState.Type:
+    case is AgentControlledState.Type, is SkeletonMoveState.Type:
       return true
+    case is SkeletonAttackState.Type:
+      return false
     default:
       return false
     }

@@ -57,8 +57,16 @@ class HitState: GKState {
     // Обновляем счетчик времени в состоянии `HitState`.
     elapsedTime += seconds
     
-    // Добавляем `hitBox` в промежутке между 0.1 и 0.3 нахождения в состояни `HitState`.
-    if elapsedTime >= 0.1 && elapsedTime <= 0.3 {
+    var startDamageTime = 0.1
+    var endDamageTime = 0.3
+    
+    if let _ = animationComponent.entity as? Skeleton {
+      startDamageTime = 0.4
+      endDamageTime = 0.6
+    }
+    
+    // Добавляем `hitBox` в промежутке между `startDamageTime` и `endDamageTime` нахождения в состояни `HitState`.
+    if elapsedTime >= startDamageTime && elapsedTime <= endDamageTime {
       if attackComponent.hitBox.parent == nil {
         spriteComponent.node.addChild(attackComponent.hitBox)
       }

@@ -63,7 +63,7 @@ class EntitySnapshot {
   // MARK: - Properties
   
   /// Коэффициент, используемый для нормализации  расстояний между персонажами  для  "Fuzzy rules"
-  let proximityFactor: Float = 800
+  let proximityFactor: Float = 700
   
   /// Расстояние до `Amber`
   var amberTarget: (target: Amber, distance: Float)?

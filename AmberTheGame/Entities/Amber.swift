@@ -30,7 +30,7 @@ class Amber: GKEntity {
     super.init()
     
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "amber-idle"), size: CGSize(width: 200, height: 200))
-    spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.3)
+    spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.31)
     
     // Свет вокруг персонажа
     let lightNode = SKLightNode()
@@ -68,7 +68,7 @@ class Amber: GKEntity {
       jumpMiddle: SKTexture(imageNamed: "amber-jump-middle"),
       jumpDown: SKTexture(imageNamed: "amber-jump-down"),
       hit: SKAction(named: "amber-hit"),
-      damage: nil
+      damage: SKAction(named: "amber-blinks")
     ))
     
     let attackComponent = AttackComponent()

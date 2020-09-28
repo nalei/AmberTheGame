@@ -9,11 +9,24 @@ class Skeleton: Enemy, RulesComponentDelegate {
   required override init() {
     super.init()
     
-    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "skeleton-idle"), size: CGSize(width: 200, height: 200))
-    spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.18)
+    let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "skeleton-idle"), size: CGSize(width: 260, height: 200))
+    spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0.19)
+    
+    // Свет вокруг персонажа
+    let lightNode = SKLightNode()
+    lightNode.position = CGPoint(
+      x: spriteComponent.node.position.x,
+      y: spriteComponent.node.position.y + 30)
+    lightNode.categoryBitMask = 1
+    lightNode.falloff = 5
+    lightNode.lightColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+    lightNode.ambientColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    lightNode.name = "LightNode"
+    spriteComponent.node.addChild(lightNode)
+
     addComponent(spriteComponent)
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 90), center: CGPoint(x: -15, y: 45)))
+    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 90), center: CGPoint(x: -5, y: 45)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.ENEMY
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
     physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
@@ -25,9 +38,9 @@ class Skeleton: Enemy, RulesComponentDelegate {
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
     addComponent(MovementComponent(
-      walkSpeed: 60,
+      walkSpeed: 80,
       maxJump: 0,
-      accel: 40,
+      accel: 20,
       decel: 80
     ))
     
@@ -37,21 +50,22 @@ class Skeleton: Enemy, RulesComponentDelegate {
       jumpUp: nil,
       jumpMiddle: nil,
       jumpDown: nil,
-      hit: nil,
+      hit: SKAction(named: "skeleton-attack"),
       damage: SKAction(named: "skeleton-damage")
     ))
     
     let attackComponent = AttackComponent()
-    attackComponent.hitBox.position = CGPoint(x: 60, y: 30)
-    attackComponent.hitBox.size = CGSize(width: 50, height: 50)
-    attackComponent.hurtBox.position = CGPoint(x: -15, y: 45)
+    attackComponent.hitBox.position = CGPoint(x: 90, y: 40)
+    attackComponent.hitBox.size = CGSize(width: 40, height: 80)
+    attackComponent.hurtBox.position = CGPoint(x: -5, y: 45)
     attackComponent.hurtBox.size = CGSize(width: 40, height: 90)
     spriteComponent.node.addChild(attackComponent.hurtBox)
     addComponent(attackComponent)
     
     let intelligenceComponent = IntelligenceComponent(states: [
       AgentControlledState(entity: self),
-      SkeletonMoveState(entity: self)
+      SkeletonMoveState(entity: self),
+      SkeletonAttackState(entity: self)
     ])
     addComponent(intelligenceComponent)
     
@@ -112,7 +126,12 @@ class Skeleton: Enemy, RulesComponentDelegate {
       
       // Правила обеспечили мотивацию для движения по направлению к `Amber`.
       if let intelligenceComponent = component(ofType: IntelligenceComponent.self) {
-        intelligenceComponent.stateMachine.enter(SkeletonMoveState.self)
+        // Если объект находится в состоянии удара
+        if intelligenceComponent.stateMachine.currentState is SkeletonAttackState {
+          
+        } else {
+          intelligenceComponent.stateMachine.enter(SkeletonMoveState.self)
+        }
       }
     } else if hit > move {
       // Правила обеспечили мотивацию для нанесения удара.
