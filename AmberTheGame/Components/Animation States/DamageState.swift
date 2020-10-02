@@ -23,6 +23,10 @@ class DamageState: GKState {
     super.didEnter(from: previousState)
     
     spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
+    
+    if let attackComponent = animationComponent.entity?.component(ofType: AttackComponent.self) {
+      attackComponent.bounceBack(force: 100)
+    }
   }
   
   

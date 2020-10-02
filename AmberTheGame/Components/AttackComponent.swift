@@ -14,7 +14,7 @@ class AttackComponent: GKComponent {
   }
   
   override init() {
-    self.hitBox = SKSpriteNode(color: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), size: .zero)
+    self.hitBox = SKSpriteNode(color: .clear, size: .zero)
     self.hurtBox = SKSpriteNode(color: .clear, size: .zero)
     
     super.init()
@@ -40,20 +40,33 @@ class AttackComponent: GKComponent {
     }
   }
   
-  ///  Перебираем все объекты сцены, если `hitBox` и `hurtBox` пересекаются, то объект содержащий `hurtBox` получает damage
+  public func bounceBack(force: CGFloat) {
+    if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
+      physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * force), dy: 0.0))
+    }
+  }
+  
+  /// Перебираем все объекты сцены, если `hitBox` и `hurtBox` пересекаются, то объект содержащий `hurtBox` получает damage
   private func damageEntity() {
     guard let levelScene = spriteComponent.node.scene as? LevelScene else { return }
     
     levelScene.entityManager.entities.forEach { enemy in
+      
+      
       if let enemyHurtBox = enemy.component(ofType: AttackComponent.self)?.hurtBox {
         if self.hitBox.intersects(enemyHurtBox) {
           
-          if let enemyAnimationComponent = enemy.component(ofType: AnimationComponent.self) {
-            enemyAnimationComponent.stateMachine?.enter(DamageState.self)
+          // Откидываем `Amber` назад, при ударе
+          if let _ = entity as? Amber {
+            bounceBack(force: 10)
           }
           
-          if let _ = entity as? Amber {
-            bounceBack(force: 20)
+          if let enemyAnimationComponent = enemy.component(ofType: AnimationComponent.self) {
+            if ((enemy as? Skeleton) != nil) && enemyAnimationComponent.stateMachine?.currentState is HitState {
+              // Не дамажим скелета если он в состоянии удара
+            } else {
+              enemyAnimationComponent.stateMachine?.enter(DamageState.self)
+            }
           }
         }
       }
@@ -65,12 +78,6 @@ class AttackComponent: GKComponent {
           bounceBack(force: 10)
         }
       }
-    }
-  }
-  
-  private func bounceBack(force: CGFloat) {
-    if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
-      physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * force), dy: 0.0))
     }
   }
 }
