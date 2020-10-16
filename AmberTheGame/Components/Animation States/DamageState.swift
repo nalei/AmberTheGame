@@ -13,11 +13,15 @@ class DamageState: GKState {
     return spriteComponent
   }
   
+  
   // MARK: - Initializers
   
   required init(animationComponent: AnimationComponent) {
     self.animationComponent = animationComponent
   }
+  
+  
+  // MARK: - GKState Life Cycle
   
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
@@ -25,12 +29,9 @@ class DamageState: GKState {
     spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
     
     if let attackComponent = animationComponent.entity?.component(ofType: AttackComponent.self) {
-      attackComponent.bounceBack(force: 100)
+      attackComponent.damageSelf()
     }
   }
-  
-  
-  // MARK: - GKState Life Cycle
   
   override func willExit(to nextState: GKState) {
     super.willExit(to: nextState)

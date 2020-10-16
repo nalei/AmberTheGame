@@ -71,7 +71,7 @@ class Amber: GKEntity {
       damage: SKAction(named: "amber-blinks")
     ))
     
-    let attackComponent = AttackComponent()
+    let attackComponent = AttackComponent(hp: 3)
     attackComponent.hitBox.position = CGPoint(x: 60, y: 30)
     attackComponent.hitBox.size = CGSize(width: 50, height: 50)
     attackComponent.hurtBox.position = CGPoint(x: 0, y: 29)

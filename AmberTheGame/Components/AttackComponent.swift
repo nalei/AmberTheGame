@@ -2,7 +2,11 @@ import SpriteKit
 import GameplayKit
 
 class AttackComponent: GKComponent {
+  // MARK: - Properties
+  var hp: Int
+  
   let hitBox: SKSpriteNode
+  
   let hurtBox: SKSpriteNode
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
@@ -13,7 +17,11 @@ class AttackComponent: GKComponent {
     return spriteComponent
   }
   
-  override init() {
+  
+  // MARK: - Initializers
+  
+  init(hp: Int) {
+    self.hp = hp
     self.hitBox = SKSpriteNode(color: .clear, size: .zero)
     self.hurtBox = SKSpriteNode(color: .clear, size: .zero)
     
@@ -24,12 +32,15 @@ class AttackComponent: GKComponent {
     fatalError("init(coder:) has not been implemented")
   }
   
+  
+  // MARK: - GKComponent Life Cycle
+  
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       if animationComponent.stateMachine?.currentState is HitState {
-        damageEntity()
+        damageEnemy()
       }
     }
   }
@@ -40,23 +51,29 @@ class AttackComponent: GKComponent {
     }
   }
   
-  public func bounceBack(force: CGFloat) {
-    if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
-      physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * force), dy: 0.0))
+  public func damageSelf() {
+    hp -= 1
+    
+    if hp == 0 {
+      // Переносим `Amber` к ближайшему чекпоинту
+      if let _ = entity as? Amber {
+        print("Game over!")
+      }
     }
+    
+    bounceBack(force: 100)
   }
   
   /// Перебираем все объекты сцены, если `hitBox` и `hurtBox` пересекаются, то объект содержащий `hurtBox` получает damage
-  private func damageEntity() {
+  private func damageEnemy() {
     guard let levelScene = spriteComponent.node.scene as? LevelScene else { return }
     
     levelScene.entityManager.entities.forEach { enemy in
       
-      
       if let enemyHurtBox = enemy.component(ofType: AttackComponent.self)?.hurtBox {
         if self.hitBox.intersects(enemyHurtBox) {
           
-          // Откидываем `Amber` назад, при ударе
+          // Откидываем `Amber` назад, при попадании по врагу
           if let _ = entity as? Amber {
             bounceBack(force: 10)
           }
@@ -78,6 +95,12 @@ class AttackComponent: GKComponent {
           bounceBack(force: 10)
         }
       }
+    }
+  }
+  
+  private func bounceBack(force: CGFloat) {
+    if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
+      physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * force), dy: 0.0))
     }
   }
 }
