@@ -199,6 +199,19 @@ extension LevelScene: SKPhysicsContactDelegate {
       }
     }
     
+    let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+    if collision == CollisionCategory.ENEMY | CollisionCategory.PLAYER {
+      if let amber = contact.bodyA.node?.entity as? Amber {
+        if let animationComponent = amber.component(ofType: AnimationComponent.self) {
+          animationComponent.stateMachine?.enter(DamageState.self)
+        }
+      } else if let amber = contact.bodyB.node?.entity as? Amber {
+        if let animationComponent = amber.component(ofType: AnimationComponent.self) {
+          animationComponent.stateMachine?.enter(DamageState.self)
+        }
+      }
+    }
+    
     //    let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
     //    if collision == CollisionCategory.ENEMY | CollisionCategory.GROUND {
     //      if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {

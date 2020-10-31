@@ -87,6 +87,8 @@ class MovementComponent : GKComponent {
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
+    hSpeed = physicsComponent.physicsBody.velocity.dx
+    
     // Начинаем движение, если кнопка нажата
     if moveButtonPressed {
       hSpeed = approach(start: hSpeed, end: walkSpeed * facing.rawValue, shift: accel)
@@ -94,14 +96,9 @@ class MovementComponent : GKComponent {
     }
     
     // Останавливаем движение, если кнопка отпущена
-    if !moveButtonPressed && hSpeed != 0 {
+    if !moveButtonPressed {
       hSpeed = approach(start: hSpeed, end: 0, shift: decel)
       physicsComponent.physicsBody.velocity.dx = hSpeed
-    }
-    
-    // Проверка на случай если горизонтальная скорость была получена от физических взаимодействий
-    if hSpeed == 0 && physicsComponent.physicsBody.velocity.dx != 0 {
-      hSpeed = physicsComponent.physicsBody.velocity.dx
     }
     
     // Прерываем прыжок, если кнопка отпущена
@@ -117,8 +114,10 @@ class MovementComponent : GKComponent {
     // Анимация
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       
-      // Если объект находится в состоянии удара
-      if animationComponent.stateMachine?.currentState is HitState {
+      if animationComponent.stateMachine?.currentState is HitState ||
+          animationComponent.stateMachine?.currentState is DamageState {
+        
+        // Не меняем состояние если объект находится в `HitState` или `DamageState`
 
       } else {
         if onGround {

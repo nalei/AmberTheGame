@@ -45,6 +45,9 @@ class AttackComponent: GKComponent {
     }
   }
   
+  
+  // MARK: - Convenience
+  
   public func hit() {
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       animationComponent.stateMachine?.enter(HitState.self)
@@ -52,16 +55,26 @@ class AttackComponent: GKComponent {
   }
   
   public func damageSelf() {
+    guard let levelScene = spriteComponent.node.scene as? LevelScene else { return }
+    
     hp -= 1
+    
+    if entity is Skeleton {
+      print("Damage")
+    }
     
     if hp == 0 {
       // Переносим `Amber` к ближайшему чекпоинту
       if let _ = entity as? Amber {
         print("Game over!")
       }
+      
+      if let enemy = entity as? Enemy {
+        levelScene.entityManager.remove(enemy)
+      }
+    } else {
+      bounceBack(force: 100)
     }
-    
-    bounceBack(force: 100)
   }
   
   /// Перебираем все объекты сцены, если `hitBox` и `hurtBox` пересекаются, то объект содержащий `hurtBox` получает damage
@@ -74,16 +87,12 @@ class AttackComponent: GKComponent {
         if self.hitBox.intersects(enemyHurtBox) {
           
           // Откидываем `Amber` назад, при попадании по врагу
-          if let _ = entity as? Amber {
-            bounceBack(force: 10)
+          if entity is Amber {
+            bounceBack(force: 20)
           }
           
           if let enemyAnimationComponent = enemy.component(ofType: AnimationComponent.self) {
-            if ((enemy as? Skeleton) != nil) && enemyAnimationComponent.stateMachine?.currentState is HitState {
-              // Не дамажим скелета если он в состоянии удара
-            } else {
-              enemyAnimationComponent.stateMachine?.enter(DamageState.self)
-            }
+            enemyAnimationComponent.stateMachine?.enter(DamageState.self)
           }
         }
       }

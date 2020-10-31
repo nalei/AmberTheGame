@@ -58,9 +58,9 @@ class HitState: GKState {
     elapsedTime += seconds
     
     var startDamageTime = 0.1
-    var endDamageTime = 0.3
+    var endDamageTime = 0.2
     
-    if let _ = animationComponent.entity as? Skeleton {
+    if animationComponent.entity is Skeleton {
       startDamageTime = 0.4
       endDamageTime = 0.6
     }
@@ -84,7 +84,7 @@ class HitState: GKState {
   override func willExit(to nextState: GKState) {
     super.willExit(to: nextState)
     
-    spriteComponent.node.removeAction(forKey: "hit")
+//    spriteComponent.node.removeAction(forKey: "hit")
     
     if attackComponent.hitBox.parent != nil {
       attackComponent.hitBox.removeFromParent()

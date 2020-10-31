@@ -51,7 +51,7 @@ class Amber: GKEntity {
     let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 29)))
     physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER
     physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
-    physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
+    physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND | CollisionCategory.ENEMY
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.15
     addComponent(physicsComponent)
@@ -68,7 +68,7 @@ class Amber: GKEntity {
       jumpMiddle: SKTexture(imageNamed: "amber-jump-middle"),
       jumpDown: SKTexture(imageNamed: "amber-jump-down"),
       hit: SKAction(named: "amber-hit"),
-      damage: SKAction(named: "amber-blinks")
+      damage: SKAction(named: "amber-damage")
     ))
     
     let attackComponent = AttackComponent(hp: 3)

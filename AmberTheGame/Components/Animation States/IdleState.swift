@@ -31,7 +31,7 @@ class IdleState: GKState {
     
     startTimer()
     
-    if let _ = previousState as? FallingState {
+    if previousState is FallingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
     }
   }
@@ -40,7 +40,7 @@ class IdleState: GKState {
     super.update(deltaTime: seconds)
     
     // `Amber` моргает
-    if let _ = animationComponent.entity as? Amber {
+    if animationComponent.entity is Amber {
       if totalSeconds == 5 {
         spriteComponent.node.run(SKAction(named: "amber-blinks")!, withKey: "blinks")
         totalSeconds = 0
