@@ -49,9 +49,9 @@ class Amber: GKEntity {
     addComponent(InputComponent(camera: camera, scene: scene))
     
     let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 29)))
-    physicsComponent.physicsBody.categoryBitMask = CollisionCategory.PLAYER
-    physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
-    physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND | CollisionCategory.ENEMY
+    physicsComponent.physicsBody.categoryBitMask = ColliderType.PLAYER
+    physicsComponent.physicsBody.collisionBitMask = ColliderType.GROUND
+    physicsComponent.physicsBody.contactTestBitMask = ColliderType.GROUND | ColliderType.ENEMY
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.15
     addComponent(physicsComponent)

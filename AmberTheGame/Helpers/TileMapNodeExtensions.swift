@@ -62,7 +62,7 @@ extension SKTileMapNode {
       loadnode.physicsBody?.isDynamic = false
       loadnode.physicsBody?.allowsRotation = false
       loadnode.physicsBody?.restitution = 0
-      loadnode.physicsBody?.categoryBitMask = CollisionCategory.GROUND
+      loadnode.physicsBody?.categoryBitMask = ColliderType.GROUND
       
       self.addChild(loadnode)
       

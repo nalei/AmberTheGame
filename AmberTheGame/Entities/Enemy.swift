@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class Enemy: GKEntity, GKAgentDelegate {
+class Enemy: GKEntity, GKAgentDelegate, ContactNotifiableType {
   // MARK: - Nested types
   
   /// Мандат, то есть цель, которую `Enemy` ставит перед собой.
@@ -122,6 +122,15 @@ class Enemy: GKEntity, GKAgentDelegate {
     // После того, как агент обновит позицию, устанавливаем спрайт в позицию агента
     updateNodePositionToMatchAgentPosition()
   }
+  
+  
+  // MARK: - ContactableType
+  
+  func contactWithEntityDidBegin(_ entity: GKEntity) {
+    print("contactWithEntityDidBegin")
+  }
+
+  func contactWithEntityDidEnd(_ entity: GKEntity) {}
   
   
   // MARK: - Convenience

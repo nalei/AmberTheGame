@@ -39,7 +39,7 @@ class AttackComponent: GKComponent {
     super.update(deltaTime: seconds)
     
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-      if animationComponent.stateMachine?.currentState is HitState {
+      if (animationComponent.stateMachine?.currentState is HitState) || (animationComponent.stateMachine?.currentState is DamageState) {
         damageEnemy()
       }
     }
@@ -54,7 +54,7 @@ class AttackComponent: GKComponent {
     }
   }
   
-  public func damageSelf() {
+  public func applyDamageToEntity() {
     guard let levelScene = spriteComponent.node.scene as? LevelScene else { return }
     
     hp -= 1
@@ -73,7 +73,9 @@ class AttackComponent: GKComponent {
         levelScene.entityManager.remove(enemy)
       }
     } else {
-      bounceBack(force: 100)
+      
+      bounceDamage()
+      
     }
   }
   
@@ -110,6 +112,12 @@ class AttackComponent: GKComponent {
   private func bounceBack(force: CGFloat) {
     if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
       physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * force), dy: 0.0))
+    }
+  }
+  
+  private func bounceDamage() {
+    if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
+      physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * 160), dy: 100))
     }
   }
 }

@@ -27,9 +27,9 @@ class Skeleton: Enemy, RulesComponentDelegate {
     addComponent(spriteComponent)
     
     let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 90), center: CGPoint(x: -5, y: 45)))
-    physicsComponent.physicsBody.categoryBitMask = CollisionCategory.ENEMY
-    physicsComponent.physicsBody.collisionBitMask = CollisionCategory.GROUND
-    physicsComponent.physicsBody.contactTestBitMask = CollisionCategory.GROUND
+    physicsComponent.physicsBody.categoryBitMask = ColliderType.ENEMY
+    physicsComponent.physicsBody.collisionBitMask = ColliderType.GROUND
+    physicsComponent.physicsBody.contactTestBitMask = ColliderType.GROUND
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.50
     addComponent(physicsComponent)

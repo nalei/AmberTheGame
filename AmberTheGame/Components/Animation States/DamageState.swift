@@ -8,6 +8,9 @@ class DamageState: GKState {
   /// Время, в течение которого объект находился в состоянии `DamageState`.
   var elapsedTime: TimeInterval = 0.0
   
+  /// Используется если во время получения урона необходимо продолжить проведение атаки
+  var damageAndHit = false
+  
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
     guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
@@ -34,31 +37,44 @@ class DamageState: GKState {
     
     // Не запускаем анимацию damage для `Skeleton` если он в состоянии удара
     if (animationComponent.entity is Skeleton) && (previousState is HitState) {
-      
+      damageAndHit = true
     } else {
       spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
     }
     
-    // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
-    let pulsedWhite = SKAction.sequence([
-      SKAction.run({
-        let whiteColorShader = SKShader(source: "void main() { " +
-                                          "    vec4 current_color = SKDefaultShading(); " +
-                                          "    if (current_color.a > 0.0) { " +
-                                          "        gl_FragColor = vec4(1,1,1,1); " +
-                                          "    } else {" +
-                                          "        gl_FragColor = current_color; " +
-                                          "    } " +
-                                          "} ")
-        self.spriteComponent.node.shader = whiteColorShader
-      }),
-      SKAction.wait(forDuration: 0.15),
-      SKAction.run({
-        self.spriteComponent.node.shader = nil
-      })
-    ])
+    // Создаем, запускаем и удаляем эмиттер частиц для прыжка
+    if let levelScene = spriteComponent.node.scene as? LevelScene, let jumpEmitter = SKEmitterNode(fileNamed: "jump.sks") {
+      jumpEmitter.targetNode = levelScene
+      jumpEmitter.particleZPosition = -1
+      jumpEmitter.position = CGPoint(x: 0, y: 29)
+      spriteComponent.node.addChild(jumpEmitter)
       
-    spriteComponent.node.run(pulsedWhite)
+      let emitterDuration = Double(jumpEmitter.numParticlesToEmit) / Double(jumpEmitter.particleBirthRate) + Double(jumpEmitter.particleLifetime + jumpEmitter.particleLifetimeRange/2)
+      let wait = SKAction.wait(forDuration: TimeInterval(emitterDuration))
+      let remove = SKAction.removeFromParent()
+      jumpEmitter.run(SKAction.sequence([wait, remove]))
+    }
+    
+    // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
+//    let pulsedWhite = SKAction.sequence([
+//      SKAction.run({
+//        let whiteColorShader = SKShader(source: "void main() { " +
+//                                          "    vec4 current_color = SKDefaultShading(); " +
+//                                          "    if (current_color.a > 0.0) { " +
+//                                          "        gl_FragColor = vec4(1,1,1,1); " +
+//                                          "    } else {" +
+//                                          "        gl_FragColor = current_color; " +
+//                                          "    } " +
+//                                          "} ")
+//        self.spriteComponent.node.shader = whiteColorShader
+//      }),
+//      SKAction.wait(forDuration: 0.15),
+//      SKAction.run({
+//        self.spriteComponent.node.shader = nil
+//      })
+//    ])
+//
+//    spriteComponent.node.run(pulsedWhite)
     
     // Прерываем управление персонажем, пока он находится в `DamageState`.
     if let inputComponent = animationComponent.entity?.component(ofType: InputComponent.self) {
@@ -67,7 +83,7 @@ class DamageState: GKState {
     
     //Наносим дамаг
     if let attackComponent = animationComponent.entity?.component(ofType: AttackComponent.self) {
-      attackComponent.damageSelf()
+      attackComponent.applyDamageToEntity()
     }
   }
   
@@ -77,6 +93,24 @@ class DamageState: GKState {
     // Обновляем счетчик времени в состоянии `DamageState`.
     elapsedTime += seconds
     
+    if damageAndHit {
+      let startDamageTime = 0.4
+      let endDamageTime = 0.6
+      
+      if let attackComponent = animationComponent.entity?.component(ofType: AttackComponent.self) {
+        // Добавляем `hitBox` в промежутке между `startDamageTime` и `endDamageTime` нахождения в состояни `HitState`.
+        if elapsedTime >= startDamageTime && elapsedTime <= endDamageTime {
+          if attackComponent.hitBox.parent == nil {
+            spriteComponent.node.addChild(attackComponent.hitBox)
+          }
+        } else {
+          if attackComponent.hitBox.parent != nil {
+            attackComponent.hitBox.removeFromParent()
+          }
+        }
+      }
+    }
+    
     if elapsedTime >= 0.6 {
       stateMachine?.enter(IdleState.self)
     }
@@ -84,6 +118,8 @@ class DamageState: GKState {
   
   override func willExit(to nextState: GKState) {
     super.willExit(to: nextState)
+    
+    damageAndHit = false
     
     spriteComponent.node.removeAction(forKey: "damage")
     

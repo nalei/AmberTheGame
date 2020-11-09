@@ -152,10 +152,10 @@ class LevelScene: SKScene {
     guard let camera = self.camera else { return }
     if let spriteComponent = character?.component(ofType: SpriteComponent.self) {
       camera.run(SKAction.move(
-        to: CGPoint(
-          x: spriteComponent.node.position.x,
-          y: spriteComponent.node.position.y),
-        duration: 0.2)
+                  to: CGPoint(
+                    x: spriteComponent.node.position.x,
+                    y: spriteComponent.node.position.y),
+                  duration: 0.2)
       )
     }
   }
@@ -189,7 +189,11 @@ class LevelScene: SKScene {
 extension LevelScene: SKPhysicsContactDelegate {
   
   func didBegin(_ contact: SKPhysicsContact) {
-    if contact.bodyA.categoryBitMask == CollisionCategory.GROUND || contact.bodyB.categoryBitMask == CollisionCategory.GROUND {
+    handleContact(contact: contact) { (ContactNotifiableType: ContactNotifiableType, otherEntity: GKEntity) in
+      ContactNotifiableType.contactWithEntityDidBegin(otherEntity)
+    }
+    
+    if contact.bodyA.categoryBitMask == ColliderType.GROUND || contact.bodyB.categoryBitMask == ColliderType.GROUND {
       if collisionDirection(contact) == .bottom {
         if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
           movementComponent.onGround = true
@@ -200,7 +204,7 @@ extension LevelScene: SKPhysicsContactDelegate {
     }
     
     let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-    if collision == CollisionCategory.ENEMY | CollisionCategory.PLAYER {
+    if collision == ColliderType.ENEMY | ColliderType.PLAYER {
       if let amber = contact.bodyA.node?.entity as? Amber {
         if let animationComponent = amber.component(ofType: AnimationComponent.self) {
           animationComponent.stateMachine?.enter(DamageState.self)
@@ -211,28 +215,42 @@ extension LevelScene: SKPhysicsContactDelegate {
         }
       }
     }
-    
-    //    let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-    //    if collision == CollisionCategory.ENEMY | CollisionCategory.GROUND {
-    //      if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
-    //        if collisionDirection(contact) == .left && movementComponent.facing == .left {
-    //          movementComponent.moveTo(.right)
-    //        }
-    //        if collisionDirection(contact) == .right && movementComponent.facing == .right {
-    //          movementComponent.moveTo(.left)
-    //        }
-    //      } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
-    //        if collisionDirection(contact) == .left && movementComponent.facing == .left {
-    //          movementComponent.moveTo(.right)
-    //        }
-    //        if collisionDirection(contact) == .right && movementComponent.facing == .right {
-    //          movementComponent.moveTo(.left)
-    //        }
-    //      }
-    //    }
   }
   
-  private func collisionDirection(_ contact: SKPhysicsContact) -> CollisionCategory.Direction {
+  private func handleContact(contact: SKPhysicsContact, contactCallback: (ContactNotifiableType, GKEntity) -> Void) {
+    // Получаем `ColliderType` для каждого тела, которое учавствует в столкновении.
+    //    let colliderTypeA = ColliderType(rawValue: contact.bodyA.categoryBitMask)
+    //    let colliderTypeB = ColliderType(rawValue: contact.bodyB.categoryBitMask)
+    
+    // Определяем, какой `ColliderType` должен быть уведомлен о контакте.
+    //    let aWantsCallback = colliderTypeA.notifyOnContactWith(colliderTypeB)
+    //    let bWantsCallback = colliderTypeB.notifyOnContactWith(colliderTypeA)
+    
+    
+    // Убеждаемся, что хотя бы одна из сущностей хочет обработать этот контакт.
+    // assert(aWantsCallback || bWantsCallback, "Unhandled physics contact - A = \(colliderTypeA), B = \(colliderTypeB)")
+    
+    let entityA = contact.bodyA.node?.entity
+    let entityB = contact.bodyB.node?.entity
+    
+    /*
+     Если `entityA` является уведомляемым типом, а `colliderTypeA` указывает, что он должен быть уведомлен
+     о контакте с `colliderTypeB`, вызываем колбэк `entityA`.
+     */
+    if let notifiableEntity = entityA as? ContactNotifiableType, let otherEntity = entityB {
+      contactCallback(notifiableEntity, otherEntity)
+    }
+    
+    /*
+     Если `entityB` является уведомляемым типом, а `scolliderTypeB` указывает, что он должен быть уведомлен
+     о контакте с `colliderTypeA`, вызываем колбэк `entityB`.
+     */
+    if let notifiableEntity = entityB as? ContactNotifiableType, let otherEntity = entityA {
+      contactCallback(notifiableEntity, otherEntity)
+    }
+  }
+  
+  private func collisionDirection(_ contact: SKPhysicsContact) -> ColliderType.Direction {
     if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
       return .bottom
     }
