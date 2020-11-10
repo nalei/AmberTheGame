@@ -23,13 +23,13 @@ class Skeleton: Enemy, RulesComponentDelegate {
     lightNode.ambientColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     lightNode.name = "LightNode"
     spriteComponent.node.addChild(lightNode)
-
+    
     addComponent(spriteComponent)
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 90), center: CGPoint(x: -5, y: 45)))
-    physicsComponent.physicsBody.categoryBitMask = ColliderType.ENEMY
-    physicsComponent.physicsBody.collisionBitMask = ColliderType.GROUND
-    physicsComponent.physicsBody.contactTestBitMask = ColliderType.GROUND
+    let physicsComponent = PhysicsComponent(
+      physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 40, height: 90), center: CGPoint(x: -5, y: 45)),
+      colliderType: .ENEMY
+    )
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.50
     addComponent(physicsComponent)

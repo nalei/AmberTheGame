@@ -11,10 +11,10 @@ class Goblin: Enemy {
     spriteComponent.node.anchorPoint = CGPoint(x: 0.5, y: 0)
     addComponent(spriteComponent)
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 42, height: 50), center: CGPoint(x: 0, y: 25)))
-    physicsComponent.physicsBody.categoryBitMask = ColliderType.ENEMY
-    physicsComponent.physicsBody.collisionBitMask = ColliderType.GROUND
-    physicsComponent.physicsBody.contactTestBitMask = ColliderType.GROUND
+    let physicsComponent = PhysicsComponent(
+      physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 42, height: 50), center: CGPoint(x: 0, y: 25)),
+      colliderType: .ENEMY
+    )
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.20
     addComponent(physicsComponent)

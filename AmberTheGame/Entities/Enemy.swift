@@ -123,11 +123,27 @@ class Enemy: GKEntity, GKAgentDelegate, ContactNotifiableType {
     updateNodePositionToMatchAgentPosition()
   }
   
+  // MARK: - ResourceLoadableType
+  
+  static func loadResources() {
+    ColliderType.definedCollisions[.ENEMY] = [
+      .GROUND
+    ]
+    ColliderType.requestedContactNotifications[.ENEMY] = [
+      .GROUND,
+      .PLAYER
+    ]
+  }
+  
   
   // MARK: - ContactableType
   
   func contactWithEntityDidBegin(_ entity: GKEntity) {
-    print("contactWithEntityDidBegin")
+    if entity is Amber {
+      if let animationComponent = entity.component(ofType: AnimationComponent.self) {
+        animationComponent.stateMachine?.enter(DamageState.self)
+      }
+    }
   }
 
   func contactWithEntityDidEnd(_ entity: GKEntity) {}

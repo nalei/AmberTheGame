@@ -4,12 +4,19 @@ import GameplayKit
 class PhysicsComponent: GKComponent {
   var physicsBody: SKPhysicsBody
   
-  init(physicsBody: SKPhysicsBody) {
-    physicsBody.isDynamic = true
-    physicsBody.allowsRotation = false
-    physicsBody.friction = 0
-    physicsBody.restitution = 0
+  init(physicsBody: SKPhysicsBody, colliderType: ColliderType) {
     self.physicsBody = physicsBody
+    
+    self.physicsBody.isDynamic = true
+    self.physicsBody.allowsRotation = false
+    self.physicsBody.friction = 0
+    self.physicsBody.restitution = 0
+    
+    
+    self.physicsBody.categoryBitMask = colliderType.categoryMask
+    self.physicsBody.collisionBitMask = colliderType.collisionMask
+    self.physicsBody.contactTestBitMask = colliderType.contactMask
+    
     super.init()
   }
   
@@ -19,7 +26,7 @@ class PhysicsComponent: GKComponent {
   
   func isContactByGround() -> Bool {
     for body in physicsBody.allContactedBodies() {
-      if body.categoryBitMask == ColliderType.GROUND {
+      if body.categoryBitMask == ColliderType.GROUND.rawValue {
         return true
       }
     }

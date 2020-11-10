@@ -15,9 +15,10 @@ class Bat: Enemy, RulesComponentDelegate {
     let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: "bat-idle"), size: CGSize(width: 64, height: 64))
     addComponent(spriteComponent)
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30, height: 30), center: CGPoint(x: 0, y: 10)))
-    physicsComponent.physicsBody.categoryBitMask = ColliderType.ENEMY
-    physicsComponent.physicsBody.collisionBitMask = ColliderType.GROUND
+    let physicsComponent = PhysicsComponent(
+      physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30, height: 30), center: CGPoint(x: 0, y: 10)),
+      colliderType: .ENEMY
+    )
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.10
     physicsComponent.physicsBody.affectedByGravity = false

@@ -20,7 +20,7 @@ class Amber: GKEntity {
   var debugNode = SKNode()
   
   
-    // MARK: - Initialization
+  // MARK: - Initialization
   
   init(camera: SKCameraNode?, scene: SKScene) {
     agent = GKAgent2D()
@@ -48,10 +48,10 @@ class Amber: GKEntity {
     
     addComponent(InputComponent(camera: camera, scene: scene))
     
-    let physicsComponent = PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 29)))
-    physicsComponent.physicsBody.categoryBitMask = ColliderType.PLAYER
-    physicsComponent.physicsBody.collisionBitMask = ColliderType.GROUND
-    physicsComponent.physicsBody.contactTestBitMask = ColliderType.GROUND | ColliderType.ENEMY
+    let physicsComponent = PhysicsComponent(
+      physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 29)),
+      colliderType: .PLAYER
+    )
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.15
     addComponent(physicsComponent)
@@ -82,6 +82,19 @@ class Amber: GKEntity {
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  
+  // MARK: - ResourceLoadableType
+  
+  static func loadResources() {
+    ColliderType.definedCollisions[.PLAYER] = [
+      .GROUND
+    ]
+    ColliderType.requestedContactNotifications[.PLAYER] = [
+      .GROUND,
+      .ENEMY
+    ]
   }
   
   
