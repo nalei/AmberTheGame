@@ -42,6 +42,16 @@ class DamageState: GKState {
       spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
     }
     
+    // Анимация: трясем экран
+    if spriteComponent.entity is Amber {
+      if let cameraNode = spriteComponent.node.scene?.camera {
+        cameraNode.run(SKAction.shake(initialPosition: cameraNode.position, duration: 0.9, amplitudeX: 12, amplitudeY: 40))
+      }
+    }
+    
+    // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
+    spriteComponent.node.run(SKAction.pulsedWhite(node: spriteComponent.node))
+    
     // Создаем, запускаем и удаляем эмиттер частиц для прыжка
     if let levelScene = spriteComponent.node.scene as? LevelScene, let jumpEmitter = SKEmitterNode(fileNamed: "jump.sks") {
       jumpEmitter.targetNode = levelScene
@@ -55,27 +65,6 @@ class DamageState: GKState {
       jumpEmitter.run(SKAction.sequence([wait, remove]))
     }
     
-    // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
-//    let pulsedWhite = SKAction.sequence([
-//      SKAction.run({
-//        let whiteColorShader = SKShader(source: "void main() { " +
-//                                          "    vec4 current_color = SKDefaultShading(); " +
-//                                          "    if (current_color.a > 0.0) { " +
-//                                          "        gl_FragColor = vec4(1,1,1,1); " +
-//                                          "    } else {" +
-//                                          "        gl_FragColor = current_color; " +
-//                                          "    } " +
-//                                          "} ")
-//        self.spriteComponent.node.shader = whiteColorShader
-//      }),
-//      SKAction.wait(forDuration: 0.15),
-//      SKAction.run({
-//        self.spriteComponent.node.shader = nil
-//      })
-//    ])
-//
-//    spriteComponent.node.run(pulsedWhite)
-    
     // Прерываем управление персонажем, пока он находится в `DamageState`.
     if let inputComponent = animationComponent.entity?.component(ofType: InputComponent.self) {
       inputComponent.isEnabled = false;
@@ -85,6 +74,8 @@ class DamageState: GKState {
     if let attackComponent = animationComponent.entity?.component(ofType: AttackComponent.self) {
       attackComponent.applyDamageToEntity()
     }
+    
+    spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
   }
   
   override func update(deltaTime seconds: TimeInterval) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0B7DAE255AC38400991C01 /* ActionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0B7DAD255AC38400991C01 /* ActionExtensions.swift */; };
 		1E118C2323D3273A002FFE8C /* SpriteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2223D3273A002FFE8C /* SpriteComponent.swift */; };
 		1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2423D32869002FFE8C /* EntityManager.swift */; };
 		1E27A21424FA59B7005A2AFF /* LevelScene+Pause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E27A21324FA59B7005A2AFF /* LevelScene+Pause.swift */; };
@@ -70,6 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E0B7DAD255AC38400991C01 /* ActionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionExtensions.swift; sourceTree = "<group>"; };
 		1E118C2223D3273A002FFE8C /* SpriteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteComponent.swift; sourceTree = "<group>"; };
 		1E118C2423D32869002FFE8C /* EntityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityManager.swift; sourceTree = "<group>"; };
 		1E27A21324FA59B7005A2AFF /* LevelScene+Pause.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelScene+Pause.swift"; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				1EF7755A240317A700534AB7 /* FallingState.swift */,
 				1EB51714249A9F9D00F83165 /* HitState.swift */,
 				1EA8021C24ACCA06004CE065 /* DamageState.swift */,
+				1E0B7DAD255AC38400991C01 /* ActionExtensions.swift */,
 			);
 			path = "Animation States";
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				1EFD7E9C24AB8AC9005113EF /* Skeleton.swift in Sources */,
 				1E98890B250EB11C00251697 /* BatSleepState.swift in Sources */,
 				1E6E5108248CDF5300C640E9 /* GeometryExtensions.swift in Sources */,
+				1E0B7DAE255AC38400991C01 /* ActionExtensions.swift in Sources */,
 				1E46ACDA2486C62300D3E976 /* GameplayConfiguration.swift in Sources */,
 				1E3DF9EB23F7F5B200B69080 /* ColliderType.swift in Sources */,
 				1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */,
