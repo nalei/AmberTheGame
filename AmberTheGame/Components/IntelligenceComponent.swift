@@ -33,7 +33,7 @@ class IntelligenceComponent: GKComponent {
   
   // MARK: - Actions
   
-  func enterInitialState() {
+  public func enterInitialState() {
     stateMachine.enter(initialStateClass)
   }
 }

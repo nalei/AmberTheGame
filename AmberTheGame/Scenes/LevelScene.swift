@@ -81,15 +81,6 @@ class LevelScene: SKScene {
       amberSprite.removeFromParent()
     }
     
-    self["Goblin"].forEach { node in
-      let goblin = Goblin()
-      goblin.spriteComponent.node.position = node.position
-      goblin.spriteComponent.node.xScale = node.xScale
-      goblin.spriteComponent.node.name = node.name
-      self.entityManager.add(goblin)
-      node.removeFromParent()
-    }
-    
     self["Skeleton"].forEach { node in
       let skeleton = Skeleton()
       skeleton.spriteComponent.node.position = node.position
@@ -100,6 +91,11 @@ class LevelScene: SKScene {
       skeleton.spriteComponent.node.name = node.name
       self.entityManager.add(skeleton)
       node.removeFromParent()
+      
+      // Если у объекта есть `IntelligenceComponent`, входим в его начальное состояние.
+      if let intelligenceComponent = skeleton.component(ofType: IntelligenceComponent.self) {
+        intelligenceComponent.enterInitialState()
+      }
     }
     
     self["Bat"].forEach { node in
@@ -111,7 +107,7 @@ class LevelScene: SKScene {
       self.entityManager.add(bat)
       node.removeFromParent()
       
-      // If the entity has an `IntelligenceComponent`, enter its initial state.
+      // Если у объекта есть `IntelligenceComponent`, входим в его начальное состояние.
       if let intelligenceComponent = bat.component(ofType: IntelligenceComponent.self) {
         intelligenceComponent.enterInitialState()
       }

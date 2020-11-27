@@ -54,11 +54,15 @@ class Skeleton: Enemy, RulesComponentDelegate {
       damage: SKAction(named: "skeleton-damage")
     ))
     
-    let attackComponent = AttackComponent(hp: 30)
+    let attackComponent = AttackComponent(hp: 30, states: [
+      ReadyState(entity: self),
+      AttackState(entity: self),
+      DamagedState(entity: self)
+    ])
     attackComponent.hitBox.position = CGPoint(x: 90, y: 40)
-    attackComponent.hitBox.size = CGSize(width: 40, height: 80)
-    attackComponent.hurtBox.position = CGPoint(x: -5, y: 45)
-    attackComponent.hurtBox.size = CGSize(width: 40, height: 90)
+    attackComponent.hitBox.size = CGSize(width: 50, height: 80)
+    attackComponent.hurtBox.position = CGPoint(x: 0, y: 45)
+    attackComponent.hurtBox.size = CGSize(width: 50, height: 90)
     spriteComponent.node.addChild(attackComponent.hurtBox)
     addComponent(attackComponent)
     

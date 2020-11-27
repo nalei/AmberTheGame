@@ -71,7 +71,11 @@ class Amber: GKEntity {
       damage: SKAction(named: "amber-damage")
     ))
     
-    let attackComponent = AttackComponent(hp: 3)
+    let attackComponent = AttackComponent(hp: 3, states: [
+      ReadyState(entity: self),
+      AttackState(entity: self),
+      DamagedState(entity: self)
+    ])
     attackComponent.hitBox.position = CGPoint(x: 60, y: 30)
     attackComponent.hitBox.size = CGSize(width: 50, height: 50)
     attackComponent.hurtBox.position = CGPoint(x: 0, y: 29)
