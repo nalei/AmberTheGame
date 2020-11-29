@@ -140,8 +140,11 @@ class Enemy: GKEntity, GKAgentDelegate, ContactNotifiableType {
   
   func contactWithEntityDidBegin(_ entity: GKEntity) {
     if entity is Amber {
-      if let attackComponent = entity.component(ofType: AttackComponent.self) {
-        attackComponent.stateMachine.enter(DamagedState.self)
+      if let healthComponent = entity.component(ofType: HealthComponent.self) {
+        healthComponent.stateMachine.enter(HealthDamageState.self)
+      }
+      if let animationComponent = entity.component(ofType: AnimationComponent.self) {
+        animationComponent.stateMachine.enter(DamageState.self)
       }
     }
   }

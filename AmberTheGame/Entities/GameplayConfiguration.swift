@@ -9,6 +9,9 @@ struct GameplayConfiguration {
     
     /// Период времени, в течение которого `Amber` остается в состоянии `AttackState`.
     static let hitStateDuration: TimeInterval = 0.4
+    
+    /// Период времени, в течение которого `Amber` остается в состоянии `DamageState`.
+    static let damageStateDuration: TimeInterval = 0.4
   }
   
   struct Enemy {

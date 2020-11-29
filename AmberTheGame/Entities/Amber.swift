@@ -71,17 +71,16 @@ class Amber: GKEntity {
       damage: SKAction(named: "amber-damage")
     ))
     
-    let attackComponent = AttackComponent(hp: 3, states: [
-      ReadyState(entity: self),
-      AttackState(entity: self),
-      DamagedState(entity: self)
+    let healthComponent = HealthComponent(hp: 3, states: [
+      HealthIdleState(entity: self),
+      HealthDamageState(entity: self)
     ])
-    attackComponent.hitBox.position = CGPoint(x: 60, y: 30)
-    attackComponent.hitBox.size = CGSize(width: 50, height: 50)
-    attackComponent.hurtBox.position = CGPoint(x: 0, y: 29)
-    attackComponent.hurtBox.size = CGSize(width: 30, height: 52)
-    spriteComponent.node.addChild(attackComponent.hurtBox)
-    addComponent(attackComponent)
+    healthComponent.hitBox.position = CGPoint(x: 60, y: 30)
+    healthComponent.hitBox.size = CGSize(width: 50, height: 50)
+    healthComponent.hurtBox.position = CGPoint(x: 0, y: 29)
+    healthComponent.hurtBox.size = CGSize(width: 30, height: 52)
+    spriteComponent.node.addChild(healthComponent.hurtBox)
+    addComponent(healthComponent)
   }
   
   required init?(coder aDecoder: NSCoder) {

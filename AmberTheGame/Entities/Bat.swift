@@ -27,17 +27,16 @@ class Bat: Enemy, RulesComponentDelegate {
     // Связываем `PhysicsComponent` и `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
-    let attackComponent = AttackComponent(hp: 1, states: [
-      ReadyState(entity: self),
-      AttackState(entity: self),
-      DamagedState(entity: self),
+    let healthComponent = HealthComponent(hp: 1, states: [
+      HealthIdleState(entity: self),
+      HealthDamageState(entity: self),
     ])
-    attackComponent.hitBox.position = CGPoint(x: 0, y: 10)
-    attackComponent.hitBox.size = CGSize(width: 30, height: 30)
-    attackComponent.hurtBox.position = CGPoint(x: 0 , y: 10)
-    attackComponent.hurtBox.size = CGSize(width: 30, height: 30)
-    spriteComponent.node.addChild(attackComponent.hurtBox)
-    addComponent(attackComponent)
+    healthComponent.hitBox.position = CGPoint(x: 0, y: 10)
+    healthComponent.hitBox.size = CGSize(width: 30, height: 30)
+    healthComponent.hurtBox.position = CGPoint(x: 0 , y: 10)
+    healthComponent.hurtBox.size = CGSize(width: 30, height: 30)
+    spriteComponent.node.addChild(healthComponent.hurtBox)
+    addComponent(healthComponent)
     
     addComponent(AnimationComponent(
       idle: SKTexture(imageNamed: "bat-idle"),

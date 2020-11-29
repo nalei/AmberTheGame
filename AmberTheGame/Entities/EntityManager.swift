@@ -16,10 +16,10 @@ class EntityManager {
     let agentSystem = GKComponentSystem(componentClass: AgentComponent.self)
     let animationSystem = GKComponentSystem(componentClass: AnimationComponent.self)
     let parallaxSystem = GKComponentSystem(componentClass: ParallaxComponent.self)
-    let attackSystem = GKComponentSystem(componentClass: AttackComponent.self)
+    let healthSystem = GKComponentSystem(componentClass: HealthComponent.self)
     let rulesSystem = GKComponentSystem(componentClass: RulesComponent.self)
     let intelligenceSystem = GKComponentSystem(componentClass: IntelligenceComponent.self)
-    return [moveSystem, agentSystem, animationSystem, parallaxSystem, attackSystem, rulesSystem, intelligenceSystem]
+    return [moveSystem, agentSystem, animationSystem, parallaxSystem, healthSystem, rulesSystem, intelligenceSystem]
   }()
   
   

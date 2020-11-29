@@ -32,7 +32,7 @@ class InputComponent: GKComponent, ControlInputSourceDelegate {
   /// Вычисляемое свойство указывающее на `MovementComponent`.
   var movementComponent: MovementComponent {
     guard let movementComponent = entity?.component(ofType: MovementComponent.self) else {
-      fatalError("A AttackComponent's entity must have a MovementComponent")
+      fatalError("A InputComponent's entity must have a MovementComponent")
     }
     return movementComponent
   }
@@ -73,8 +73,8 @@ class InputComponent: GKComponent, ControlInputSourceDelegate {
       case "stop jump":
         movementComponent.stopJump()
       case "hit":
-        guard let attackComponent = entity?.component(ofType: AttackComponent.self) else { break }
-        attackComponent.hit()
+        guard let healthComponent = entity?.component(ofType: HealthComponent.self) else { break }
+        healthComponent.hit()
       case "stop hit":
         break
       default:

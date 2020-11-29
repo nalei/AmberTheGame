@@ -34,11 +34,6 @@ class DamageState: GKState {
     
     spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
     
-    // Прерываем управление персонажем, пока он находится в `DamageState`.
-    if let inputComponent = animationComponent.entity?.component(ofType: InputComponent.self) {
-      inputComponent.isEnabled = false;
-    }
-    
     if spriteComponent.entity is Amber {
       // Анимация: трясем экран
       if let cameraNode = spriteComponent.node.scene?.camera {
@@ -68,7 +63,7 @@ class DamageState: GKState {
     // Обновляем счетчик времени в состоянии `DamageState`.
     elapsedTime += seconds
     
-    if elapsedTime >= 0.4 {
+    if elapsedTime >= GameplayConfiguration.Amber.damageStateDuration {
       stateMachine?.enter(IdleState.self)
     }
   }
@@ -77,10 +72,6 @@ class DamageState: GKState {
     super.willExit(to: nextState)
     
     spriteComponent.node.removeAction(forKey: "damage")
-    
-    if let inputComponent = animationComponent.entity?.component(ofType: InputComponent.self) {
-      inputComponent.isEnabled = true;
-    }
   }
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {

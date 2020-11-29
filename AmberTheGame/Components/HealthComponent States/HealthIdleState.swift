@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class ReadyState: GKState {
+class HealthIdleState: GKState {
   // MARK: - Properties
   
   unowned var entity: GKEntity
@@ -15,7 +15,7 @@ class ReadyState: GKState {
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {
     switch stateClass {
-    case is AttackState.Type, is DamagedState.Type:
+    case is HealthDamageState.Type:
       return true
     default:
       return false

@@ -33,8 +33,8 @@ class SkeletonAttackState: GKState {
     // Сбросываем счетчик времени при входе в это состояние.
     elapsedTime = 0.0
     
-    if let attackComponent = entity.component(ofType: AttackComponent.self) {
-      attackComponent.hit()
+    if let healthComponent = entity.component(ofType: HealthComponent.self) {
+      healthComponent.hit()
     }
   }
   

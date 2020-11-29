@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class AttackComponent: GKComponent {
+class HealthComponent: GKComponent {
   // MARK: - Properties
   var hp: Int
   
@@ -16,7 +16,7 @@ class AttackComponent: GKComponent {
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
     guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
-      fatalError("A AttackComponent's entity must have a SpriteComponent")
+      fatalError("A HealthComponent's entity must have a SpriteComponent")
     }
     return spriteComponent
   }
@@ -48,8 +48,10 @@ class AttackComponent: GKComponent {
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
-    if stateMachine.currentState is AttackState {
-      damageEnemy()
+    if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+      if animationComponent.stateMachine.currentState is HitState {
+        damageEnemy()
+      }
     }
     
     stateMachine.update(deltaTime: seconds)
@@ -63,8 +65,6 @@ class AttackComponent: GKComponent {
   }
   
   public func hit() {
-    stateMachine.enter(AttackState.self)
-    
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       animationComponent.stateMachine?.enter(HitState.self)
     }
@@ -75,16 +75,13 @@ class AttackComponent: GKComponent {
     
     hp -= 1
     
-    // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
-    spriteComponent.node.run(SKAction.pulsedWhite(node: spriteComponent.node))
-    
     if hp == 0 {
       if let enemy = entity as? Enemy {
         levelScene.entityManager.remove(enemy)
       }
     } else {
       if entity is Amber {
-        bounceBack(force: 160)
+        bounceBack(force: 200)
       }
     }
   }
@@ -98,11 +95,11 @@ class AttackComponent: GKComponent {
     
     levelScene.entityManager.entities.forEach { enemy in
       
-      if let enemyHurtBox = enemy.component(ofType: AttackComponent.self)?.hurtBox {
+      if let enemyHurtBox = enemy.component(ofType: HealthComponent.self)?.hurtBox {
         if self.hitBox.intersects(enemyHurtBox) {
           
-          if let enemyAttackComponent = enemy.component(ofType: AttackComponent.self) {
-            enemyAttackComponent.stateMachine.enter(DamagedState.self)
+          if let enemyHealthComponent = enemy.component(ofType: HealthComponent.self) {
+            enemyHealthComponent.stateMachine.enter(HealthDamageState.self)
           }
           
           // Анимация
