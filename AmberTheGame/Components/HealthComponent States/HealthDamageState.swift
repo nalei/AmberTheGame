@@ -25,14 +25,14 @@ class HealthDamageState: GKState {
     // Сбросываем счетчик времени при входе в это состояние.
     elapsedTime = 0.0
     
+    // Наносим дамаг
+    if let healthComponent = entity.component(ofType: HealthComponent.self) {
+      healthComponent.damage()
+    }
+    
     // Прерываем управление персонажем, пока он находится в `DamageState`.
     if let inputComponent = entity.component(ofType: InputComponent.self) {
       inputComponent.isEnabled = false;
-    }
-    
-    // Наносим дамаг
-    if let healthComponent = entity.component(ofType: HealthComponent.self) {
-      healthComponent.applyDamageToSelf()
     }
     
     // Анимация: меняет цвет спрайта на белый, в течение 0.15c.

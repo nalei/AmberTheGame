@@ -69,20 +69,24 @@ class HealthComponent: GKComponent {
       animationComponent.stateMachine?.enter(HitState.self)
     }
   }
-  
-  public func applyDamageToSelf() {
-    guard let levelScene = spriteComponent.node.scene as? LevelScene else { return }
-    
+  public func damage() {
     hp -= 1
     
     if hp == 0 {
-      if let enemy = entity as? Enemy {
-        levelScene.entityManager.remove(enemy)
-      }
-    } else {
-      if entity is Amber {
-        bounceBack(force: 200)
-      }
+      death()
+    }
+    
+    // Откидываем `Amber` назад, при дамаге
+    if entity is Amber {
+      bounceBack(force: 200)
+    }
+  }
+  
+  public func death() {
+    guard let levelScene = spriteComponent.node.scene as? LevelScene else { return }
+    
+    if let enemy = entity as? Enemy {
+      levelScene.entityManager.remove(enemy)
     }
   }
   
