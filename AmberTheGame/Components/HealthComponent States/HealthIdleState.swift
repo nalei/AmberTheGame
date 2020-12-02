@@ -4,13 +4,13 @@ import GameplayKit
 class HealthIdleState: GKState {
   // MARK: - Properties
   
-  unowned var entity: GKEntity
+  unowned var healthComponent: HealthComponent
   
   
   // MARK: - Initializers
   
-  required init(entity: GKEntity) {
-    self.entity = entity
+  required init(healthComponent: HealthComponent) {
+    self.healthComponent = healthComponent
   }
   
   override func isValidNextState(_ stateClass: AnyClass) -> Bool {

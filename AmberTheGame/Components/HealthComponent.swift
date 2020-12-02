@@ -3,15 +3,18 @@ import GameplayKit
 
 class HealthComponent: GKComponent {
   // MARK: - Properties
+  
+  /**
+   The state machine for this `HealthComponent`. Defined as an implicitly
+   unwrapped optional property, because it is created during initialization,
+   but cannot be created until after we have called super.init().
+   */
+  var stateMachine: GKStateMachine!
+  
   var hp: Int
   
   let hitBox: SKSpriteNode
-  
   let hurtBox: SKSpriteNode
-  
-  var stateMachine: GKStateMachine
-  
-  let initialStateClass: AnyClass
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
@@ -24,18 +27,19 @@ class HealthComponent: GKComponent {
   
   // MARK: - Initializers
   
-  init(hp: Int, states: [GKState]) {
+  init(hp: Int) {
     self.hp = hp
     hitBox = SKSpriteNode(color: .clear, size: .zero)
     hurtBox = SKSpriteNode(color: .clear, size: .zero)
     
-    stateMachine = GKStateMachine(states: states)
-    let firstState = states.first!
-    initialStateClass = type(of: firstState)
-    
     super.init()
     
-    self.enterInitialState()
+    stateMachine = GKStateMachine(states: [
+      HealthIdleState(healthComponent: self),
+      HealthDamageState(healthComponent: self)
+    ])
+    
+    stateMachine.enter(HealthIdleState.self)
   }
   
   required init?(coder: NSCoder) {
@@ -59,10 +63,6 @@ class HealthComponent: GKComponent {
   
   
   // MARK: - Actions
-  
-  public func enterInitialState() {
-    stateMachine.enter(initialStateClass)
-  }
   
   public func hit() {
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
@@ -102,6 +102,7 @@ class HealthComponent: GKComponent {
       if let enemyHurtBox = enemy.component(ofType: HealthComponent.self)?.hurtBox {
         if self.hitBox.intersects(enemyHurtBox) {
           
+          // Damage
           if let enemyHealthComponent = enemy.component(ofType: HealthComponent.self) {
             enemyHealthComponent.stateMachine.enter(HealthDamageState.self)
           }
@@ -112,7 +113,6 @@ class HealthComponent: GKComponent {
             if enemy is Skeleton && enemyAnimationComponent.stateMachine?.currentState is HitState {
               // Не меняем состояние на `damageState` для `Skeleton` если он в состоянии удара
             } else {
-              // Переводим объект в `damageState`
               enemyAnimationComponent.stateMachine?.enter(DamageState.self)
             }
           }

@@ -2,11 +2,8 @@ import SpriteKit
 import GameplayKit
 
 class AnimationComponent: GKComponent {
-  /**
-   The state machine for this `AnimationComponent`. Defined as an implicitly
-   unwrapped optional property, because it is created during initialization,
-   but cannot be created until after we have called super.init().
-   */
+  // MARK: - Properties
+
   var stateMachine: GKStateMachine!
   
   var idle: SKTexture?
@@ -16,6 +13,9 @@ class AnimationComponent: GKComponent {
   var jumpDown: SKTexture?
   var hit: SKAction?
   var damage: SKAction?
+  
+  
+  // MARK: - Initializers
   
   init(idle: SKTexture?, run: SKAction?, jumpUp: SKTexture?, jumpMiddle: SKTexture?, jumpDown: SKTexture?, hit: SKAction?, damage: SKAction?) {
     super.init()
@@ -44,6 +44,9 @@ class AnimationComponent: GKComponent {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  
+  // MARK: - GKComponent Life Cycle
   
   override func update(deltaTime seconds: TimeInterval) {
     stateMachine.update(deltaTime: seconds)

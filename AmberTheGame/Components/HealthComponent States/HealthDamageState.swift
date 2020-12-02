@@ -4,7 +4,7 @@ import GameplayKit
 class HealthDamageState: GKState {
   // MARK: - Properties
   
-  unowned var entity: GKEntity
+  unowned var healthComponent: HealthComponent
   
   /// Время, в течение которого объект находился в состоянии `DamagedState`.
   var elapsedTime: TimeInterval = 0.0
@@ -12,8 +12,8 @@ class HealthDamageState: GKState {
   
   // MARK: - Initializers
   
-  required init(entity: GKEntity) {
-    self.entity = entity
+  required init(healthComponent: HealthComponent) {
+    self.healthComponent = healthComponent
   }
   
   
@@ -26,17 +26,15 @@ class HealthDamageState: GKState {
     elapsedTime = 0.0
     
     // Наносим дамаг
-    if let healthComponent = entity.component(ofType: HealthComponent.self) {
-      healthComponent.damage()
-    }
+    healthComponent.damage()
     
     // Прерываем управление персонажем, пока он находится в `DamageState`.
-    if let inputComponent = entity.component(ofType: InputComponent.self) {
+    if let inputComponent = healthComponent.entity?.component(ofType: InputComponent.self) {
       inputComponent.isEnabled = false;
     }
     
     // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
-    if let spriteComponent = entity.component(ofType: SpriteComponent.self) {
+    if let spriteComponent = healthComponent.entity?.component(ofType: SpriteComponent.self) {
       spriteComponent.node.run(SKAction.pulsedWhite(node: spriteComponent.node))
     }
   }
@@ -55,7 +53,7 @@ class HealthDamageState: GKState {
   override func willExit(to nextState: GKState) {
     super.willExit(to: nextState)
     
-    if let inputComponent = entity.component(ofType: InputComponent.self) {
+    if let inputComponent = healthComponent.entity?.component(ofType: InputComponent.self) {
       inputComponent.isEnabled = true;
     }
   }

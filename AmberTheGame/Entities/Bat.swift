@@ -27,10 +27,7 @@ class Bat: Enemy, RulesComponentDelegate {
     // Связываем `PhysicsComponent` и `SpriteComponent`.
     spriteComponent.node.physicsBody = physicsComponent.physicsBody
     
-    let healthComponent = HealthComponent(hp: 1, states: [
-      HealthIdleState(entity: self),
-      HealthDamageState(entity: self),
-    ])
+    let healthComponent = HealthComponent(hp: 1)
     healthComponent.hitBox.position = CGPoint(x: 0, y: 10)
     healthComponent.hitBox.size = CGSize(width: 30, height: 30)
     healthComponent.hurtBox.position = CGPoint(x: 0 , y: 10)

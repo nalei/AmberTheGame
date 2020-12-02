@@ -54,10 +54,7 @@ class Skeleton: Enemy, RulesComponentDelegate {
       damage: SKAction(named: "skeleton-damage")
     ))
     
-    let healthComponent = HealthComponent(hp: 30, states: [
-      HealthIdleState(entity: self),
-      HealthDamageState(entity: self)
-    ])
+    let healthComponent = HealthComponent(hp: 30)
     healthComponent.hitBox.position = CGPoint(x: 90, y: 40)
     healthComponent.hitBox.size = CGSize(width: 50, height: 80)
     healthComponent.hurtBox.position = CGPoint(x: 0, y: 45)

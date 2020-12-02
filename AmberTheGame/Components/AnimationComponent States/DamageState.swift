@@ -35,11 +35,6 @@ class DamageState: GKState {
     spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
     
     if spriteComponent.entity is Amber {
-      // Анимация: трясем экран
-      if let cameraNode = spriteComponent.node.scene?.camera {
-        cameraNode.run(SKAction.shake(initialPosition: cameraNode.position, duration: 0.9, amplitudeX: 12, amplitudeY: 40))
-      }
-      
       // Создаем, запускаем и удаляем эмиттер частиц для прыжка
       if let levelScene = spriteComponent.node.scene as? LevelScene, let jumpEmitter = SKEmitterNode(fileNamed: "jump.sks") {
         jumpEmitter.targetNode = levelScene

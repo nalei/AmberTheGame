@@ -14,6 +14,7 @@ class IntelligenceComponent: GKComponent {
     stateMachine = GKStateMachine(states: states)
     let firstState = states.first!
     initialStateClass = type(of: firstState)
+    
     super.init()
   }
   
