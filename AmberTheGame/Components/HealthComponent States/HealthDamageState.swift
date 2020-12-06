@@ -26,16 +26,25 @@ class HealthDamageState: GKState {
     elapsedTime = 0.0
     
     // Наносим дамаг
-    healthComponent.damage()
+    healthComponent.hp -= 1
+    
+    if healthComponent.hp == 0 {
+      healthComponent.death()
+    }
     
     // Прерываем управление персонажем, пока он находится в `DamageState`.
     if let inputComponent = healthComponent.entity?.component(ofType: InputComponent.self) {
       inputComponent.isEnabled = false;
     }
     
-    // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
     if let spriteComponent = healthComponent.entity?.component(ofType: SpriteComponent.self) {
+      // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
       spriteComponent.node.run(SKAction.pulsedWhite(node: spriteComponent.node))
+      
+      // Откидываем `Amber` назад, при дамаге
+      if healthComponent.entity is Amber {
+        spriteComponent.bounceBack(force: 200)
+      }
     }
   }
   

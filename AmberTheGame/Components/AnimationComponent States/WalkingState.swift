@@ -4,11 +4,13 @@ import GameplayKit
 class WalkingState: GKState {
   // MARK: - Properties
   
-  unowned var animationComponent: AnimationComponent
+  unowned var entity: GKEntity
+  
+  var walkingAnimation: SKAction
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
+    guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
       fatalError("A WalkingState's entity must have an SpriteComponent.")
     }
     return spriteComponent
@@ -17,8 +19,9 @@ class WalkingState: GKState {
   
   // MARK: - Initializers
   
-  required init(animationComponent: AnimationComponent) {
-    self.animationComponent = animationComponent
+  required init(entity: GKEntity, walkingAnimation: SKAction?) {
+    self.entity = entity
+    self.walkingAnimation = walkingAnimation! // !!!
   }
   
   
@@ -27,7 +30,7 @@ class WalkingState: GKState {
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    spriteComponent.node.run(animationComponent.run!, withKey: "run")
+    spriteComponent.node.run(walkingAnimation, withKey: "run")
     
     if previousState is FallingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)

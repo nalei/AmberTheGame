@@ -2,18 +2,34 @@ import GameplayKit
 import SpriteKit
 
 class JumpingState : GKState {
-  unowned var animationComponent: AnimationComponent
+  // MARK: - Properties
   
-  required init(animationComponent: AnimationComponent) {
-    self.animationComponent = animationComponent
+  unowned var entity: GKEntity
+  
+  var jumpUpAnimation: SKTexture
+  
+  /// Вычисляемое свойство указывающее на `SpriteComponent`.
+  var spriteComponent: SpriteComponent {
+    guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
+      fatalError("A JumpingState's entity must have an SpriteComponent.")
+    }
+    return spriteComponent
   }
+  
+  // MARK: - Initializers
+  
+  required init(entity: GKEntity, jumpUpAnimation: SKTexture?) {
+    self.entity = entity
+    self.jumpUpAnimation = jumpUpAnimation! // !!!
+  }
+  
+  
+  // MARK: - GKState Life Cycle
   
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
-    
-    spriteComponent.node.texture = animationComponent.jumpUp
+    spriteComponent.node.texture = jumpUpAnimation
     
     // Создаем, запускаем и удаляем эмиттер частиц для прыжка
     if let levelScene = spriteComponent.node.scene as? LevelScene, let jumpEmitter = SKEmitterNode(fileNamed: "jump.sks") {
@@ -32,7 +48,6 @@ class JumpingState : GKState {
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
 
     if (spriteComponent.node.physicsBody?.velocity.dy)! < 0 {
       stateMachine?.enter(FallingState.self)

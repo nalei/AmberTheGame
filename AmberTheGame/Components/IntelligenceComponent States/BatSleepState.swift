@@ -20,7 +20,7 @@ class BatSleepState: GKState {
     super.didEnter(from: previousState)
     
     if let animationComponent = entity.component(ofType: AnimationComponent.self) {
-      animationComponent.stateMachine?.enter(IdleState.self)
+      animationComponent.stateMachine.enter(IdleState.self)
     }
     
     entity.agent.stopAgent()

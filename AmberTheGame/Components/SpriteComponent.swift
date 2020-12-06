@@ -13,9 +13,13 @@ class SpriteComponent: GKComponent {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func squashAndSretch(xScale: CGFloat, yScale: CGFloat) {
+  public func squashAndSretch(xScale: CGFloat, yScale: CGFloat) {
     node.xScale = xScale * node.xScale
     node.yScale = yScale
+  }
+  
+  public func bounceBack(force: CGFloat) {
+    node.physicsBody?.applyImpulse(CGVector(dx: (-node.xScale * force), dy: 0.0))
   }
   
   override func didAddToEntity() {

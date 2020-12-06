@@ -24,15 +24,11 @@ class Goblin: Enemy {
     
     addComponent(MovementComponent())
     
-    addComponent(AnimationComponent(
-      idle: SKTexture(imageNamed: "goblin-idle"),
-      run: SKAction(named: "goblin-run"),
-      jumpUp: nil,
-      jumpMiddle: nil,
-      jumpDown: nil,
-      hit: nil,
-      damage: nil
-    ))
+    let animationComponent = AnimationComponent(states: [
+      IdleState(entity: self, idleAnimation: SKTexture(imageNamed: "goblin-idle")),
+      WalkingState(entity: self, walkingAnimation: SKAction(named: "goblin-run")),
+    ])
+    addComponent(animationComponent)
     
     let agent = AgentComponent()
     agent.delegate = self

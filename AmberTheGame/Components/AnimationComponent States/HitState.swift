@@ -4,14 +4,16 @@ import GameplayKit
 class HitState: GKState {
   // MARK: - Properties
   
-  unowned var animationComponent: AnimationComponent
+  unowned var entity: GKEntity
+  
+  var hitAnimation: SKAction
   
   /// Время, в течение которого объект находился в состоянии `AttackHitState`.
   var elapsedTime: TimeInterval = 0.0
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
+    guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
       fatalError("A HitState's entity must have an SpriteComponent.")
     }
     return spriteComponent
@@ -19,7 +21,7 @@ class HitState: GKState {
   
   /// Вычисляемое свойство указывающее на `HealthComponent`.
   var healthComponent: HealthComponent {
-    guard let healthComponent = animationComponent.entity?.component(ofType: HealthComponent.self) else {
+    guard let healthComponent = entity.component(ofType: HealthComponent.self) else {
       fatalError("A HitState's entity must have an HealthComponent.")
     }
     return healthComponent
@@ -28,8 +30,9 @@ class HitState: GKState {
   
   // MARK: - Initializers
   
-  required init(animationComponent: AnimationComponent) {
-    self.animationComponent = animationComponent
+  required init(entity: GKEntity, hitAnimation: SKAction?) {
+    self.entity = entity
+    self.hitAnimation = hitAnimation! // !!!
   }
   
   
@@ -41,7 +44,7 @@ class HitState: GKState {
     // Сбросываем счетчик времени при входе в это состояние.
     elapsedTime = 0.0
     
-    spriteComponent.node.run(animationComponent.hit!, withKey: "hit")
+    spriteComponent.node.run(hitAnimation, withKey: "hit")
     
     if let _ = previousState as? FallingState {
       spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
@@ -61,7 +64,7 @@ class HitState: GKState {
     var startDamageTime = 0.1
     var endDamageTime = 0.2
     
-    if animationComponent.entity is Skeleton {
+    if entity is Skeleton {
       startDamageTime = 0.4
       endDamageTime = 0.6
     }

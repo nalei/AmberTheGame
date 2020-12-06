@@ -3,14 +3,17 @@ import GameplayKit
 
 class DamageState: GKState {
   // MARK: - Properties
-  unowned var animationComponent: AnimationComponent
+  
+  unowned var entity: GKEntity
+  
+  var damageAnimation: SKAction
   
   /// Время, в течение которого объект находился в состоянии `DamageState`.
   var elapsedTime: TimeInterval = 0.0
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
+    guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
       fatalError("A DamageState's entity must have an SpriteComponent.")
     }
     return spriteComponent
@@ -19,10 +22,10 @@ class DamageState: GKState {
   
   // MARK: - Initializers
   
-  required init(animationComponent: AnimationComponent) {
-    self.animationComponent = animationComponent
+  required init(entity: GKEntity, damageAnimation: SKAction?) {
+    self.entity = entity
+    self.damageAnimation = damageAnimation! // !!!
   }
-  
   
   // MARK: - GKState Life Cycle
   
@@ -32,9 +35,9 @@ class DamageState: GKState {
     // Сбросываем счетчик времени при входе в это состояние.
     elapsedTime = 0.0
     
-    spriteComponent.node.run(animationComponent.damage!, withKey: "damage")
+    spriteComponent.node.run(damageAnimation, withKey: "damage")
     
-    if spriteComponent.entity is Amber {
+    if entity is Amber {
       // Создаем, запускаем и удаляем эмиттер частиц для прыжка
       if let levelScene = spriteComponent.node.scene as? LevelScene, let jumpEmitter = SKEmitterNode(fileNamed: "jump.sks") {
         jumpEmitter.targetNode = levelScene

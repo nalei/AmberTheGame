@@ -44,15 +44,13 @@ class Skeleton: Enemy, RulesComponentDelegate {
       decel: 80
     ))
     
-    addComponent(AnimationComponent(
-      idle: SKTexture(imageNamed: "skeleton-idle"),
-      run: SKAction(named: "skeleton-run"),
-      jumpUp: nil,
-      jumpMiddle: nil,
-      jumpDown: nil,
-      hit: SKAction(named: "skeleton-attack"),
-      damage: SKAction(named: "skeleton-damage")
-    ))
+    let animationComponent = AnimationComponent(states: [
+      IdleState(entity: self, idleAnimation: SKTexture(imageNamed: "skeleton-idle")),
+      WalkingState(entity: self, walkingAnimation: SKAction(named: "skeleton-run")),
+      HitState(entity: self, hitAnimation: SKAction(named: "skeleton-attack")),
+      DamageState(entity: self, damageAnimation: SKAction(named: "skeleton-damage"))
+    ])
+    addComponent(animationComponent)
     
     let healthComponent = HealthComponent(hp: 30)
     healthComponent.hitBox.position = CGPoint(x: 90, y: 40)

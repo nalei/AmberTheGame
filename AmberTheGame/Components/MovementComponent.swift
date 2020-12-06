@@ -72,7 +72,7 @@ class MovementComponent : GKComponent {
     if onGround {
       physicsComponent.physicsBody.applyImpulse(CGVector(dx: 0.0, dy: maxJump))
       if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-        animationComponent.stateMachine?.enter(JumpingState.self)
+        animationComponent.stateMachine.enter(JumpingState.self)
       }
       onGround = false
     }
@@ -114,20 +114,20 @@ class MovementComponent : GKComponent {
     // Анимация
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
       
-      if animationComponent.stateMachine?.currentState is HitState ||
-          animationComponent.stateMachine?.currentState is DamageState {
+      if animationComponent.stateMachine.currentState is HitState ||
+          animationComponent.stateMachine.currentState is DamageState {
         
         // Не меняем состояние если объект находится в `HitState` или `DamageState`
 
       } else {
         if onGround {
           if moveButtonPressed {
-            animationComponent.stateMachine?.enter(WalkingState.self)
+            animationComponent.stateMachine.enter(WalkingState.self)
           } else {
-            animationComponent.stateMachine?.enter(IdleState.self)
+            animationComponent.stateMachine.enter(IdleState.self)
           }
         } else if physicsComponent.physicsBody.velocity.dy < -100 {
-          animationComponent.stateMachine?.enter(FallingState.self)
+          animationComponent.stateMachine.enter(FallingState.self)
         }
       }
     }

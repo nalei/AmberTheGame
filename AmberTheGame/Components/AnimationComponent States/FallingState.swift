@@ -2,26 +2,41 @@ import GameplayKit
 import SpriteKit
 
 class FallingState : GKState {
-  unowned var animationComponent: AnimationComponent
+  // MARK: - Properties
   
-  required init(animationComponent: AnimationComponent) {
-    self.animationComponent = animationComponent
+  unowned var entity: GKEntity
+  
+  var jumpMiddleAnimation: SKTexture
+  var jumpDownAnimation: SKTexture
+  
+  /// Вычисляемое свойство указывающее на `SpriteComponent`.
+  var spriteComponent: SpriteComponent {
+    guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
+      fatalError("A FallingState's entity must have an SpriteComponent.")
+    }
+    return spriteComponent
   }
+  
+  // MARK: - Initializers
+  
+  required init(entity: GKEntity, jumpMiddleAnimation: SKTexture?, jumpDownAnimation: SKTexture?) {
+    self.entity = entity
+    self.jumpMiddleAnimation = jumpMiddleAnimation! // !!!
+    self.jumpDownAnimation = jumpDownAnimation! // !!!
+  }
+  
   
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
-    
-    spriteComponent.node.texture = animationComponent.jumpMiddle
+    spriteComponent.node.texture = jumpMiddleAnimation
   }
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else { return }
-
+    
     if (spriteComponent.node.physicsBody?.velocity.dy)! < -400 {
-      spriteComponent.node.texture = animationComponent.jumpDown
+      spriteComponent.node.texture = jumpDownAnimation
     }
   }
   

@@ -24,7 +24,7 @@ class PhysicsComponent: GKComponent {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func isContactByGround() -> Bool {
+  public func isContactByGround() -> Bool {
     for body in physicsBody.allContactedBodies() {
       if body.categoryBitMask == ColliderType.GROUND.rawValue {
         return true

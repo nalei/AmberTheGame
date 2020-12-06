@@ -61,15 +61,15 @@ class Amber: GKEntity {
     
     addComponent(MovementComponent())
     
-    addComponent(AnimationComponent(
-      idle: SKTexture(imageNamed: "amber-idle"),
-      run: SKAction(named: "amber-run"),
-      jumpUp: SKTexture(imageNamed: "amber-jump-up"),
-      jumpMiddle: SKTexture(imageNamed: "amber-jump-middle"),
-      jumpDown: SKTexture(imageNamed: "amber-jump-down"),
-      hit: SKAction(named: "amber-hit"),
-      damage: SKAction(named: "amber-damage")
-    ))
+    let animationComponent = AnimationComponent(states: [
+      IdleState(entity: self, idleAnimation: SKTexture(imageNamed: "amber-idle")),
+      WalkingState(entity: self, walkingAnimation: SKAction(named: "amber-run")),
+      JumpingState(entity: self, jumpUpAnimation: SKTexture(imageNamed: "amber-jump-up")),
+      FallingState(entity: self, jumpMiddleAnimation: SKTexture(imageNamed: "amber-jump-middle"), jumpDownAnimation: SKTexture(imageNamed: "amber-jump-down")),
+      HitState(entity: self, hitAnimation: SKAction(named: "amber-hit")),
+      DamageState(entity: self, damageAnimation: SKAction(named: "amber-damage"))
+    ])
+    addComponent(animationComponent)
     
     let healthComponent = HealthComponent(hp: 3)
     healthComponent.hitBox.position = CGPoint(x: 60, y: 30)

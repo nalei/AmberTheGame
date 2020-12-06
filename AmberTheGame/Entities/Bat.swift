@@ -35,15 +35,12 @@ class Bat: Enemy, RulesComponentDelegate {
     spriteComponent.node.addChild(healthComponent.hurtBox)
     addComponent(healthComponent)
     
-    addComponent(AnimationComponent(
-      idle: SKTexture(imageNamed: "bat-idle"),
-      run: SKAction(named: "bat-fly"),
-      jumpUp: nil,
-      jumpMiddle: nil,
-      jumpDown: nil,
-      hit: nil,
-      damage: SKAction(named: "bat-died")
-    ))
+    let animationComponent = AnimationComponent(states: [
+      IdleState(entity: self, idleAnimation: SKTexture(imageNamed: "bat-idle")),
+      WalkingState(entity: self, walkingAnimation: SKAction(named: "bat-fly")),
+      DamageState(entity: self, damageAnimation: SKAction(named: "bat-died"))
+    ])
+    addComponent(animationComponent)
     
     let intelligenceComponent = IntelligenceComponent(states: [
       BatSleepState(entity: self),
@@ -111,7 +108,7 @@ class Bat: Enemy, RulesComponentDelegate {
       }
       
       if let animationComponent = component(ofType: AnimationComponent.self) {
-        animationComponent.stateMachine?.enter(WalkingState.self)
+        animationComponent.stateMachine.enter(WalkingState.self)
       }
     } else {
       /*

@@ -66,19 +66,21 @@ class HealthComponent: GKComponent {
   
   public func hit() {
     if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
-      animationComponent.stateMachine?.enter(HitState.self)
+      animationComponent.stateMachine.enter(HitState.self)
     }
   }
+  
   public func damage() {
-    hp -= 1
+    self.stateMachine.enter(HealthDamageState.self)
     
-    if hp == 0 {
-      death()
-    }
-    
-    // Откидываем `Amber` назад, при дамаге
-    if entity is Amber {
-      bounceBack(force: 200)
+    // Анимация
+    if let animationComponent = entity?.component(ofType: AnimationComponent.self) {
+      
+      if entity is Skeleton && animationComponent.stateMachine.currentState is HitState {
+        // Не меняем состояние на `damageState` для `Skeleton` если он в состоянии удара
+      } else {
+        animationComponent.stateMachine.enter(DamageState.self)
+      }
     }
   }
   
@@ -104,22 +106,12 @@ class HealthComponent: GKComponent {
           
           // Damage
           if let enemyHealthComponent = enemy.component(ofType: HealthComponent.self) {
-            enemyHealthComponent.stateMachine.enter(HealthDamageState.self)
-          }
-          
-          // Анимация
-          if let enemyAnimationComponent = enemy.component(ofType: AnimationComponent.self) {
-            
-            if enemy is Skeleton && enemyAnimationComponent.stateMachine?.currentState is HitState {
-              // Не меняем состояние на `damageState` для `Skeleton` если он в состоянии удара
-            } else {
-              enemyAnimationComponent.stateMachine?.enter(DamageState.self)
-            }
+            enemyHealthComponent.damage()
           }
           
           // Откидываем `Amber` назад, при попадании по врагу
           if entity is Amber {
-            bounceBack(force: 20)
+            spriteComponent.bounceBack(force: 20)
           }
         }
       }
@@ -129,15 +121,9 @@ class HealthComponent: GKComponent {
     if let foregroundMap = levelScene.childNode(withName: "ForegroundMap") as? SKTileMapNode {
       foregroundMap["Ground"].forEach { node in
         if self.hitBox.intersects(node) {
-          bounceBack(force: 10)
+          spriteComponent.bounceBack(force: 10)
         }
       }
-    }
-  }
-  
-  private func bounceBack(force: CGFloat) {
-    if let physicsComponent = entity?.component(ofType: PhysicsComponent.self) {
-      physicsComponent.physicsBody.applyImpulse(CGVector(dx: (-spriteComponent.node.xScale * force), dy: 0.0))
     }
   }
 }

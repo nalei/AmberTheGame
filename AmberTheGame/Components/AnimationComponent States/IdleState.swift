@@ -2,26 +2,37 @@ import SpriteKit
 import GameplayKit
 
 class IdleState: GKState {
-  unowned var animationComponent: AnimationComponent
+  // MARK: - Properties
+  
+  unowned var entity: GKEntity
+  
+  var idleAnimation: SKTexture
   
   var totalSeconds:Int = 0
   
   /// Вычисляемое свойство указывающее на `SpriteComponent`.
   var spriteComponent: SpriteComponent {
-    guard let spriteComponent = animationComponent.entity?.component(ofType: SpriteComponent.self) else {
+    guard let spriteComponent = entity.component(ofType: SpriteComponent.self) else {
       fatalError("A IdleState's entity must have an SpriteComponent.")
     }
     return spriteComponent
   }
   
-  required init(animationComponent: AnimationComponent) {
-    self.animationComponent = animationComponent
+  
+  // MARK: - Initializers
+  
+  required init(entity: GKEntity, idleAnimation: SKTexture?) {
+    self.entity = entity
+    self.idleAnimation = idleAnimation!
   }
+  
+  
+  // MARK: - GKState Life Cycle
   
   override func didEnter(from previousState: GKState?) {
     super.didEnter(from: previousState)
     
-    spriteComponent.node.texture = animationComponent.idle
+    spriteComponent.node.texture = idleAnimation
     
     //    let pulsed = SKAction.sequence([
     //      SKAction.fadeAlpha(to: 1, duration: 0.1),
@@ -40,7 +51,7 @@ class IdleState: GKState {
     super.update(deltaTime: seconds)
     
     // `Amber` моргает
-    if animationComponent.entity is Amber {
+    if entity is Amber {
       if totalSeconds == 5 {
         spriteComponent.node.run(SKAction(named: "amber-blinks")!, withKey: "blinks")
         totalSeconds = 0
@@ -64,6 +75,9 @@ class IdleState: GKState {
       return false
     }
   }
+  
+  
+  // MARK: - Convenience
   
   private func startTimer() {
     let wait: SKAction = SKAction.wait(forDuration: 1)
