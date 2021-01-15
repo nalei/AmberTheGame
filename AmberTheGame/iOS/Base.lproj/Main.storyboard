@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Game View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="AmberTheGame" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qMC-Yp-oob"/>
+                        <viewControllerLayoutGuide type="bottom" id="XU9-QJ-VcH"/>
+                    </layoutGuides>
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="amber-logo" translatesAutoresizingMaskIntoConstraints="NO" id="3iK-Cm-she">
+                                <rect key="frame" x="350" y="181" width="196" height="52"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.08749931306" green="0.026833588259999999" blue="0.1405134499" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstItem="3iK-Cm-she" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX" id="1YD-Nu-Ilt"/>
+                            <constraint firstItem="3iK-Cm-she" firstAttribute="centerY" secondItem="3se-qz-xqx" secondAttribute="centerY" id="5jS-hI-YUO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logoView" destination="3iK-Cm-she" id="FDW-4f-8af"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="123"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="amber-logo" width="196" height="52"/>
+    </resources>
+</document>

@@ -1,11 +1,9 @@
+/*
+ Набор параметров, используемый для категоризации физических тел в физическом мире SpriteKit.
+ */
+
 import SpriteKit
 import GameplayKit
-
-protocol ContactNotifiableType {
-  func contactWithEntityDidBegin(_ entity: GKEntity)
-  
-  func contactWithEntityDidEnd(_ entity: GKEntity)
-}
 
 struct ColliderType: OptionSet, Hashable {
   enum Direction {
@@ -46,7 +44,7 @@ struct ColliderType: OptionSet, Hashable {
     let mask = ColliderType.definedCollisions[self]?.reduce(ColliderType()) { initial, colliderType in
       return initial.union(colliderType)
     }
-
+    
     // Provide the rawValue of the resulting mask or 0 (so the object doesn't collide with anything).
     return mask?.rawValue ?? 0
   }
@@ -57,7 +55,7 @@ struct ColliderType: OptionSet, Hashable {
     let mask = ColliderType.requestedContactNotifications[self]?.reduce(ColliderType()) { initial, colliderType in
       return initial.union(colliderType)
     }
-
+    
     // Provide the rawValue of the resulting mask or 0 (so the object doesn't need contact callbacks).
     return mask?.rawValue ?? 0
   }

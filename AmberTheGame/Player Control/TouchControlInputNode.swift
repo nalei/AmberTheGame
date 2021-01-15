@@ -11,16 +11,16 @@ class TouchControlInputNode: SKSpriteNode {
   var alphaUnpressed:CGFloat = 0.8
   var alphaPressed:CGFloat   = 1
   
-  var allButtons = [ButtonNode]()
-  var pressedButtons = Set<ButtonNode>()
+  var allButtons = [TouchButtonNode]()
+  var pressedButtons = Set<TouchButtonNode>()
   
   init(frame: CGRect) {
     super.init(texture: nil, color: UIColor.clear, size: frame.size)
     
-    let buttonDirLeft  = ButtonNode(iconName: "shevron-arrow", color: .clear)
-    let buttonDirRight = ButtonNode(iconName: "shevron-arrow", color: .clear)
-    let buttonJump     = ButtonNode(iconName: "shevron-arrow", color: .clear)
-    let buttonHit      = ButtonNode(iconName: "shevron-cross", color: .clear)
+    let buttonDirLeft  = TouchButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonDirRight = TouchButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonJump     = TouchButtonNode(iconName: "shevron-arrow", color: .clear)
+    let buttonHit      = TouchButtonNode(iconName: "shevron-cross", color: .clear)
     
     addButton(button: buttonDirLeft,
               position: CGPoint(
@@ -57,7 +57,7 @@ class TouchControlInputNode: SKSpriteNode {
     fatalError("init(coder:) has not been implemented")
   }
   
-  private func addButton(button: ButtonNode, position: CGPoint, rotation: CGFloat, name: String) {
+  private func addButton(button: TouchButtonNode, position: CGPoint, rotation: CGFloat, name: String) {
     button.size = CGSize(width: 150, height: 150)
     button.position = position
     button.name = name
@@ -71,7 +71,7 @@ class TouchControlInputNode: SKSpriteNode {
   
   // MARK: - UIResponder
   
-  private func buttonPressed(_ button: ButtonNode) {
+  private func buttonPressed(_ button: TouchButtonNode) {
     let insertionResult = pressedButtons.insert(button)
     if insertionResult.inserted {
       button.alpha = alphaPressed
@@ -82,7 +82,7 @@ class TouchControlInputNode: SKSpriteNode {
     }
   }
   
- private func buttonUnpressed(_ button: ButtonNode) {
+ private func buttonUnpressed(_ button: TouchButtonNode) {
     if let _ = pressedButtons.remove(button) {
       button.alpha = alphaUnpressed
       

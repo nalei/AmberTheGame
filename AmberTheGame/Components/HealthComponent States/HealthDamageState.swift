@@ -6,7 +6,7 @@ class HealthDamageState: GKState {
   
   unowned var healthComponent: HealthComponent
   
-  /// Время, в течение которого объект находился в состоянии `DamagedState`.
+  /// Время, в течение которого объект находился в состоянии `HealthDamageState`.
   var elapsedTime: TimeInterval = 0.0
   
   
@@ -32,7 +32,7 @@ class HealthDamageState: GKState {
       healthComponent.death()
     }
     
-    // Прерываем управление персонажем, пока он находится в `DamageState`.
+    // Прерываем управление персонажем, пока он находится в `HealthDamageState`.
     if let inputComponent = healthComponent.entity?.component(ofType: InputComponent.self) {
       inputComponent.isEnabled = false;
     }
@@ -51,7 +51,7 @@ class HealthDamageState: GKState {
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)
     
-    // Обновляем счетчик времени в состоянии `DamagedState`.
+    // Обновляем счетчик времени в состоянии `HealthDamageState`.
     elapsedTime += seconds
     
     if elapsedTime >= GameplayConfiguration.Amber.damageStateDuration {

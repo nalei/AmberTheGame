@@ -4,12 +4,12 @@ import SpriteKit
 extension LevelScene {
   // MARK: - Properties
   
-  /// Уведомления платформы о том, что приложение становится неактивным.
+  /// Уведомления платформу о том, что приложение становится неактивным.
   private var pauseNotificationNames: [NSNotification.Name] {
     return [UIApplication.willResignActiveNotification]
   }
   
-  /// Уведомления платформы о том, что приложение становится активным.
+  /// Уведомления платформу о том, что приложение становится активным.
   private var activeNotificationNames: [NSNotification.Name] {
     return [UIApplication.didBecomeActiveNotification]
   }

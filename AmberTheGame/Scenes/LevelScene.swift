@@ -1,7 +1,7 @@
 import SpriteKit
 import GameplayKit
 
-class LevelScene: SKScene {
+class LevelScene: BaseScene {
   // MARK: - Properties
   
   var entities = [GKEntity]()
@@ -132,6 +132,13 @@ class LevelScene: SKScene {
     polygonObstacles += SKNode.obstacles(fromNodeBounds: obstacleSpriteNodes)
     graph.addObstacles(polygonObstacles)
     
+    // !!!!!!!!
+    for agentComponent in entityManager.getAllAgents() {
+      let wait = SKAction.wait(forDuration: TimeInterval(0.0))
+      let startAgent = SKAction.run({agentComponent.startAgent()})
+      self.run(SKAction.sequence([wait, startAgent]))
+    }
+    
     #if DEBUG
     self.addChild(graphLayer)
     graphLayer.zPosition = 1
@@ -190,6 +197,7 @@ extension LevelScene: SKPhysicsContactDelegate {
       ContactNotifiableType.contactWithEntityDidBegin(otherEntity)
     }
     
+    // Любой объект, касающийся нижней стороной земли и имеющий `MovementComponent` получает флаг onGround
     if contact.bodyA.categoryBitMask == ColliderType.GROUND.rawValue || contact.bodyB.categoryBitMask == ColliderType.GROUND.rawValue {
       if collisionDirection(contact) == .bottom {
         if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {

@@ -4,6 +4,9 @@ import GameplayKit
 class Amber: GKEntity {
   // MARK: - Properties
   
+  /// Используется для эффекта получения дамага.
+  static var blinckShader: SKShader!
+  
   /// Агент, используемый как цель при поиске пути.
   let agent: GKAgent2D
   

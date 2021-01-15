@@ -24,4 +24,12 @@ struct GameplayConfiguration {
     /// The buffer radius (in points) to add to polygon obstacles when calculating agent pathfinding.
     static let pathfindingGraphBufferRadius: Float = 40
   }
+  
+  struct SceneManager {
+    /// The duration of a transition between loaded scenes.
+    static let transitionDuration: TimeInterval = 2.0
+    
+    /// The duration of a transition from the progress scene to its loaded scene.
+    static let progressSceneTransitionDuration: TimeInterval = 0.5
+  }
 }
