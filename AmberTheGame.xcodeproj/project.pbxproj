@@ -245,13 +245,6 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		1E845EF52585357A0073BD71 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		1E845EF62585380E0073BD71 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,7 +324,6 @@
 				1EC1660B23CA2E2F0055452D /* GameViewController.swift */,
 				1EC1660D23CA2E2F0055452D /* Main.storyboard */,
 				1EC1661223CA2E310055452D /* LaunchScreen.storyboard */,
-				1E845EF52585357A0073BD71 /* Supporting Files */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
