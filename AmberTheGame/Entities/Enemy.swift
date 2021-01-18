@@ -131,7 +131,7 @@ class Enemy: GKEntity, GKAgentDelegate, ContactNotifiableType {
     ]
     ColliderType.requestedContactNotifications[.ENEMY] = [
       .GROUND,
-      .PLAYER
+      .CHARACTER
     ]
   }
   

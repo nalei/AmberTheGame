@@ -53,7 +53,7 @@ class Amber: GKEntity {
     
     let physicsComponent = PhysicsComponent(
       physicsBody: SKPhysicsBody(rectangleOf: CGSize(width: 30 , height: 52), center: CGPoint(x: 0, y: 29)),
-      colliderType: .PLAYER
+      colliderType: .CHARACTER
     )
     physicsComponent.physicsBody.fieldBitMask = 0
     physicsComponent.physicsBody.mass = 0.15
@@ -91,10 +91,10 @@ class Amber: GKEntity {
   // MARK: - ResourceLoadableType
   
   static func loadResources() {
-    ColliderType.definedCollisions[.PLAYER] = [
+    ColliderType.definedCollisions[.CHARACTER] = [
       .GROUND
     ]
-    ColliderType.requestedContactNotifications[.PLAYER] = [
+    ColliderType.requestedContactNotifications[.CHARACTER] = [
       .GROUND,
       .ENEMY
     ]

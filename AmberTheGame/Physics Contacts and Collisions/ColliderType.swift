@@ -26,7 +26,7 @@ struct ColliderType: OptionSet, Hashable {
   
   // MARK: - Options
   
-  static var PLAYER: ColliderType { return self.init(rawValue: 1 << 0) } // bitmask is ...00000001
+  static var CHARACTER: ColliderType { return self.init(rawValue: 1 << 0) } // bitmask is ...00000001
   static var GROUND: ColliderType { return self.init(rawValue: 1 << 1) } // bitmask is ...00000010
   static var ENEMY:  ColliderType { return self.init(rawValue: 1 << 2) } // bitmask is ...00000100
   

@@ -66,6 +66,7 @@
 		1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EC1661223CA2E310055452D /* LaunchScreen.storyboard */; };
 		1EC1662223CB20670055452D /* TouchControlInputNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662123CB20670055452D /* TouchControlInputNode.swift */; };
 		1EC1662623CB78920055452D /* TouchButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC1662523CB78920055452D /* TouchButtonNode.swift */; };
+		1EC78B9725B1AEC10025A564 /* LevelScene+Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC78B9625B1AEC10025A564 /* LevelScene+Physics.swift */; };
 		1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF968F24839FD4009A3765 /* AgentComponent.swift */; };
 		1EDF96932483DC64009A3765 /* TileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EDF96922483DC64009A3765 /* TileSet.sks */; };
 		1EEDA68A250ED88A002B43C2 /* SkeletonMoveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDA689250ED88A002B43C2 /* SkeletonMoveState.swift */; };
@@ -141,6 +142,7 @@
 		1EC1661523CA2E310055452D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1EC1662123CB20670055452D /* TouchControlInputNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchControlInputNode.swift; sourceTree = "<group>"; };
 		1EC1662523CB78920055452D /* TouchButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchButtonNode.swift; sourceTree = "<group>"; };
+		1EC78B9625B1AEC10025A564 /* LevelScene+Physics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelScene+Physics.swift"; sourceTree = "<group>"; };
 		1EDF968F24839FD4009A3765 /* AgentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentComponent.swift; sourceTree = "<group>"; };
 		1EDF96922483DC64009A3765 /* TileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TileSet.sks; sourceTree = "<group>"; };
 		1EEDA689250ED88A002B43C2 /* SkeletonMoveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonMoveState.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				1E79A38625A9C0140032E306 /* BaseScene+Buttons.swift */,
 				1EF87C3225A10FA80066D3DD /* HomeEndScene.swift */,
 				1EC1660923CA2E2F0055452D /* LevelScene.swift */,
+				1EC78B9625B1AEC10025A564 /* LevelScene+Physics.swift */,
 				1E27A21324FA59B7005A2AFF /* LevelScene+Pause.swift */,
 				1E64B54224798B9500883809 /* LevelScene+Debug.swift */,
 			);
@@ -537,6 +540,7 @@
 				1E6C065524BCD87B0084359E /* FuzzyEnemyRule.swift in Sources */,
 				1E2C039F2571608C00B5F341 /* BaseScene.swift in Sources */,
 				1EB7B4AF2416237800F0FA54 /* ParallaxComponent.swift in Sources */,
+				1EC78B9725B1AEC10025A564 /* LevelScene+Physics.swift in Sources */,
 				1EB867E724A735E80016ABDB /* TileMapNodeExtensions.swift in Sources */,
 				1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */,
 				1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */,

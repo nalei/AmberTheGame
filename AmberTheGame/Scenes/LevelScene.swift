@@ -4,8 +4,8 @@ import GameplayKit
 class LevelScene: BaseScene {
   // MARK: - Properties
   
-  var entities = [GKEntity]()
-  var graphs = [String : GKGraph]()
+//  var entities = [GKEntity]()
+//  var graphs = [String : GKGraph]()
   
   /// Игровой персонаж, везде далее `Amber`.
   var character: Amber?
@@ -29,7 +29,6 @@ class LevelScene: BaseScene {
       debugDrawingEnabledDidChange()
     }
   }
-  
   var graphLayer = SKNode()
   
   
@@ -46,14 +45,18 @@ class LevelScene: BaseScene {
   override func didMove(to view: SKView) {
     super.didMove(to: view)
     
+    // Регистрируемся для получения уведомлений о том, что приложение становится неактивным.
     registerForPauseNotifications()
     
+    // Регистрируемся для получения уведомлений о том, что приложение становится активным.
     registerForActiveNotifications()
     
     self.lastUpdateTimeInterval = 0
     
+    // Физические контакты будет обрабатывать `LevelScene`.
     self.physicsWorld.contactDelegate = self
     
+    // Инициализируем `EntityManager`.
     entityManager = EntityManager(scene: self)
     
     // Функция для поиска местоположений узлов по набору имен узлов.
@@ -85,12 +88,13 @@ class LevelScene: BaseScene {
       let skeleton = Skeleton()
       skeleton.spriteComponent.node.position = node.position
       skeleton.spriteComponent.node.xScale = node.xScale
-      if let movementComponent = skeleton.component(ofType: MovementComponent.self) {
-        movementComponent.facing = MovementComponent.FacingType(rawValue: node.xScale)!
-      }
       skeleton.spriteComponent.node.name = node.name
       self.entityManager.add(skeleton)
       node.removeFromParent()
+      
+      if let movementComponent = skeleton.component(ofType: MovementComponent.self) {
+        movementComponent.facing = MovementComponent.FacingType(rawValue: node.xScale)!
+      }
       
       // Если у объекта есть `IntelligenceComponent`, входим в его начальное состояние.
       if let intelligenceComponent = skeleton.component(ofType: IntelligenceComponent.self) {
@@ -128,16 +132,16 @@ class LevelScene: BaseScene {
       self.camera!.addChild(bokehEmitter)
     }
     
-    // Добавляем препятствия в граф поиска пути
-    polygonObstacles += SKNode.obstacles(fromNodeBounds: obstacleSpriteNodes)
-    graph.addObstacles(polygonObstacles)
-    
     // !!!!!!!!
     for agentComponent in entityManager.getAllAgents() {
       let wait = SKAction.wait(forDuration: TimeInterval(0.0))
       let startAgent = SKAction.run({agentComponent.startAgent()})
       self.run(SKAction.sequence([wait, startAgent]))
     }
+    
+    // Добавляем препятствия в граф поиска пути
+    polygonObstacles += SKNode.obstacles(fromNodeBounds: obstacleSpriteNodes)
+    graph.addObstacles(polygonObstacles)
     
     #if DEBUG
     self.addChild(graphLayer)
@@ -185,79 +189,24 @@ class LevelScene: BaseScene {
      */
     character?.updateAgentPositionToMatchNodePosition()
   }
-}
-
-
-//MARK: - Physics
-
-extension LevelScene: SKPhysicsContactDelegate {
   
-  func didBegin(_ contact: SKPhysicsContact) {
-    handleContact(contact: contact) { (ContactNotifiableType: ContactNotifiableType, otherEntity: GKEntity) in
-      ContactNotifiableType.contactWithEntityDidBegin(otherEntity)
-    }
-    
-    // Любой объект, касающийся нижней стороной земли и имеющий `MovementComponent` получает флаг onGround
-    if contact.bodyA.categoryBitMask == ColliderType.GROUND.rawValue || contact.bodyB.categoryBitMask == ColliderType.GROUND.rawValue {
-      if collisionDirection(contact) == .bottom {
-        if let movementComponent = contact.bodyA.node?.entity?.component(ofType: MovementComponent.self) {
-          movementComponent.onGround = true
-        } else if let movementComponent = contact.bodyB.node?.entity?.component(ofType: MovementComponent.self) {
-          movementComponent.onGround = true
-        }
-      }
-    }
-  }
+  // MARK: - Convenience
   
-  func didEnd(_ contact: SKPhysicsContact) {
-    handleContact(contact: contact) { (ContactNotifiableType: ContactNotifiableType, otherEntity: GKEntity) in
-      ContactNotifiableType.contactWithEntityDidEnd(otherEntity)
-    }
-  }
-  
-  private func handleContact(contact: SKPhysicsContact, contactCallback: (ContactNotifiableType, GKEntity) -> Void) {
-    // Получаем `ColliderType` для каждого тела, которое учавствует в столкновении.
-    let colliderTypeA = ColliderType(rawValue: contact.bodyA.categoryBitMask)
-    let colliderTypeB = ColliderType(rawValue: contact.bodyB.categoryBitMask)
+  func addEntity(entity: GKEntity, spriteInScene: SKNode) {
+    let entity = Skeleton()
+    entity.spriteComponent.node.position = spriteInScene.position
+    entity.spriteComponent.node.xScale = spriteInScene.xScale
+    entity.spriteComponent.node.name = spriteInScene.name
+    self.entityManager.add(entity)
+    spriteInScene.removeFromParent()
     
-    // Определяем, какой `ColliderType` должен быть уведомлен о контакте.
-    let aWantsCallback = colliderTypeA.notifyOnContactWith(colliderTypeB)
-    let bWantsCallback = colliderTypeB.notifyOnContactWith(colliderTypeA)
-    
-    
-    // Убеждаемся, что хотя бы одна из сущностей хочет обработать этот контакт.
-    // assert(aWantsCallback || bWantsCallback, "Unhandled physics contact - A = \(colliderTypeA), B = \(colliderTypeB)")
-    
-    let entityA = contact.bodyA.node?.entity
-    let entityB = contact.bodyB.node?.entity
-    
-    /*
-     Если `entityA` является уведомляемым типом, а `colliderTypeA` указывает, что он должен быть уведомлен
-     о контакте с `colliderTypeB`, вызываем колбэк `entityA`.
-     */
-    if let notifiableEntity = entityA as? ContactNotifiableType, let otherEntity = entityB, aWantsCallback {
-      contactCallback(notifiableEntity, otherEntity)
+    if let movementComponent = entity.component(ofType: MovementComponent.self) {
+      movementComponent.facing = MovementComponent.FacingType(rawValue: spriteInScene.xScale)!
     }
     
-    /*
-     Если `entityB` является уведомляемым типом, а `scolliderTypeB` указывает, что он должен быть уведомлен
-     о контакте с `colliderTypeA`, вызываем колбэк `entityB`.
-     */
-    if let notifiableEntity = entityB as? ContactNotifiableType, let otherEntity = entityA, bWantsCallback {
-      contactCallback(notifiableEntity, otherEntity)
+    // Если у объекта есть `IntelligenceComponent`, входим в его начальное состояние.
+    if let intelligenceComponent = entity.component(ofType: IntelligenceComponent.self) {
+      intelligenceComponent.enterInitialState()
     }
-  }
-  
-  private func collisionDirection(_ contact: SKPhysicsContact) -> ColliderType.Direction {
-    if contact.contactNormal.dy > 0.9 && contact.contactNormal.dy <= 1 {
-      return .bottom
-    }
-    if contact.contactNormal.dx == 1 {
-      return .left
-    }
-    if contact.contactNormal.dx == -1 {
-      return .right
-    }
-    return .none
   }
 }
