@@ -4,8 +4,11 @@ import GameplayKit
 class Amber: GKEntity {
   // MARK: - Properties
   
-  /// Используется для эффекта получения дамага.
+  /// Используется для шейдер-эффекта получения дамага.
   static var blinckShader: SKShader!
+  
+  /// Используется для шейдер-эффект телепорта, когда `Amber` впервые появляется на уровне.
+  static var teleportShader: SKShader!
   
   /// Агент, используемый как цель при поиске пути.
   let agent: GKAgent2D
@@ -91,6 +94,10 @@ class Amber: GKEntity {
   // MARK: - ResourceLoadableType
   
   static func loadResources() {
+    blinckShader = SKShader(fileNamed: "WhiteColor.fsh")
+    teleportShader = SKShader(fileNamed: "Teleport.fsh")
+    teleportShader.addUniform(SKUniform(name: "u_duration", float: Float(GameplayConfiguration.Amber.appearDuration)))
+    
     ColliderType.definedCollisions[.CHARACTER] = [
       .GROUND
     ]

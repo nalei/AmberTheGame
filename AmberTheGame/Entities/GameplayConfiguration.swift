@@ -12,6 +12,9 @@ struct GameplayConfiguration {
     
     /// Период времени, в течение которого `Amber` остается в состоянии `DamageState`.
     static let damageStateDuration: TimeInterval = 0.4
+    
+    /// Время, необходимое `Amber`, чтобы появиться на уровне, прежде чем игрок станет его контролировать.
+    static let appearDuration: TimeInterval = 0.50
   }
   
   struct Enemy {

@@ -4,9 +4,6 @@ import GameplayKit
 class LevelScene: BaseScene {
   // MARK: - Properties
   
-//  var entities = [GKEntity]()
-//  var graphs = [String : GKGraph]()
-  
   /// Игровой персонаж, везде далее `Amber`.
   var character: Amber?
   
@@ -76,45 +73,27 @@ class LevelScene: BaseScene {
     if let amberSprite = childNode(withName: "Amber") as? SKSpriteNode {
       Amber.loadResources()
       Enemy.loadResources()
+      
       let amber = Amber(camera: self.camera, scene: self)
       self.character = amber
       amber.spriteComponent.node.position = amberSprite.position
       amber.spriteComponent.node.name = amberSprite.name
       entityManager.add(amber)
       amberSprite.removeFromParent()
+      
+      // Add an `SKShader` to the node to render the "teleport" effect.
+      amber.spriteComponent.node.shader = Amber.teleportShader
     }
     
     self["Skeleton"].forEach { node in
       let skeleton = Skeleton()
-      skeleton.spriteComponent.node.position = node.position
-      skeleton.spriteComponent.node.xScale = node.xScale
-      skeleton.spriteComponent.node.name = node.name
-      self.entityManager.add(skeleton)
-      node.removeFromParent()
-      
-      if let movementComponent = skeleton.component(ofType: MovementComponent.self) {
-        movementComponent.facing = MovementComponent.FacingType(rawValue: node.xScale)!
-      }
-      
-      // Если у объекта есть `IntelligenceComponent`, входим в его начальное состояние.
-      if let intelligenceComponent = skeleton.component(ofType: IntelligenceComponent.self) {
-        intelligenceComponent.enterInitialState()
-      }
+      configEnemy(entity: skeleton, spriteInScene: node)
     }
     
     self["Bat"].forEach { node in
       let patrolPoints = nodePointsFromNodeNames(nodeNames: ["bat_point01", "bat_point02", "bat_point03", "bat_point04"])
-      
       let bat = Bat(patrolPoints: patrolPoints, nestPoint: node.position)
-      bat.spriteComponent.node.name = node.name
-      bat.spriteComponent.node.position = node.position
-      self.entityManager.add(bat)
-      node.removeFromParent()
-      
-      // Если у объекта есть `IntelligenceComponent`, входим в его начальное состояние.
-      if let intelligenceComponent = bat.component(ofType: IntelligenceComponent.self) {
-        intelligenceComponent.enterInitialState()
-      }
+      configEnemy(entity: bat, spriteInScene: node)
     }
     
     self["ParallaxBg"].forEach { node in
@@ -169,7 +148,6 @@ class LevelScene: BaseScene {
   }
   
   override func update(_ currentTime: TimeInterval) {
-    
     // Инициализируем `lastUpdateTime`, если ешё не был инициализирован.
     if (self.lastUpdateTimeInterval == 0) {
       self.lastUpdateTimeInterval = currentTime
@@ -192,14 +170,14 @@ class LevelScene: BaseScene {
   
   // MARK: - Convenience
   
-  func addEntity(entity: GKEntity, spriteInScene: SKNode) {
-    let entity = Skeleton()
+  private func configEnemy(entity: Enemy, spriteInScene: SKNode) {
     entity.spriteComponent.node.position = spriteInScene.position
     entity.spriteComponent.node.xScale = spriteInScene.xScale
     entity.spriteComponent.node.name = spriteInScene.name
     self.entityManager.add(entity)
     spriteInScene.removeFromParent()
     
+    // Если у объекта есть `MovementComponent`, сетапим facing как у спрайта в сцене.
     if let movementComponent = entity.component(ofType: MovementComponent.self) {
       movementComponent.facing = MovementComponent.FacingType(rawValue: spriteInScene.xScale)!
     }

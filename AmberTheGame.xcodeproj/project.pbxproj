@@ -19,6 +19,7 @@
 		1E50353523D63B9F0010B16E /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353423D63B9F0010B16E /* MovementComponent.swift */; };
 		1E50353A23DDA9190010B16E /* IdleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353923DDA9190010B16E /* IdleState.swift */; };
 		1E50353C23DDA92B0010B16E /* WalkingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E50353B23DDA92B0010B16E /* WalkingState.swift */; };
+		1E5A2DAF25B9E3AB002AA292 /* Teleport.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1E5A2DAE25B9E3AB002AA292 /* Teleport.fsh */; };
 		1E5AD00A242738F1002CEE01 /* Goblin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD009242738F1002CEE01 /* Goblin.swift */; };
 		1E5AD00C242763FF002CEE01 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */; };
 		1E5F6DAE247315E000F54A81 /* ParallaxBg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */; };
@@ -69,6 +70,7 @@
 		1EC78B9725B1AEC10025A564 /* LevelScene+Physics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC78B9625B1AEC10025A564 /* LevelScene+Physics.swift */; };
 		1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF968F24839FD4009A3765 /* AgentComponent.swift */; };
 		1EDF96932483DC64009A3765 /* TileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EDF96922483DC64009A3765 /* TileSet.sks */; };
+		1EE59DA625BB3388000F4D54 /* WhiteColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1EE59DA525BB3388000F4D54 /* WhiteColor.fsh */; };
 		1EEDA68A250ED88A002B43C2 /* SkeletonMoveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDA689250ED88A002B43C2 /* SkeletonMoveState.swift */; };
 		1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */; };
 		1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEFBD2123E2240900DE1B08 /* JumpingState.swift */; };
@@ -93,6 +95,7 @@
 		1E50353423D63B9F0010B16E /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
 		1E50353923DDA9190010B16E /* IdleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleState.swift; sourceTree = "<group>"; };
 		1E50353B23DDA92B0010B16E /* WalkingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingState.swift; sourceTree = "<group>"; };
+		1E5A2DAE25B9E3AB002AA292 /* Teleport.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Teleport.fsh; sourceTree = "<group>"; };
 		1E5AD009242738F1002CEE01 /* Goblin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goblin.swift; sourceTree = "<group>"; };
 		1E5AD00B242763FF002CEE01 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
 		1E5F6DAD247315E000F54A81 /* ParallaxBg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxBg.swift; sourceTree = "<group>"; };
@@ -145,6 +148,7 @@
 		1EC78B9625B1AEC10025A564 /* LevelScene+Physics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelScene+Physics.swift"; sourceTree = "<group>"; };
 		1EDF968F24839FD4009A3765 /* AgentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentComponent.swift; sourceTree = "<group>"; };
 		1EDF96922483DC64009A3765 /* TileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TileSet.sks; sourceTree = "<group>"; };
+		1EE59DA525BB3388000F4D54 /* WhiteColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = WhiteColor.fsh; sourceTree = "<group>"; };
 		1EEDA689250ED88A002B43C2 /* SkeletonMoveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonMoveState.swift; sourceTree = "<group>"; };
 		1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Amber.xcassets; sourceTree = "<group>"; };
 		1EEFBD2123E2240900DE1B08 /* JumpingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpingState.swift; sourceTree = "<group>"; };
@@ -167,6 +171,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E076D8325B9E10200038992 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				1EE59DA525BB3388000F4D54 /* WhiteColor.fsh */,
+				1E5A2DAE25B9E3AB002AA292 /* Teleport.fsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
 		1E3DF9E923F7F55100B69080 /* Physics Contacts and Collisions */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,8 +344,10 @@
 		1EC1661F23CB17DF0055452D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				1EC1661023CA2E310055452D /* images.xcassets */,
+				1E076D8325B9E10200038992 /* Shaders */,
 				1E845EF62585380E0073BD71 /* Scenes */,
+				1EBF079D23EEC20F00BB2A80 /* Tiles */,
+				1EC1661023CA2E310055452D /* images.xcassets */,
 				1E6C065824BCD94F0084359E /* ParticleSpriteAtlas.xcassets */,
 				1E6C065024BCD8370084359E /* SavePoint.xcassets */,
 				1EFD7E9924AB8979005113EF /* Skeleton.xcassets */,
@@ -340,7 +355,6 @@
 				1E60B25E242D1F4F00ABB505 /* Goblin.xcassets */,
 				1E99C9CD2469966E00930779 /* Bat.xcassets */,
 				1EC1660723CA2E2F0055452D /* Actions.sks */,
-				1EBF079D23EEC20F00BB2A80 /* Tiles */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -474,6 +488,7 @@
 				1EFD7E9A24AB8979005113EF /* Skeleton.xcassets in Resources */,
 				1E6C066024BCD94F0084359E /* missile.sks in Resources */,
 				1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */,
+				1E5A2DAF25B9E3AB002AA292 /* Teleport.fsh in Resources */,
 				1E845EF8258538BC0073BD71 /* HomeScene.sks in Resources */,
 				1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */,
 				1E92F7B124BCDEAE000A290E /* bokeh.sks in Resources */,
@@ -483,6 +498,7 @@
 				1E6C065F24BCD94F0084359E /* fire.sks in Resources */,
 				1EDF96932483DC64009A3765 /* TileSet.sks in Resources */,
 				1E99C9CE2469966E00930779 /* Bat.xcassets in Resources */,
+				1EE59DA625BB3388000F4D54 /* WhiteColor.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
