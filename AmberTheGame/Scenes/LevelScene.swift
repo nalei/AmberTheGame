@@ -82,7 +82,7 @@ class LevelScene: BaseScene {
       amberSprite.removeFromParent()
       
       // Add an `SKShader` to the node to render the "teleport" effect.
-      amber.spriteComponent.node.shader = Amber.teleportShader
+//      amber.spriteComponent.node.shader = Amber.teleportShader
     }
     
     self["Skeleton"].forEach { node in
@@ -111,7 +111,6 @@ class LevelScene: BaseScene {
       self.camera!.addChild(bokehEmitter)
     }
     
-    // !!!!!!!!
     for agentComponent in entityManager.getAllAgents() {
       let wait = SKAction.wait(forDuration: TimeInterval(0.0))
       let startAgent = SKAction.run({agentComponent.startAgent()})

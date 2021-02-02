@@ -31,17 +31,7 @@ class JumpingState : GKState {
     
     spriteComponent.node.texture = jumpUpAnimation
     
-    // Создаем, запускаем и удаляем эмиттер частиц для прыжка
-    if let levelScene = spriteComponent.node.scene as? LevelScene, let jumpEmitter = SKEmitterNode(fileNamed: "jump.sks") {
-      jumpEmitter.targetNode = levelScene
-      jumpEmitter.particleZPosition = -1
-      spriteComponent.node.addChild(jumpEmitter)
-      
-      let emitterDuration = Double(jumpEmitter.numParticlesToEmit) / Double(jumpEmitter.particleBirthRate) + Double(jumpEmitter.particleLifetime + jumpEmitter.particleLifetimeRange/2)
-      let wait = SKAction.wait(forDuration: TimeInterval(emitterDuration))
-      let remove = SKAction.removeFromParent()
-      jumpEmitter.run(SKAction.sequence([wait, remove]))
-    }
+    spriteComponent.launchJumpParticleEffect()
 
     spriteComponent.squashAndSretch(xScale: 0.7, yScale: 1.4)
   }

@@ -42,7 +42,8 @@ class Amber: GKEntity {
     let lightNode = SKLightNode()
     lightNode.position = CGPoint(
       x: spriteComponent.node.position.x,
-      y: spriteComponent.node.position.y + 30)
+      y: spriteComponent.node.position.y + 30
+    )
     lightNode.categoryBitMask = 1
     lightNode.falloff = 5
     lightNode.lightColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
@@ -95,8 +96,8 @@ class Amber: GKEntity {
   
   static func loadResources() {
     blinckShader = SKShader(fileNamed: "WhiteColor.fsh")
-    teleportShader = SKShader(fileNamed: "Teleport.fsh")
-    teleportShader.addUniform(SKUniform(name: "u_duration", float: Float(GameplayConfiguration.Amber.appearDuration)))
+//    teleportShader = SKShader(fileNamed: "Teleport.fsh")
+//    teleportShader.addUniform(SKUniform(name: "u_duration", float: Float(GameplayConfiguration.Amber.appearDuration)))
     
     ColliderType.definedCollisions[.CHARACTER] = [
       .GROUND

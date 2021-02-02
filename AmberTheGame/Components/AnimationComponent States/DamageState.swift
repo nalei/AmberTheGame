@@ -27,6 +27,7 @@ class DamageState: GKState {
     self.damageAnimation = damageAnimation! // !!!
   }
   
+  
   // MARK: - GKState Life Cycle
   
   override func didEnter(from previousState: GKState?) {
@@ -38,22 +39,14 @@ class DamageState: GKState {
     spriteComponent.node.run(damageAnimation, withKey: "damage")
     
     if entity is Amber {
-      // Создаем, запускаем и удаляем эмиттер частиц для прыжка
-      if let levelScene = spriteComponent.node.scene as? LevelScene, let jumpEmitter = SKEmitterNode(fileNamed: "jump.sks") {
-        jumpEmitter.targetNode = levelScene
-        jumpEmitter.particleZPosition = -1
-        jumpEmitter.position = CGPoint(x: 0, y: 29)
-        spriteComponent.node.addChild(jumpEmitter)
-        
-        let emitterDuration = Double(jumpEmitter.numParticlesToEmit) / Double(jumpEmitter.particleBirthRate) + Double(jumpEmitter.particleLifetime + jumpEmitter.particleLifetimeRange/2)
-        let wait = SKAction.wait(forDuration: TimeInterval(emitterDuration))
-        let remove = SKAction.removeFromParent()
-        jumpEmitter.run(SKAction.sequence([wait, remove]))
-      }
+      spriteComponent.launchJumpParticleEffect()
     }
     
     spriteComponent.squashAndSretch(xScale: 1.3, yScale: 0.7)
   }
+  
+  
+  // MARK: - Actions
   
   override func update(deltaTime seconds: TimeInterval) {
     super.update(deltaTime: seconds)

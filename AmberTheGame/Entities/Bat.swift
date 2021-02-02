@@ -67,7 +67,6 @@ class Bat: Enemy, RulesComponentDelegate {
     addComponent(rulesComponent)
     rulesComponent.delegate = self
     self.nestPoint = nestPoint
-    
   }
   
   required init?(coder aDecoder: NSCoder) {

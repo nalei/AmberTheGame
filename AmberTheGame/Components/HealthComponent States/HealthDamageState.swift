@@ -38,13 +38,12 @@ class HealthDamageState: GKState {
     }
     
     if let spriteComponent = healthComponent.entity?.component(ofType: SpriteComponent.self) {
-      // Анимация: меняет цвет спрайта на белый, в течение 0.15c.
-      spriteComponent.node.run(SKAction.pulsedWhite(node: spriteComponent.node))
-      
       // Откидываем `Amber` назад, при дамаге
-      if healthComponent.entity is Amber {
+      if spriteComponent.entity is Amber {
         spriteComponent.bounceBack(force: 200)
       }
+      
+      spriteComponent.pulsedWhite()
     }
   }
   
