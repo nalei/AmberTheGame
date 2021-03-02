@@ -19,8 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="amber_logo" translatesAutoresizingMaskIntoConstraints="NO" id="3iK-Cm-she">
-                                <rect key="frame" x="350" y="181" width="196" height="52"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="amber-logo" translatesAutoresizingMaskIntoConstraints="NO" id="3iK-Cm-she">
+                                <rect key="frame" x="176.5" y="116.5" width="543" height="181"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.08749931306" green="0.026833588259999999" blue="0.1405134499" alpha="1" colorSpace="deviceRGB"/>
@@ -39,6 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="amber_logo" width="196" height="52"/>
+        <image name="amber-logo" width="543" height="181"/>
     </resources>
 </document>

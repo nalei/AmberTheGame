@@ -52,9 +52,9 @@ class AgentControlledState: GKState {
           
           spriteComponent.node.position = CGPoint(position)
           
-          entity.mandate = .passiveAgent
-          
           stateMachine?.enter(BatSleepState.self)
+          
+          entity.mandate = .passiveAgent
         }
       }
       

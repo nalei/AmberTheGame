@@ -11,7 +11,7 @@
 		1E118C2523D32869002FFE8C /* EntityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E118C2423D32869002FFE8C /* EntityManager.swift */; };
 		1E27A21424FA59B7005A2AFF /* LevelScene+Pause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E27A21324FA59B7005A2AFF /* LevelScene+Pause.swift */; };
 		1E2C039F2571608C00B5F341 /* BaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2C039E2571608C00B5F341 /* BaseScene.swift */; };
-		1E3D41A925C9B5C000E29DBF /* m6x11.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3D41A825C9B5BF00E29DBF /* m6x11.ttf */; };
+		1E3D41AD25C9BA8500E29DBF /* m6x11.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E3D41A825C9B5BF00E29DBF /* m6x11.ttf */; };
 		1E3DF9EB23F7F5B200B69080 /* ColliderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3DF9EA23F7F5B200B69080 /* ColliderType.swift */; };
 		1E406B5625700A7900B3EB7E /* HealthDamageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E406B5525700A7900B3EB7E /* HealthDamageState.swift */; };
 		1E46ACDA2486C62300D3E976 /* GameplayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E46ACD92486C62300D3E976 /* GameplayConfiguration.swift */; };
@@ -494,7 +494,7 @@
 				1E6C065D24BCD94F0084359E /* ParticleSpriteAtlas.xcassets in Resources */,
 				1EC1661123CA2E310055452D /* images.xcassets in Resources */,
 				1EFD7E9A24AB8979005113EF /* Skeleton.xcassets in Resources */,
-				1E3D41A925C9B5C000E29DBF /* m6x11.ttf in Resources */,
+				1E3D41AD25C9BA8500E29DBF /* m6x11.ttf in Resources */,
 				1E6C066024BCD94F0084359E /* missile.sks in Resources */,
 				1EBF079F23EED26800BB2A80 /* Tiles.xcassets in Resources */,
 				1E5A2DAF25B9E3AB002AA292 /* Teleport.fsh in Resources */,

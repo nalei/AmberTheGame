@@ -4,7 +4,12 @@ class AgentComponent: GKAgent2D, GKAgentDelegate {
   
   public func stopAgent() {
     if let entity = entity as? Enemy {
-      entity.agent.delegate = nil
+      switch entity.mandate {
+        case .passiveAgent:
+          return
+        default:
+          entity.agent.delegate = nil
+      }
     }
   }
   
