@@ -48,7 +48,7 @@ class ButtonNode: SKSpriteNode {
       let newScale: CGFloat = isHighlighted ? 0.99 : 1.01
       let scaleAction = SKAction.scale(by: newScale, duration: 0.15)
       
-      // Создайте анимацию наложения цветов, чтобы немного затемнить кнопку, когда она нажата.
+      // Создаем анимацию наложения цветов, чтобы немного затемнить кнопку, когда она нажата.
       let newColorBlendFactor: CGFloat = isHighlighted ? 1.0 : 0.0
       let colorBlendAction = SKAction.colorize(withColorBlendFactor: newColorBlendFactor, duration: 0.15)
       
@@ -74,16 +74,11 @@ class ButtonNode: SKSpriteNode {
     
     // Сохраняем текстуру кнопки по умолчанию (взятую из ее текстуры в сцене).
     defaultTexture = texture
-    
-    // Включаем возможность взаимодействия пользователя с узлом кнопки для обнаружения событий касания.
-    isUserInteractionEnabled = true
   }
   
   func buttonTriggered() {
-    if isUserInteractionEnabled {
-      // Пробрасываем событие нажатия кнопки в сцену.
-      responder.buttonTriggered(button: self)
-    }
+    // Пробрасываем событие нажатия кнопки в сцену.
+    responder.buttonTriggered(button: self)
   }
   
   

@@ -71,6 +71,7 @@
 		1EDF969024839FD4009A3765 /* AgentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF968F24839FD4009A3765 /* AgentComponent.swift */; };
 		1EDF96932483DC64009A3765 /* TileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EDF96922483DC64009A3765 /* TileSet.sks */; };
 		1EE59DA625BB3388000F4D54 /* WhiteColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1EE59DA525BB3388000F4D54 /* WhiteColor.fsh */; };
+		1EEC203F25EE9F5200C3A04F /* snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1EEC203D25EE9F5200C3A04F /* snow.sks */; };
 		1EEDA68A250ED88A002B43C2 /* SkeletonMoveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEDA689250ED88A002B43C2 /* SkeletonMoveState.swift */; };
 		1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */; };
 		1EEFBD2223E2240900DE1B08 /* JumpingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEFBD2123E2240900DE1B08 /* JumpingState.swift */; };
@@ -149,6 +150,7 @@
 		1EDF968F24839FD4009A3765 /* AgentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentComponent.swift; sourceTree = "<group>"; };
 		1EDF96922483DC64009A3765 /* TileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TileSet.sks; sourceTree = "<group>"; };
 		1EE59DA525BB3388000F4D54 /* WhiteColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = WhiteColor.fsh; sourceTree = "<group>"; };
+		1EEC203D25EE9F5200C3A04F /* snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = snow.sks; sourceTree = "<group>"; };
 		1EEDA689250ED88A002B43C2 /* SkeletonMoveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonMoveState.swift; sourceTree = "<group>"; };
 		1EEFBD1F23DF7F2100DE1B08 /* Amber.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Amber.xcassets; sourceTree = "<group>"; };
 		1EEFBD2123E2240900DE1B08 /* JumpingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpingState.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				1E6C065A24BCD94F0084359E /* fire.sks */,
 				1E6C065B24BCD94F0084359E /* missile.sks */,
 				1E92F7B024BCDEAE000A290E /* bokeh.sks */,
+				1EEC203D25EE9F5200C3A04F /* snow.sks */,
 			);
 			path = "Particle Effects";
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				1E5A2DAF25B9E3AB002AA292 /* Teleport.fsh in Resources */,
 				1E845EF8258538BC0073BD71 /* HomeScene.sks in Resources */,
 				1EEFBD2023DF7F2100DE1B08 /* Amber.xcassets in Resources */,
+				1EEC203F25EE9F5200C3A04F /* snow.sks in Resources */,
 				1E92F7B124BCDEAE000A290E /* bokeh.sks in Resources */,
 				1E6C065124BCD8370084359E /* SavePoint.xcassets in Resources */,
 				1EC1661423CA2E310055452D /* LaunchScreen.storyboard in Resources */,
